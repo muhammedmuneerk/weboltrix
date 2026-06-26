@@ -149,7 +149,7 @@ weboltrix/
 
 ## 📽️ Animation & Smooth Motion System
 
-The movement in **MMK Websites** is strictly driven by scroll-linked velocity and stagger thresholds.
+The movement in **Weboltrix** is strictly driven by scroll-linked velocity and stagger thresholds.
 
 ### 🧬 ScrollTrigger Reveal Mechanics
 Every main section features subtle translations (`y: 18` or `scale: 0.992`) triggered only when it enters `top 88%` of the viewport. Elements matching `.stagger-grid` cascade into place using GSAP staggers:
@@ -291,6 +291,6 @@ This project is licensed under the **MIT License**. Check the license records fo
 
 <div align="center">
 
-Made with 🖤 by **MMK Websites**
+Made with 🖤 by **Weboltrix**
 
 </div>
