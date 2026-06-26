@@ -256,7 +256,7 @@ Make sure you have [Node.js](https://nodejs.org) (v18+ recommended) and npm inst
     ```bash
     npm run dev
     ```
-    The site will start locally at `http://localhost:5173`.
+    The site will start locally at `http://localhost:5777`.
 
 4.  **Build and Bundles compilation:**
     ```bash
