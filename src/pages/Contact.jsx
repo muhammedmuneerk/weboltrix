@@ -74,7 +74,7 @@ export default function Contact() {
                   {contactDetails.phoneDisplay}
                 </a>
                 <a className="text-sm font-bold text-white/58 transition hover:text-white" href={contactDetails.instagram} target="_blank" rel="noreferrer">
-                  Instagram: @mmk_websites
+                  Instagram: @weboltrix
                 </a>
               </div>
             </div>

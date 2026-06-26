@@ -7,10 +7,10 @@ export default function Footer() {
       <div className="container-premium py-12">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <Link to="/" className="inline-flex items-center" aria-label="MMK Websites home">
+            <Link to="/" className="inline-flex items-center" aria-label="Weboltrix home">
               <img
-                src={brandAssets.logoWide}
-                alt="MMK Websites"
+                src={brandAssets.logoSquare}
+                alt="Weboltrix"
                 className="h-16 lg:h-24 w-auto"
               />
             </Link>
@@ -42,13 +42,13 @@ export default function Footer() {
                 WhatsApp: {contactDetails.phoneDisplay}
               </a>
               <a className="transition hover:text-white" href={contactDetails.instagram} target="_blank" rel="noreferrer">
-                Instagram: @mmk_websites
+                Instagram: @weboltrix
               </a>
             </div>
           </div>
         </div>
         <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} MMK Websites. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Weboltrix. All rights reserved.</p>
           <p>Built with clarity, speed, and premium intent.</p>
         </div>
       </div>

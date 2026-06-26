@@ -1,4 +1,4 @@
-# 🌌 MMK Websites — Premium Design & Web Development Studio
+# 🌌 Weboltrix — Premium Design & Web Development Studio
 
 <div align="center">
 
@@ -11,7 +11,7 @@
 
 > **"We build premium websites that bring customers."** A cinematic, high-impact web design studio portfolio built to convert visitors into inquiries using smooth scroll motion, dynamic interactive elements, and dark-mode glassmorphic aesthetics.
 
-[✨ Live Preview](https://github.com/muhammedmuneerk/MMKWebsites-v02) • [📁 Explore Code](file:///c:/Users/muham/Downloads/MMKWebsites/MMKWebsites-v02/src) • [💬 Get in Touch](https://wa.me/0000000000?text=Hi%2C%20I%20want%20a%20website%20for%20my%20business)
+[✨ Live Preview](https://github.com/muhammedmuneerk/weboltrix) • [📁 Explore Code](file:///c:/Users/muham/Downloads/weboltrix/weboltrix/src) • [💬 Get in Touch](https://wa.me/0000000000?text=Hi%2C%20I%20want%20a%20website%20for%20my%20business)
 
 </div>
 
@@ -35,7 +35,7 @@
 
 ## ✨ Project Overview
 
-**MMK Websites** is a conversion-focused portfolio and business platform built for local and global brands. The project showcases how refined aesthetics, robust animations, and zero-friction communication paths (like floating WhatsApp triggers) help brands establish instant authority online. 
+**Weboltrix** is a conversion-focused portfolio and business platform built for local and global brands. The project showcases how refined aesthetics, robust animations, and zero-friction communication paths (like floating WhatsApp triggers) help brands establish instant authority online. 
 
 Instead of heavy library loads or generic component builders, this platform is hand-crafted with **React 19**, **Vite**, **GSAP ScrollTrigger**, **Lenis Smooth Scroll**, and **Tailwind CSS**. It is tailored to load quickly, react gracefully, and guide user attention down key decision points.
 
@@ -82,7 +82,7 @@ The website adopts a **"Dark Premium / Glassmorphic"** design system:
 <summary><b>📂 Click to expand codebase directory tree</b></summary>
 
 ```bash
-MMKWebsites-v02/
+weboltrix/
 ├── .chrome-headless-home/           # Chrome environment configs
 ├── dist/                            # Production build bundle
 ├── src/
@@ -138,12 +138,12 @@ MMKWebsites-v02/
 
 ## 🧩 Architecture & Design Decisions
 
-1.  **Centralized Site Data Configuration:** Rather than hardcoding project lists, pricing, FAQs, and testimonials, everything is maintained inside [siteData.js](file:///c:/Users/muham/Downloads/MMKWebsites/MMKWebsites-v02/src/data/siteData.js). This ensures simple updates and content consistency.
-2.  **Modular Motion System:** Animations are centralized inside a custom React hook: [useSiteMotion.js](file:///c:/Users/muham/Downloads/MMKWebsites/MMKWebsites-v02/src/hooks/useSiteMotion.js). This hook handles:
+1.  **Centralized Site Data Configuration:** Rather than hardcoding project lists, pricing, FAQs, and testimonials, everything is maintained inside [siteData.js](file:///c:/Users/muham/Downloads/weboltrix/weboltrix/src/data/siteData.js). This ensures simple updates and content consistency.
+2.  **Modular Motion System:** Animations are centralized inside a custom React hook: [useSiteMotion.js](file:///c:/Users/muham/Downloads/weboltrix/weboltrix/src/hooks/useSiteMotion.js). This hook handles:
     *   Setup and destruction of Lenis smooth scroll on mount/unmount.
     *   Tracking route changes to automatically clean up previous `ScrollTrigger` instances, avoiding memory leaks and stale trigger targets.
     *   Mobile thresholds (`min-width: 768px`) for complex horizontal pins to prevent layout shifts on small viewports.
-3.  **Layout Wrapper Architecture:** [Layout.jsx](file:///c:/Users/muham/Downloads/MMKWebsites/MMKWebsites-v02/src/components/Layout.jsx) uses React Router's `<Outlet />` wrapper to ensure persistent elements (Navbar, Footer, Cursor Glow, WhatsApp Float) do not re-render or flicker during page changes.
+3.  **Layout Wrapper Architecture:** [Layout.jsx](file:///c:/Users/muham/Downloads/weboltrix/weboltrix/src/components/Layout.jsx) uses React Router's `<Outlet />` wrapper to ensure persistent elements (Navbar, Footer, Cursor Glow, WhatsApp Float) do not re-render or flicker during page changes.
 
 ---
 
@@ -191,7 +191,7 @@ timeline.fromTo(cards, {
 <summary><b>📂 Click to expand page details</b></summary>
 
 ### 🏠 Home Page (`/`)
-*   **Signature Hero:** Dynamic title, call-to-actions, and [HeroShowcase.jsx](file:///c:/Users/muham/Downloads/MMKWebsites/MMKWebsites-v02/src/components/HeroShowcase.jsx) featuring visual mocks and statistics.
+*   **Signature Hero:** Dynamic title, call-to-actions, and [HeroShowcase.jsx](file:///c:/Users/muham/Downloads/weboltrix/weboltrix/src/components/HeroShowcase.jsx) featuring visual mocks and statistics.
 *   **Featured Work Grid:** Direct visual grid showcasing the high-value project cards.
 *   **Interactive Comparison Slider:** Before/After redesign previews displaying agency-level updates.
 *   **Result Indicators:** Numeric statistics highlighting inquiries, brand trust, and conversion metrics.
@@ -243,8 +243,8 @@ Make sure you have [Node.js](https://nodejs.org) (v18+ recommended) and npm inst
 
 1.  **Clone the Repository:**
     ```bash
-    git clone https://github.com/muhammedmuneerk/MMKWebsites-v02.git
-    cd MMKWebsites-v02
+    git clone https://github.com/muhammedmuneerk/weboltrix.git
+    cd weboltrix
     ```
 
 2.  **Install Project Dependencies:**

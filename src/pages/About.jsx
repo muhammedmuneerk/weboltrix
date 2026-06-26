@@ -5,7 +5,7 @@ import SectionHeading from "../components/SectionHeading.jsx";
 export default function About() {
   return (
     <>
-      <PageHero eyebrow="About" title="About MMK Websites">
+      <PageHero eyebrow="About" title="About Weboltrix">
         A boutique web design studio focused on making local businesses look premium, move faster,
         and win more trust online.
       </PageHero>
@@ -15,7 +15,7 @@ export default function About() {
           <SectionHeading
             eyebrow="Story"
             title="We believe small businesses should not look small online."
-            text="MMK Websites was built for owners who care about quality but need a website that is practical, fast, and easy for customers to act on."
+            text="Weboltrix was built for owners who care about quality but need a website that is practical, fast, and easy for customers to act on."
           />
           <div className="glass rounded-[2rem] p-8 text-lg leading-9 text-white/65">
             We combine high-end visual taste with the direct needs of local business: clear offers,

@@ -14,7 +14,7 @@ export default function CTASection({
             <img
               src={brandAssets.logoSquare}
               alt=""
-              className="mx-auto mb-7 h-16 w-16 object-contain opacity-90"
+              className="mx-auto mb-7 h-20 w-auto object-contain opacity-90"
             />
             <h2 className="text-4xl font-black leading-tight tracking-tight text-balance sm:text-6xl lg:text-7xl">
               {title}

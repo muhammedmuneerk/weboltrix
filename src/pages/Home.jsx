@@ -84,10 +84,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="mmk-signature" className="py-20 lg:py-24">
+      <section id="weboltrix-signature" className="py-20 lg:py-24">
         <div className="container-premium">
           <div className="max-w-5xl">
-            <p className="eyebrow">MMK signature</p>
+            <p className="eyebrow">Weboltrix signature</p>
             <h2 className="mt-5 max-w-4xl text-4xl font-black leading-tight tracking-tight text-balance sm:text-5xl lg:text-6xl">
               A scroll experience that feels premium, but still sells.
             </h2>

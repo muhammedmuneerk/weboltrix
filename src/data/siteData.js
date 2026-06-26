@@ -1,6 +1,6 @@
 import heroStudio from "../assets/mmk-hero-studio.jpg";
-import logoSquare from "../assets/logos/MMKWebsites-Logo-crop-1-1-bgremoved.png";
-import logoWide from "../assets/logos/weboltrix-bgremoved.png";
+import logoSquare from "../assets/logos/weboltrix-bgremoved.png";
+import logoWide from "../assets/logos/MMKWebsites-Logo-crop-2--2-1-bgremoved.png";
 import mmkShopImage from "../assets/preview/screens.png";
 import amorWeddingsImage from "../assets/preview/collage-amorweddings-3.png";
 import amorUniformsImage from "../assets/preview/AmorUniforms-Preview.png";
@@ -394,8 +394,8 @@ export const uspItems = [
 export const contactDetails = {
   phone: "+918281689200",
   phoneDisplay: "+91 82816 89200",
-  email: "mmkwebsites.business@gmail.com",
-  instagram: "https://www.instagram.com/mmk_websites",
+  email: "weboltrix.business@gmail.com",
+  instagram: "https://www.instagram.com/weboltrix",
 };
 
 export const whatsappLink = `https://wa.me/${contactDetails.phone.replace("+", "")}?text=Hi%2C%20I%20want%20a%20website%20for%20my%20business`;

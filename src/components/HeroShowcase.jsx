@@ -5,7 +5,7 @@ export default function HeroShowcase() {
     <div className="hero-showcase relative hidden lg:block" data-cursor-glow>
       <div className="relative overflow-hidden rounded-[2.4rem] border border-white/[0.12] bg-white/[0.06] p-3 shadow-premium backdrop-blur-2xl">
         <div className="absolute right-6 top-6 z-20 rounded-full border border-white/15 bg-black/[0.42] px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-white/68 backdrop-blur">
-          MMK signature
+          Weboltrix signature
         </div>
         <div className="absolute bottom-6 left-6 z-20 max-w-52 rounded-[1.4rem] border border-white/[0.12] bg-black/[0.48] p-5 text-sm font-bold leading-6 text-white/72 backdrop-blur-xl">
           Built to make customers trust the business before they call.

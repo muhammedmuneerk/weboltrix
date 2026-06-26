@@ -22,10 +22,10 @@ export default function Navbar() {
       }`}
     >
       <nav className="container-premium flex h-20 items-center justify-between">
-        <Link to="/" className="flex items-center" aria-label="MMK Websites home" onClick={() => setOpen(false)}>
+        <Link to="/" className="flex items-center" aria-label="Weboltrix home" onClick={() => setOpen(false)}>
           <img
-            src={brandAssets.logoWide}
-            alt="MMK Websites"
+            src={brandAssets.logoSquare}
+            alt="Weboltrix"
             className="h-20 w-auto lg:h-28"
           />
         </Link>
