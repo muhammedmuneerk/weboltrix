@@ -1,6 +1,6 @@
 import heroStudio from "../assets/mmk-hero-studio.jpg";
 import logoSquare from "../assets/logos/MMKWebsites-Logo-crop-1-1-bgremoved.png";
-import logoWide from "../assets/logos/MMKWebsites-Logo-crop-2--2-1-bgremoved.png";
+import logoWide from "../assets/logos/weboltrix-bgremoved.png";
 import mmkShopImage from "../assets/preview/screens.png";
 import amorWeddingsImage from "../assets/preview/collage-amorweddings-3.png";
 import amorUniformsImage from "../assets/preview/AmorUniforms-Preview.png";

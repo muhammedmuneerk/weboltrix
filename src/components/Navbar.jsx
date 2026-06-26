@@ -26,7 +26,7 @@ export default function Navbar() {
           <img
             src={brandAssets.logoWide}
             alt="MMK Websites"
-            className="h-10 w-auto sm:h-11"
+            className="h-20 w-auto lg:h-28"
           />
         </Link>
 

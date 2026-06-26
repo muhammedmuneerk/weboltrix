@@ -11,7 +11,7 @@ export default function Footer() {
               <img
                 src={brandAssets.logoWide}
                 alt="MMK Websites"
-                className="h-12 w-auto"
+                className="h-16 lg:h-24 w-auto"
               />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-7 text-white/55">
