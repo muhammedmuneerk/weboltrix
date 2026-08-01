@@ -1,0 +1,378 @@
+/* ══════════════════════════════════════════════════════
+   Work — Sticky Sidebar Layout  (v2 — fixed inner scroll)
+
+   THE KEY PRINCIPLE:
+   .sb-layout      → fixed height (100svh), overflow: hidden
+   .sb-sidebar     → full height, no scroll (just sits there)
+   .sb-main        → full height, overflow-y: auto  ← scrolls HERE
+   
+   This is what makes the sidebar appear stuck while content
+   flows past on the right. The page itself doesn't scroll
+   for this section — only the inner right panel does.
+   ══════════════════════════════════════════════════════ */
+
+/* ── Outer shell ── */
+.sb-layout {
+  display: flex;
+  height: 100svh;          /* full viewport height */
+  overflow: hidden;        /* nothing bleeds out */
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ── LEFT SIDEBAR — static, full height ── */
+.sb-sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 2.5rem 0 1.75rem;
+  background: #080808;     /* match page bg so it looks seamless */
+}
+
+.sb-section-label {
+  font-size: 0.5625rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+  padding: 0 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+/* ── Nav list ── */
+.sb-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.sb-list::-webkit-scrollbar { display: none; }
+
+.sb-item {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.9rem 1.5rem;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+.sb-item:hover { background: rgba(255, 255, 255, 0.03); }
+.sb-item--active { background: rgba(255, 255, 255, 0.045); }
+
+/* White bar on left edge when active */
+.sb-indicator {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 0;
+  background: #fff;
+  border-radius: 0 2px 2px 0;
+  opacity: 0;
+  transition: height 0.35s ease, opacity 0.3s ease;
+}
+.sb-item--active .sb-indicator {
+  height: 2rem;
+  opacity: 1;
+}
+
+.sb-num {
+  font-size: 0.5625rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.18);
+  font-variant-numeric: tabular-nums;
+  width: 1.25rem;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+.sb-item--active .sb-num { color: rgba(255, 255, 255, 0.85); }
+
+.sb-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.sb-name {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.28);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.3s ease;
+}
+.sb-cat {
+  font-size: 0.5625rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.16);
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+.sb-item--active .sb-name { color: #fff; }
+.sb-item--active .sb-cat  { color: rgba(255, 255, 255, 0.4); }
+
+/* ── Sidebar footer ── */
+.sb-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+.sb-count {
+  display: block;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.2);
+  margin-bottom: 0.5rem;
+}
+.sb-progress {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.sb-progress-fill {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 1px;
+  transition: width 0.25s ease;
+}
+
+/* ── RIGHT PANEL — this is the scrollable part ── */
+.sb-main {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;         /* ← THE scroll happens here */
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+  scroll-snap-type: y proximity;  /* gently frames each project as you settle */
+}
+.sb-main::-webkit-scrollbar { width: 4px; }
+.sb-main::-webkit-scrollbar-track { background: transparent; }
+.sb-main::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+/* ── Project section — fills the panel height, content centered ── */
+.sb-project {
+  position: relative;
+  min-height: 100%;             /* always at least one full panel-height */
+  display: flex;
+  align-items: center;          /* vertically centers the inner content */
+  padding: 3rem 3.5vw;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  overflow: hidden;
+  transition: background 0.4s ease;
+  scroll-snap-align: start;
+  box-sizing: border-box;
+}
+.sb-project:last-child { border-bottom: none; }
+.sb-project--active { background: rgba(255, 255, 255, 0.012); }
+
+/* Ghost numeral */
+.sb-ghost {
+  position: absolute;
+  right: -0.04em;
+  bottom: -0.16em;
+  font-size: clamp(8rem, 16vw, 16rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.035);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.sb-project-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  width: 100%;
+}
+
+/* Top row */
+.sb-proj-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.sb-proj-eyebrow {
+  font-size: 0.5625rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+.sb-proj-tags { display: flex; gap: 0.375rem; flex-wrap: wrap; }
+.sb-proj-tag {
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+/* Image */
+.sb-proj-img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  max-height: 30svh;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.sb-proj-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.sb-project--active .sb-proj-img { transform: scale(1.015); }
+
+/* Title */
+.sb-proj-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+/* Desc */
+.sb-proj-desc {
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.45);
+  max-width: 52ch;
+  margin-bottom: 1.5rem;
+}
+
+/* PSR strip */
+.sb-psr {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 0.375rem;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.sb-psr-cell {
+  padding: 0.875rem 1rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+}
+.sb-psr-cell:last-child { border-right: none; }
+.sb-psr-label {
+  display: block;
+  font-size: 0.5rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+  margin-bottom: 0.35rem;
+}
+.sb-psr-text {
+  font-size: 0.75rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* CTAs */
+.sb-proj-ctas {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+.sb-ghost-link {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.sb-ghost-link:hover { color: rgba(255, 255, 255, 0.8); }
+
+/* ══════════════════════════════════════════════════════
+   Mobile — collapse sidebar to horizontal pill nav
+   ══════════════════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .sb-layout {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  .sb-sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 1.25rem 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(8, 8, 8, 0.95);
+    backdrop-filter: blur(12px);
+  }
+
+  .sb-section-label { display: none; }
+
+  .sb-list {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 0 1rem 1rem;
+    gap: 6px;
+    scrollbar-width: none;
+  }
+  .sb-list::-webkit-scrollbar { display: none; }
+
+  .sb-item {
+    flex-shrink: 0;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    width: auto;
+  }
+  .sb-item--active {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+  .sb-indicator, .sb-num, .sb-cat { display: none; }
+  .sb-name { font-size: 0.6875rem; color: rgba(255, 255, 255, 0.5); }
+  .sb-item--active .sb-name { color: #fff; }
+  .sb-footer { display: none; }
+
+  .sb-main {
+    height: auto;
+    overflow: visible;
+  }
+
+  .sb-project { padding: 2.5rem 1.25rem 3.5rem; }
+
+  .sb-psr { grid-template-columns: 1fr; }
+  .sb-psr-cell { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .sb-psr-cell:last-child { border-bottom: none; }
+}

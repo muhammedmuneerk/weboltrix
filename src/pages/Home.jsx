@@ -11,6 +11,9 @@ import ServiceCard from "../components/ServiceCard.jsx";
 import SignatureHeroMoment from "../components/SignatureHeroMoment.jsx";
 import { useWhyChooseMotion } from "../hooks/useSiteMotion.js";
 import { experiencePillars, processSteps, projects, resultStats, services, testimonials, uspItems } from "../data/siteData.js";
+// import ProjectRow from "./ProjectRow .jsx";
+import FeaturedWorkAccordion from "../components/Featuredworkaccordion.jsx";
+import FeaturedWork from "../components/FeaturedWork.jsx";
 
 export default function Home() {
   const whyChooseRef = useRef(null);
@@ -58,20 +61,16 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-padding">
-        <div className="container-premium">
-          <SectionHeading
-            eyebrow="Featured work"
-            title="Websites designed to look expensive and work hard."
-            text="Every project starts with business clarity, then becomes a polished website that builds confidence fast."
-          />
-          <div className="stagger-grid mt-16 grid gap-8 lg:grid-cols-3">
-            {projects.map((project, index) => (
-              <ProjectCard key={project.title} project={project} index={index} />
-            ))}
-          </div>
-        </div>
-      </section>
+    <section className="section-padding">
+  <div className="container-premium">
+    <SectionHeading
+      eyebrow="Featured work"
+      title="Websites designed to look expensive and work hard."
+      text="Every project starts with business clarity, then becomes a polished website that builds confidence fast."
+    />
+    <FeaturedWorkAccordion projects={projects} />
+  </div>
+</section>
 
       <section className="section-padding border-y border-white/10 bg-white/[0.025]">
         <div className="container-premium grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
