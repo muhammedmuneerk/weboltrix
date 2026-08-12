@@ -11,36 +11,72 @@ export default function Work() {
   const mainRef = useRef(null);
   const sectionRefs = useRef([]);
 
-  /* ── Scroll spy on the inner scroll container ── */
+  /* ── Guards a click-triggered scroll so the spy below doesn't fight it
+     mid-animation (this was the cause of the sidebar highlight lagging
+     one project behind the section actually on screen). ── */
+  const isSyncingRef = useRef(false);
+  const settleTimeoutRef = useRef(null);
+
+  /* ── Scroll spy on the inner scroll container.
+     Uses IntersectionObserver (geometry-based) instead of manual
+     scrollTop math, so it stays correct through smooth-scroll
+     animation and CSS scroll-snap settling instead of racing them. ── */
   useEffect(() => {
     const main = mainRef.current;
     if (!main) return;
 
-    const onScroll = () => {
-      const scrollTop = main.scrollTop;
-      const viewH = main.clientHeight;
-      let best = 0;
-      let bestScore = Infinity;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isSyncingRef.current) return; // a click just set the index; don't fight it
 
-      sectionRefs.current.forEach((el, i) => {
-        if (!el) return;
-        const mid = el.offsetTop + el.offsetHeight / 2;
-        const score = Math.abs(mid - scrollTop - viewH / 2);
-        if (score < bestScore) { bestScore = score; best = i; }
-      });
+        const mainRect = main.getBoundingClientRect();
+        const centerY = mainRect.top + mainRect.height / 2;
 
-      setActiveIndex(best);
+        let best = null;
+        let bestDist = Infinity;
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const idx = sectionRefs.current.indexOf(entry.target);
+          if (idx === -1) return;
+          const rect = entry.target.getBoundingClientRect();
+          const dist = Math.abs(rect.top + rect.height / 2 - centerY);
+          if (dist < bestDist) { bestDist = dist; best = idx; }
+        });
+
+        if (best !== null) setActiveIndex(best);
+      },
+      { root: main, threshold: 0, rootMargin: "-40% 0px -40% 0px" }
+    );
+
+    sectionRefs.current.forEach((el) => el && observer.observe(el));
+
+    const onScrollEnd = () => { isSyncingRef.current = false; };
+    main.addEventListener("scrollend", onScrollEnd);
+
+    return () => {
+      observer.disconnect();
+      main.removeEventListener("scrollend", onScrollEnd);
+      clearTimeout(settleTimeoutRef.current);
     };
-
-    main.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => main.removeEventListener("scroll", onScroll);
   }, []);
 
   const scrollToProject = (idx) => {
     const el = sectionRefs.current[idx];
     const main = mainRef.current;
-    if (el && main) main.scrollTo({ top: el.offsetTop, behavior: "smooth" });
+    if (!el || !main) return;
+
+    // Update the highlight the instant it's clicked — don't wait for the
+    // scroll animation to finish, that gap is what made the sidebar look
+    // out of sync with the panel.
+    isSyncingRef.current = true;
+    setActiveIndex(idx);
+    main.scrollTo({ top: el.offsetTop, behavior: "smooth" });
+
+    // Fallback release in case the browser doesn't fire 'scrollend'.
+    clearTimeout(settleTimeoutRef.current);
+    settleTimeoutRef.current = setTimeout(() => {
+      isSyncingRef.current = false;
+    }, 700);
   };
 
   const total = projects.length;
@@ -61,10 +97,11 @@ export default function Work() {
 
           <ul className="sb-list" role="list">
             {projects.map((project, i) => (
-              <li key={project.title}>
+              <li key={project.slug}>
                 <button
+                  type="button"
                   className={`sb-item${i === activeIndex ? " sb-item--active" : ""}`}
-                  onMouseEnter={() => scrollToProject(i)}
+                  onClick={() => scrollToProject(i)}
                   aria-current={i === activeIndex ? "true" : undefined}
                 >
                   <span className="sb-indicator" aria-hidden="true" />
@@ -92,7 +129,7 @@ export default function Work() {
             const liveLink = project.linkAfter || project.link;
             return (
               <section
-                key={project.title}
+                key={project.slug}
                 id={`project-${project.slug}`}
                 className={`sb-project${i === activeIndex ? " sb-project--active" : ""}`}
                 ref={(el) => (sectionRefs.current[i] = el)}
