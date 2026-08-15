@@ -2,7 +2,17 @@ export default function ProcessTimeline({ steps }) {
   return (
     <div className="relative mt-14">
       <div className="absolute left-8 top-0 h-full w-px bg-white/10 md:hidden" />
-      <div className="absolute left-0 right-0 top-8 hidden h-px bg-gradient-to-r from-transparent via-white/25 to-transparent md:block" />
+
+      <div className="absolute left-0 right-0 top-14 hidden md:grid md:grid-cols-4 md:gap-5">
+        {steps.map((_, index) => (
+          <div key={index} className="relative h-px">
+            {index < steps.length - 1 && (
+              <div className="absolute -right-5 top-0 h-px w-5 bg-white/40" />
+            )}
+          </div>
+        ))}
+      </div>
+
       <div className="stagger-grid grid gap-5 md:grid-cols-4">
         {steps.map((step, index) => (
           <div
