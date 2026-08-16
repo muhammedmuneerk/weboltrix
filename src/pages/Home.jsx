@@ -166,36 +166,39 @@ export default function Home() {
       </section>
 
       <section
-        id="why-choose-us"
-        ref={whyChooseRef}
-        className="section-padding overflow-hidden"
-        data-why-scroll
-      >
-        <div className="container-premium">
-          <SectionHeading
-            eyebrow="Why choose us"
-            title="Built around design quality and customer action."
-            align="center"
-          />
-          <div className="mx-auto mt-8 h-px max-w-2xl overflow-hidden bg-white/10">
-            <div className="h-full origin-left bg-bone" data-why-progress />
-          </div>
-          <div className="mt-14" data-why-viewport>
-            <div className="grid gap-6 sm:grid-cols-2 md:flex md:w-max md:gap-5" data-why-track>
-            {uspItems.map(([title, text], index) => (
-              <div
-                key={title}
-                className="why-scroll-card glass card-hover rounded-[1.8rem] p-7 md:min-h-[22rem] md:w-[24rem] md:shrink-0 lg:w-[26rem]"
-              >
-                <IconMark label={title} index={index} />
-                <h3 className="mt-6 text-xl font-black tracking-tight">{title}</h3>
-                <p className="mt-3 text-sm leading-7 text-white/55">{text}</p>
-              </div>
-            ))}
-            </div>
-          </div>
+  id="why-choose-us"
+  ref={whyChooseRef}
+  className="section-padding overflow-hidden"
+  data-why-scroll
+>
+  <div className="container-premium">
+    <SectionHeading
+      eyebrow="Why choose us"
+      title="Built around design quality and customer action."
+      align="center"
+    />
+    <div className="mx-auto mt-8 h-px max-w-2xl overflow-hidden bg-white/10">
+      <div className="h-full origin-left bg-bone" data-why-progress />
+    </div>
+    <div
+      className="mt-14 overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:overflow-visible md:snap-none"
+      data-why-viewport
+    >
+      <div className="flex w-max gap-5" data-why-track>
+      {uspItems.map(([title, text], index) => (
+        <div
+          key={title}
+          className="why-scroll-card glass card-hover w-[82vw] shrink-0 snap-start rounded-[1.8rem] p-7 sm:w-[22rem] md:min-h-[22rem] md:w-[24rem] lg:w-[26rem]"
+        >
+          <IconMark label={title} index={index} />
+          <h3 className="mt-6 text-xl font-black tracking-tight">{title}</h3>
+          <p className="mt-3 text-sm leading-7 text-white/55">{text}</p>
         </div>
-      </section>
+      ))}
+      </div>
+    </div>
+  </div>
+</section>
 
       <section className="section-padding border-y border-white/10 bg-white/[0.025]">
         <div className="container-premium">
