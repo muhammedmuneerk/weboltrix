@@ -53,7 +53,7 @@ function ScrubReveal({ before, beforeAlt, after, afterAlt }) {
       onPointerUp={onPointerUp}
       onPointerLeave={onPointerUp}
       onKeyDown={onKeyDown}
-      className="relative aspect-[16/10] w-full cursor-ew-resize select-none overflow-hidden rounded-[1.75rem] border border-white/10 bg-black outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+      className="relative aspect-[16/10] w-full touch-none cursor-ew-resize select-none overflow-hidden rounded-[1.75rem] border border-white/10 bg-black outline-none focus-visible:ring-2 focus-visible:ring-white/40"
     >
       {/* After (base layer, fully visible) */}
       <img
@@ -87,7 +87,7 @@ function ScrubReveal({ before, beforeAlt, after, afterAlt }) {
         className="absolute inset-y-0 w-px bg-white/80"
         style={{ left: `${pos}%` }}
       >
-        <div className="absolute left-1/2 top-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white text-black shadow-lg">
+        <div className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white text-black shadow-lg sm:h-9 sm:w-9">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M14 5l-7 7 7 7M10 5l7 7-7 7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
