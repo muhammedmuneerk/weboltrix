@@ -10,7 +10,7 @@ import SectionHeading from "../components/SectionHeading.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import SignatureHeroMoment from "../components/SignatureHeroMoment.jsx";
 import { useWhyChooseMotion } from "../hooks/useSiteMotion.js";
-import { experiencePillars, processSteps, projects, resultStats, services, testimonials, uspItems } from "../data/siteData.js";
+import { experiencePillars, processSteps, projects, resultStats, services, studioAssets, testimonials, uspItems } from "../data/siteData.js";
 // import ProjectRow from "./ProjectRow .jsx";
 import FeaturedWorkAccordion from "../components/Featuredworkaccordion.jsx";
 import FeaturedWork from "../components/FeaturedWork.jsx";
@@ -23,33 +23,85 @@ export default function Home() {
   return (
     <>
       <section className="hero-mesh relative isolate overflow-hidden pt-28 lg:min-h-[86vh]">
-        <SignatureHeroMoment />
-        <div className="fine-grid absolute inset-0 z-0" />
-        <div className="container-premium relative z-10 grid items-center gap-12 pb-14 lg:min-h-[calc(86vh-11rem)] lg:grid-cols-[1.15fr_0.85fr] lg:pb-16">
-          <div className="max-w-[22rem] sm:max-w-5xl">
-            <p className="hero-kicker eyebrow">Premium web design agency</p>
-            <h1 className="hero-title mt-6 max-w-[21rem] text-4xl font-black leading-[0.94] tracking-tight text-balance sm:max-w-5xl sm:text-7xl sm:leading-[0.9] lg:text-8xl">
-              We build premium websites that bring customers.
-            </h1>
-            <p className="hero-copy mt-7 max-w-[21rem] text-lg leading-8 text-white/64 sm:max-w-2xl sm:text-xl">
-              Turn your business into a premium brand that attracts customers automatically.
-            </p>
-            <div className="hero-actions mt-9 flex max-w-[21rem] flex-col gap-3 sm:max-w-none sm:flex-row">
-              <Link to="/contact" className="premium-button-light w-full sm:w-auto">
-                Get Your Website
-              </Link>
-              <Link to="/work" className="premium-button-dark w-full sm:w-auto">
-                View Our Work
-              </Link>
-            </div>
-            <p className="hero-proof mt-6 max-w-[19rem] text-sm font-bold leading-6 text-white/62 sm:max-w-xl">
-              Helping local brands like Amor turn visitors into customers
-            </p>
-          </div>
+  <SignatureHeroMoment />
+  <div className="fine-grid absolute inset-0 z-0" />
+  <div className="container-premium relative z-10 grid items-center gap-12 pb-14 lg:min-h-[calc(86vh-11rem)] lg:grid-cols-[1.15fr_0.85fr] lg:pb-16">
 
-          <HeroShowcase />
+    {/* Mobile & tablet hero — redesigned, hidden at lg+ */}
+    <div className="lg:hidden">
+      <p className="hero-kicker eyebrow text-center">Premium web design agency</p>
+
+      <h1 className="hero-title mx-auto mt-5 max-w-sm text-center text-4xl font-black leading-[1.03] tracking-tight text-balance sm:max-w-xl sm:text-6xl sm:leading-[0.98]">
+        We build premium websites that bring customers.
+      </h1>
+
+      <p className="hero-copy mx-auto mt-5 max-w-xs text-center text-base leading-7 text-white/64 sm:max-w-md sm:text-lg">
+        Turn your business into a premium brand that attracts customers automatically.
+      </p>
+
+      <div className="relative mx-auto mt-8 max-w-md overflow-hidden rounded-[1.75rem] border border-white/[0.12] bg-white/[0.06] p-2 shadow-premium backdrop-blur-2xl">
+        <div className="relative aspect-[16/11] overflow-hidden rounded-[1.4rem] bg-black">
+          <img
+            src={studioAssets.heroStudio}
+            alt="Premium website mockup on desktop and mobile screens inside a dark studio."
+            className="h-full w-full scale-110 object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/10 to-transparent" />
+          <div className="absolute inset-x-4 bottom-4 grid grid-cols-3 gap-2">
+            {["Trust", "Leads", "Polish"].map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-white/[0.12] bg-white/10 px-2 py-2 text-center text-[10px] font-black uppercase tracking-[0.14em] text-white/72 backdrop-blur"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
-      </section>
+      </div>
+
+      <div className="hero-actions mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row sm:justify-center">
+        <Link to="/contact" className="premium-button-light w-full text-center sm:w-auto">
+          Get Your Website
+        </Link>
+        <Link to="/work" className="premium-button-dark w-full text-center sm:w-auto">
+          View Our Work
+        </Link>
+      </div>
+
+      <p className="hero-proof mx-auto mt-6 max-w-xs rounded-full border border-white/10 bg-white/[0.045] px-4 py-2.5 text-center text-sm font-bold leading-6 text-white/62 sm:max-w-sm">
+        Helping local brands like Amor turn visitors into customers
+      </p>
+    </div>
+
+    {/* Desktop hero — completely unchanged */}
+    <div className="hidden lg:contents">
+      <div className="max-w-[22rem] sm:max-w-5xl">
+        <p className="hero-kicker eyebrow">Premium web design agency</p>
+        <h1 className="hero-title mt-6 max-w-[21rem] text-4xl font-black leading-[0.94] tracking-tight text-balance sm:max-w-5xl sm:text-7xl sm:leading-[0.9] lg:text-8xl">
+          We build premium websites that bring customers.
+        </h1>
+        <p className="hero-copy mt-7 max-w-[21rem] text-lg leading-8 text-white/64 sm:max-w-2xl sm:text-xl">
+          Turn your business into a premium brand that attracts customers automatically.
+        </p>
+        <div className="hero-actions mt-9 flex max-w-[21rem] flex-col gap-3 sm:max-w-none sm:flex-row">
+          <Link to="/contact" className="premium-button-light w-full sm:w-auto">
+            Get Your Website
+          </Link>
+          <Link to="/work" className="premium-button-dark w-full sm:w-auto">
+            View Our Work
+          </Link>
+        </div>
+        <p className="hero-proof mt-6 max-w-[19rem] text-sm font-bold leading-6 text-white/62 sm:max-w-xl">
+          Helping local brands like Amor turn visitors into customers
+        </p>
+      </div>
+
+      <HeroShowcase />
+    </div>
+
+  </div>
+</section>
 
       <section className="above-fold-hint border-y border-white/10 bg-bone py-6 text-ink">
         <div className="container-premium overflow-hidden">
