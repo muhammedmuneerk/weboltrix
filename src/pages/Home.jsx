@@ -181,10 +181,10 @@ export default function Home() {
       <div className="h-full origin-left bg-bone" data-why-progress />
     </div>
     <div
-      className="mt-14 overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:overflow-visible md:snap-none"
+      className="mt-14 w-screen -mx-[calc(50vw-50%)] overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:w-auto md:overflow-visible md:snap-none"
       data-why-viewport
     >
-      <div className="flex w-max gap-5" data-why-track>
+      <div className="flex w-max gap-5 pl-6 pr-6 md:gap-5 md:pl-0 md:pr-0" data-why-track>
       {uspItems.map(([title, text], index) => (
         <div
           key={title}
