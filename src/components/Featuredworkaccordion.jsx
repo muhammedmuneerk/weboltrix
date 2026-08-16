@@ -1,9 +1,18 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function FeaturedWorkAccordion({ projects }) {
   const [openIndex, setOpenIndex] = useState(0);
+  const [canHover, setCanHover] = useState(true);
   const contentRefs = useRef([]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    setCanHover(mq.matches);
+    const handleChange = (e) => setCanHover(e.matches);
+    mq.addEventListener("change", handleChange);
+    return () => mq.removeEventListener("change", handleChange);
+  }, []);
 
   function toggle(i) {
     setOpenIndex((prev) => (prev === i ? -1 : i));
@@ -26,15 +35,16 @@ export default function FeaturedWorkAccordion({ projects }) {
           <div key={project.title} className="border-b border-white/[0.08]">
             {/* ── Title trigger row ── */}
             <button
-              onMouseEnter={() => toggle(i)}
+              onMouseEnter={canHover ? () => toggle(i) : undefined}
+              onClick={!canHover ? () => toggle(i) : undefined}
               aria-expanded={isOpen}
-              className={`group flex w-full items-center gap-5 px-0 py-5 text-left transition-colors duration-300 sm:py-6 ${
+              className={`group flex w-full items-center gap-3 px-0 py-4 text-left transition-colors duration-300 sm:gap-5 sm:py-5 sm:py-6 ${
                 isOpen ? "bg-white/[0.025]" : "hover:bg-white/[0.018]"
               }`}
             >
               {/* Index number */}
               <span
-                className={`w-7 flex-shrink-0 text-[10px] font-black tabular-nums transition-colors duration-300 ${
+                className={`w-6 flex-shrink-0 text-[10px] font-black tabular-nums transition-colors duration-300 sm:w-7 ${
                   isOpen
                     ? "text-white/50"
                     : "text-white/18 group-hover:text-white/35"
@@ -50,7 +60,7 @@ export default function FeaturedWorkAccordion({ projects }) {
                     ? "text-white"
                     : "text-white/32 group-hover:text-white"
                 }`}
-                style={{ fontSize: "clamp(1.6rem, 3.8vw, 3rem)" }}
+                style={{ fontSize: "clamp(1.5rem, 3.8vw, 3rem)" }}
               >
                 {project.title}
               </span>
@@ -85,10 +95,10 @@ export default function FeaturedWorkAccordion({ projects }) {
               }`}
             >
               <div className="min-h-0 overflow-hidden">
-                {/* Content — indented to align under the title */}
+                {/* Content — indented to align under the title on sm+, flush on mobile */}
                 <div
                   ref={(el) => (contentRefs.current[i] = el)}
-                  className="flex flex-col gap-7 pb-12 pl-12 pr-0 sm:flex-row sm:gap-8 lg:gap-10"
+                  className="flex flex-col gap-6 pb-8 pr-0 sm:flex-row sm:gap-8 sm:pb-12 sm:pl-12 lg:gap-10"
                   style={{ animation: "featuredFadeUp 0.44s ease 0.08s both" }}
                 >
                   {/* Image */}
