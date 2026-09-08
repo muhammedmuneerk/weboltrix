@@ -22,13 +22,13 @@ export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const testimonialResumeTimeout = useRef(null);
   const testimonialAutoScrolling = useRef(false);
-  
+
   const handleTestimonialScroll = () => {
     const el = testimonialTrackRef.current;
     if (!el) return;
     const index = Math.round(el.scrollLeft / el.clientWidth);
     setActiveTestimonial((prev) => (prev === index ? prev : index));
-  
+
     // Only treat this as "manual" if we didn't trigger the scroll ourselves
     if (!testimonialAutoScrolling.current) {
       if (testimonialResumeTimeout.current) clearTimeout(testimonialResumeTimeout.current);
@@ -38,29 +38,29 @@ export default function Home() {
       }, 5000);
     }
   };
-  
+
   const testimonialPaused = useRef(false);
-  
+
   useEffect(() => {
     const el = testimonialTrackRef.current;
     if (!el || testimonials.length <= 1) return undefined;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
-  
+
     const interval = setInterval(() => {
       if (testimonialPaused.current) return;
       if (document.visibilityState !== "visible") return;
-    
+
       const nextIndex = (Math.round(el.scrollLeft / el.clientWidth) + 1) % testimonials.length;
       testimonialAutoScrolling.current = true;
       el.scrollTo({ left: nextIndex * el.clientWidth, behavior: "smooth" });
       setActiveTestimonial(nextIndex);
-    
+
       // Clear the auto-scroll flag after the smooth-scroll settles
       window.setTimeout(() => {
         testimonialAutoScrolling.current = false;
       }, 500);
     }, 4500);
-  
+
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
@@ -72,17 +72,19 @@ export default function Home() {
         <SignatureHeroMoment />
         <div className="fine-grid absolute inset-0 z-0" />
         <div className="container-premium relative z-10 grid items-center gap-12 pb-14 lg:min-h-[calc(86vh-11rem)] lg:grid-cols-[1.15fr_0.85fr] lg:pb-16">
-
           {/* Mobile & tablet hero — redesigned, hidden at lg+ */}
           <div className="lg:hidden">
-            <p className="hero-kicker eyebrow text-center">Premium web design agency</p>
+            <p className="hero-kicker eyebrow text-center">
+              Premium web design agency
+            </p>
 
             <h1 className="hero-title mx-auto mt-5 max-w-sm text-center text-4xl font-black leading-[1.03] tracking-tight text-balance sm:max-w-xl sm:text-6xl sm:leading-[0.98]">
               We build premium websites that bring customers.
             </h1>
 
             <p className="hero-copy mx-auto mt-5 max-w-xs text-center text-base leading-7 text-white/64 sm:max-w-md sm:text-lg">
-              Turn your business into a premium brand that attracts customers automatically.
+              Turn your business into a premium brand that attracts customers
+              automatically.
             </p>
 
             <div className="relative mx-auto mt-8 max-w-md overflow-hidden rounded-[1.75rem] border border-white/[0.12] bg-white/[0.06] p-2 shadow-premium backdrop-blur-2xl">
@@ -105,21 +107,27 @@ export default function Home() {
                 </div>
               </div>
             </div>
-                
+
             <div className="hero-actions mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row sm:justify-center">
-              <Link to="/contact" className="premium-button-light w-full text-center sm:w-auto">
+              <Link
+                to="/contact"
+                className="premium-button-light w-full text-center sm:w-auto"
+              >
                 Get Your Website
               </Link>
-              <Link to="/work" className="premium-button-dark w-full text-center sm:w-auto">
+              <Link
+                to="/work"
+                className="premium-button-dark w-full text-center sm:w-auto"
+              >
                 View Our Work
               </Link>
             </div>
-                
+
             <p className="hero-proof mx-auto mt-6 max-w-xs rounded-full border border-white/10 bg-white/[0.045] px-4 py-2.5 text-center text-sm font-bold leading-6 text-white/62 sm:max-w-sm">
               Helping local brands like Amor turn visitors into customers
             </p>
           </div>
-                
+
           {/* Desktop hero — completely unchanged */}
           <div className="hidden lg:contents">
             <div className="max-w-[22rem] sm:max-w-5xl">
@@ -128,13 +136,20 @@ export default function Home() {
                 We build premium websites that bring customers.
               </h1>
               <p className="hero-copy mt-7 max-w-[21rem] text-lg leading-8 text-white/64 sm:max-w-2xl sm:text-xl">
-                Turn your business into a premium brand that attracts customers automatically.
+                Turn your business into a premium brand that attracts customers
+                automatically.
               </p>
               <div className="hero-actions mt-9 flex max-w-[21rem] flex-col gap-3 sm:max-w-none sm:flex-row">
-                <Link to="/contact" className="premium-button-light w-full sm:w-auto">
+                <Link
+                  to="/contact"
+                  className="premium-button-light w-full sm:w-auto"
+                >
                   Get Your Website
                 </Link>
-                <Link to="/work" className="premium-button-dark w-full sm:w-auto">
+                <Link
+                  to="/work"
+                  className="premium-button-dark w-full sm:w-auto"
+                >
                   View Our Work
                 </Link>
               </div>
@@ -142,10 +157,9 @@ export default function Home() {
                 Helping local brands like Amor turn visitors into customers
               </p>
             </div>
-                
+
             <HeroShowcase />
           </div>
-                
         </div>
       </section>
 
@@ -153,22 +167,25 @@ export default function Home() {
         <div className="container-premium overflow-hidden">
           <div className="flex min-w-max animate-marquee gap-12 text-xl font-black uppercase tracking-tight sm:text-2xl">
             {[0, 1, 2, 3].map((item) => (
-              <span key={item}>Built for local businesses that want to look premium and grow faster.</span>
+              <span key={item}>
+                Built for local businesses that want to look premium and grow
+                faster.
+              </span>
             ))}
           </div>
         </div>
       </section>
 
-    <section className="section-padding">
-  <div className="container-premium">
-    <SectionHeading
-      eyebrow="Featured work"
-      title="Websites designed to look expensive and work hard."
-      text="Every project starts with business clarity, then becomes a polished website that builds confidence fast."
-    />
-    <FeaturedWorkAccordion projects={projects} />
-  </div>
-</section>
+      <section className="section-padding">
+        <div className="container-premium">
+          <SectionHeading
+            eyebrow="Featured work"
+            title="Websites designed to look expensive and work hard."
+            text="Every project starts with business clarity, then becomes a polished website that builds confidence fast."
+          />
+          <FeaturedWorkAccordion projects={projects} />
+        </div>
+      </section>
 
       <section className="section-padding border-y border-white/10 bg-white/[0.025]">
         <div className="container-premium grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
@@ -189,7 +206,8 @@ export default function Home() {
               A scroll experience that feels premium, but still sells.
             </h2>
             <p className="mt-6 max-w-4xl text-lg leading-8 text-white/58 sm:text-xl sm:leading-9">
-              The motion system is built to guide attention: reveal proof, slow down important decisions, and make each page feel custom.
+              The motion system is built to guide attention: reveal proof, slow
+              down important decisions, and make each page feel custom.
             </p>
           </div>
           <div className="stagger-grid mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -202,8 +220,12 @@ export default function Home() {
                   0{index + 1}
                 </span>
                 <div>
-                  <h3 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl xl:text-3xl">{title}</h3>
-                  <p className="mt-5 text-base leading-8 text-white/58">{text}</p>
+                  <h3 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl xl:text-3xl">
+                    {title}
+                  </h3>
+                  <p className="mt-5 text-base leading-8 text-white/58">
+                    {text}
+                  </p>
                 </div>
               </article>
             ))}
@@ -212,39 +234,44 @@ export default function Home() {
       </section>
 
       <section
-  id="why-choose-us"
-  ref={whyChooseRef}
-  className="section-padding overflow-hidden"
-  data-why-scroll
->
-  <div className="container-premium">
-    <SectionHeading
-      eyebrow="Why choose us"
-      title="Built around design quality and customer action."
-      align="center"
-    />
-    <div className="mx-auto mt-8 h-px max-w-2xl overflow-hidden bg-white/10">
-      <div className="h-full origin-left bg-bone" data-why-progress />
-    </div>
-    <div
-      className="mt-14 w-screen -mx-[calc(50vw-50%)] overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:w-auto md:overflow-visible md:snap-none"
-      data-why-viewport
-    >
-      <div className="flex w-max gap-5 pl-6 pr-6 md:gap-5 md:pl-0 md:pr-0" data-why-track>
-      {uspItems.map(([title, text], index) => (
-        <div
-          key={title}
-          className="why-scroll-card glass card-hover w-[82vw] shrink-0 snap-start rounded-[1.8rem] p-7 sm:w-[22rem] md:min-h-[22rem] md:w-[24rem] lg:w-[26rem]"
-        >
-          <IconMark label={title} index={index} />
-          <h3 className="mt-6 text-xl font-black tracking-tight">{title}</h3>
-          <p className="mt-3 text-sm leading-7 text-white/55">{text}</p>
+        id="why-choose-us"
+        ref={whyChooseRef}
+        className="section-padding overflow-hidden"
+        data-why-scroll
+      >
+        <div className="container-premium">
+          <SectionHeading
+            eyebrow="Why choose us"
+            title="Built around design quality and customer action."
+            align="center"
+          />
+          <div className="mx-auto mt-8 h-px max-w-2xl overflow-hidden bg-white/10">
+            <div className="h-full origin-left bg-bone" data-why-progress />
+          </div>
+          <div
+            className="mt-14 w-screen -mx-[calc(50vw-50%)] overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:w-auto md:overflow-visible md:snap-none"
+            data-why-viewport
+          >
+            <div
+              className="flex w-max gap-5 pl-6 pr-6 md:gap-5 md:pl-0 md:pr-0"
+              data-why-track
+            >
+              {uspItems.map(([title, text], index) => (
+                <div
+                  key={title}
+                  className="why-scroll-card glass card-hover w-[82vw] shrink-0 snap-start rounded-[1.8rem] p-7 sm:w-[22rem] md:min-h-[22rem] md:w-[24rem] lg:w-[26rem]"
+                >
+                  <IconMark label={title} index={index} />
+                  <h3 className="mt-6 text-xl font-black tracking-tight">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-white/55">{text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      ))}
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       <section className="section-padding border-y border-white/10 bg-white/[0.025]">
         <div className="container-premium">
@@ -263,7 +290,11 @@ export default function Home() {
 
       <section className="section-padding">
         <div className="container-premium">
-          <SectionHeading eyebrow="Process" title="A clean path from idea to launch." align="center" />
+          <SectionHeading
+            eyebrow="Process"
+            title="A clean path from idea to launch."
+            align="center"
+          />
           <ProcessTimeline steps={processSteps} />
         </div>
       </section>
@@ -272,25 +303,36 @@ export default function Home() {
         <div className="container-premium">
           <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.28em] text-black/45">Visual proof</p>
+              <p className="text-xs font-black uppercase tracking-[0.28em] text-black/45">
+                Visual proof
+              </p>
               <h2 className="mt-5 text-5xl font-black leading-[0.98] tracking-tight sm:text-6xl lg:text-7xl">
                 Results your customers can feel before they call.
               </h2>
             </div>
             <p className="max-w-2xl text-xl leading-10 text-black/58">
-              A premium website should not only look better. It should make your business easier
-              to trust, easier to contact, and easier to choose.
+              A premium website should not only look better. It should make your
+              business easier to trust, easier to contact, and easier to choose.
             </p>
           </div>
           <div className="stagger-grid mt-16 grid gap-6 lg:grid-cols-3">
             {resultStats.map((item, index) => (
-              <div key={item.metric} className="interactive-card rounded-[2rem] border border-black/10 bg-white p-8 shadow-premium transition duration-500 hover:-translate-y-3">
+              <div
+                key={item.metric}
+                className="interactive-card rounded-[2rem] border border-black/10 bg-white p-8 shadow-premium transition duration-500 hover:-translate-y-3"
+              >
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-sm font-black text-white">
                   0{index + 1}
                 </span>
-                <h3 className="mt-10 text-4xl font-black tracking-tight">{item.metric}</h3>
-                <p className="mt-4 text-base font-black text-black/60">{item.label}</p>
-                <p className="mt-5 text-sm leading-7 text-black/52">{item.text}</p>
+                <h3 className="mt-10 text-4xl font-black tracking-tight">
+                  {item.metric}
+                </h3>
+                <p className="mt-4 text-base font-black text-black/60">
+                  {item.label}
+                </p>
+                <p className="mt-5 text-sm leading-7 text-black/52">
+                  {item.text}
+                </p>
               </div>
             ))}
           </div>
@@ -308,11 +350,15 @@ export default function Home() {
             <div className="stagger-grid grid gap-5 sm:grid-cols-2">
               <div className="glass rounded-[2rem] p-8">
                 <p className="eyebrow">Setup</p>
-                <p className="mt-5 text-4xl font-black">&#8377;5,000 &ndash; &#8377;25,000</p>
+                <p className="mt-5 text-4xl font-black">
+                  &#8377;5,000 &ndash; &#8377;25,000
+                </p>
               </div>
               <div className="glass rounded-[2rem] p-8">
                 <p className="eyebrow">Maintenance</p>
-                <p className="mt-5 text-4xl font-black">&#8377;900 &ndash; &#8377;2700/year</p>
+                <p className="mt-5 text-4xl font-black">
+                  &#8377;900 &ndash; &#8377;2700/year
+                </p>
               </div>
             </div>
             <p className="mt-5 rounded-full border border-white/10 bg-white/[0.045] px-5 py-3 text-center text-sm font-bold text-white/62">
@@ -323,60 +369,76 @@ export default function Home() {
       </section>
 
       <section className="section-padding border-y border-white/10 bg-white/[0.025]">
-  <div className="container-premium">
-    <SectionHeading eyebrow="Testimonials" title="What business owners notice first." align="center" />
+        <div className="container-premium">
+          <SectionHeading
+            eyebrow="Testimonials"
+            title="What business owners notice first."
+            align="center"
+          />
 
-    {/* Mobile — single-quote spotlight carousel */}
-    <div
-      ref={testimonialTrackRef}
-      onScroll={handleTestimonialScroll}
-      className="mt-14 -mx-[calc(50vw-50%)] w-screen overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden"
-    >
-      <div className="flex w-max">
-        {testimonials.map((testimonial) => (
-          <figure
-            key={testimonial.author}
-            className="w-screen flex-none snap-center px-8 text-center"
+          {/* Mobile — single-quote spotlight carousel */}
+          <div
+            ref={testimonialTrackRef}
+            onScroll={handleTestimonialScroll}
+            className="mt-14 -mx-[calc(50vw-50%)] w-screen overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden"
           >
-            <span aria-hidden="true" className="block font-black leading-none text-white/12" style={{ fontSize: "5rem" }}>
-              &rdquo;
-            </span>
-            <blockquote className="-mt-6 text-2xl font-semibold leading-9 text-white/78">
-              {testimonial.quote}
-            </blockquote>
-            <figcaption className="mx-auto mt-7 w-fit border-t border-white/15 pt-4 text-sm font-black uppercase tracking-[0.18em] text-white/40">
-              {testimonial.author}
-            </figcaption>
-          </figure>
-        ))}
-      </div>
-    </div>
-    <div className="mt-6 flex justify-center gap-2 md:hidden" aria-hidden="true">
-      {testimonials.map((testimonial, index) => (
-        <span
-          key={testimonial.author}
-          className={`h-1.5 rounded-full transition-all duration-300 ${
-            index === activeTestimonial ? "w-5 bg-white/70" : "w-1.5 bg-white/25"
-          }`}
-        />
-      ))}
-    </div>
+            <div className="flex w-max">
+              {testimonials.map((testimonial) => (
+                <figure
+                  key={testimonial.author}
+                  className="w-screen flex-none snap-center px-8 text-center"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="block font-black leading-none text-white/12"
+                    style={{ fontSize: "5rem" }}
+                  >
+                    &rdquo;
+                  </span>
+                  <blockquote className="-mt-6 text-2xl font-semibold leading-9 text-white/78">
+                    {testimonial.quote}
+                  </blockquote>
+                  <figcaption className="mx-auto mt-7 w-fit border-t border-white/15 pt-4 text-sm font-black uppercase tracking-[0.18em] text-white/40">
+                    {testimonial.author}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+          <div
+            className="mt-6 flex justify-center gap-2 md:hidden"
+            aria-hidden="true"
+          >
+            {testimonials.map((testimonial, index) => (
+              <span
+                key={testimonial.author}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  index === activeTestimonial
+                    ? "w-5 bg-white/70"
+                    : "w-1.5 bg-white/25"
+                }`}
+              />
+            ))}
+          </div>
 
-    {/* md+ — your original card grid, untouched */}
-    <div className="stagger-grid mt-16 hidden gap-7 md:grid md:grid-cols-3">
-      {testimonials.map((testimonial) => (
-        <figure key={testimonial.author} className="glass card-hover rounded-[2rem] p-8 sm:p-9">
-          <blockquote className="text-xl font-semibold leading-9 text-white/78">
-            &quot;{testimonial.quote}&quot;
-          </blockquote>
-          <figcaption className="mt-8 text-sm font-black uppercase tracking-[0.18em] text-white/40">
-            {testimonial.author}
-          </figcaption>
-        </figure>
-      ))}
-    </div>
-  </div>
-</section>
+          {/* md+ — your original card grid, untouched */}
+          <div className="stagger-grid mt-16 hidden gap-7 md:grid md:grid-cols-3">
+            {testimonials.map((testimonial) => (
+              <figure
+                key={testimonial.author}
+                className="glass card-hover rounded-[2rem] p-8 sm:p-9"
+              >
+                <blockquote className="text-xl font-semibold leading-9 text-white/78">
+                  &quot;{testimonial.quote}&quot;
+                </blockquote>
+                <figcaption className="mt-8 text-sm font-black uppercase tracking-[0.18em] text-white/40">
+                  {testimonial.author}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <CTASection />
     </>
