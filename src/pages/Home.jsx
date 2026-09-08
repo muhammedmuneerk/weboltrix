@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import BeforeAfter from "../components/BeforeAfter.jsx";
 import CTASection from "../components/CTASection.jsx";
@@ -17,6 +17,52 @@ import FeaturedWork from "../components/FeaturedWork.jsx";
 
 export default function Home() {
   const whyChooseRef = useRef(null);
+    // inside export default function Home() { ... }
+  const testimonialTrackRef = useRef(null);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const testimonialResumeTimeout = useRef(null);
+  const testimonialAutoScrolling = useRef(false);
+  
+  const handleTestimonialScroll = () => {
+    const el = testimonialTrackRef.current;
+    if (!el) return;
+    const index = Math.round(el.scrollLeft / el.clientWidth);
+    setActiveTestimonial((prev) => (prev === index ? prev : index));
+  
+    // Only treat this as "manual" if we didn't trigger the scroll ourselves
+    if (!testimonialAutoScrolling.current) {
+      if (testimonialResumeTimeout.current) clearTimeout(testimonialResumeTimeout.current);
+      testimonialPaused.current = true;
+      testimonialResumeTimeout.current = setTimeout(() => {
+        testimonialPaused.current = false;
+      }, 5000);
+    }
+  };
+  
+  const testimonialPaused = useRef(false);
+  
+  useEffect(() => {
+    const el = testimonialTrackRef.current;
+    if (!el || testimonials.length <= 1) return undefined;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+  
+    const interval = setInterval(() => {
+      if (testimonialPaused.current) return;
+      if (document.visibilityState !== "visible") return;
+    
+      const nextIndex = (Math.round(el.scrollLeft / el.clientWidth) + 1) % testimonials.length;
+      testimonialAutoScrolling.current = true;
+      el.scrollTo({ left: nextIndex * el.clientWidth, behavior: "smooth" });
+      setActiveTestimonial(nextIndex);
+    
+      // Clear the auto-scroll flag after the smooth-scroll settles
+      window.setTimeout(() => {
+        testimonialAutoScrolling.current = false;
+      }, 500);
+    }, 4500);
+  
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
 
   useWhyChooseMotion(whyChooseRef);
 
@@ -277,22 +323,60 @@ export default function Home() {
       </section>
 
       <section className="section-padding border-y border-white/10 bg-white/[0.025]">
-        <div className="container-premium">
-          <SectionHeading eyebrow="Testimonials" title="What business owners notice first." align="center" />
-          <div className="stagger-grid mt-16 grid gap-7 md:grid-cols-3">
-            {testimonials.map((testimonial) => (
-              <figure key={testimonial.author} className="glass card-hover rounded-[2rem] p-8 sm:p-9">
-                <blockquote className="text-xl font-semibold leading-9 text-white/78">
-                  &quot;{testimonial.quote}&quot;
-                </blockquote>
-                <figcaption className="mt-8 text-sm font-black uppercase tracking-[0.18em] text-white/40">
-                  {testimonial.author}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
+  <div className="container-premium">
+    <SectionHeading eyebrow="Testimonials" title="What business owners notice first." align="center" />
+
+    {/* Mobile — single-quote spotlight carousel */}
+    <div
+      ref={testimonialTrackRef}
+      onScroll={handleTestimonialScroll}
+      className="mt-14 -mx-[calc(50vw-50%)] w-screen overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden"
+    >
+      <div className="flex w-max">
+        {testimonials.map((testimonial) => (
+          <figure
+            key={testimonial.author}
+            className="w-screen flex-none snap-center px-8 text-center"
+          >
+            <span aria-hidden="true" className="block font-black leading-none text-white/12" style={{ fontSize: "5rem" }}>
+              &rdquo;
+            </span>
+            <blockquote className="-mt-6 text-2xl font-semibold leading-9 text-white/78">
+              {testimonial.quote}
+            </blockquote>
+            <figcaption className="mx-auto mt-7 w-fit border-t border-white/15 pt-4 text-sm font-black uppercase tracking-[0.18em] text-white/40">
+              {testimonial.author}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+    <div className="mt-6 flex justify-center gap-2 md:hidden" aria-hidden="true">
+      {testimonials.map((testimonial, index) => (
+        <span
+          key={testimonial.author}
+          className={`h-1.5 rounded-full transition-all duration-300 ${
+            index === activeTestimonial ? "w-5 bg-white/70" : "w-1.5 bg-white/25"
+          }`}
+        />
+      ))}
+    </div>
+
+    {/* md+ — your original card grid, untouched */}
+    <div className="stagger-grid mt-16 hidden gap-7 md:grid md:grid-cols-3">
+      {testimonials.map((testimonial) => (
+        <figure key={testimonial.author} className="glass card-hover rounded-[2rem] p-8 sm:p-9">
+          <blockquote className="text-xl font-semibold leading-9 text-white/78">
+            &quot;{testimonial.quote}&quot;
+          </blockquote>
+          <figcaption className="mt-8 text-sm font-black uppercase tracking-[0.18em] text-white/40">
+            {testimonial.author}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
 
       <CTASection />
     </>
