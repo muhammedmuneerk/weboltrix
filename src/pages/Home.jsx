@@ -199,39 +199,56 @@ export default function Home() {
       </section>
 
       <section id="weboltrix-signature" className="py-20 lg:py-24">
-        <div className="container-premium">
-          <div className="max-w-5xl">
-            <p className="eyebrow">Weboltrix signature</p>
-            <h2 className="mt-5 max-w-4xl text-4xl font-black leading-tight tracking-tight text-balance sm:text-5xl lg:text-6xl">
-              A scroll experience that feels premium, but still sells.
-            </h2>
-            <p className="mt-6 max-w-4xl text-lg leading-8 text-white/58 sm:text-xl sm:leading-9">
-              The motion system is built to guide attention: reveal proof, slow
-              down important decisions, and make each page feel custom.
-            </p>
-          </div>
-          <div className="stagger-grid mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {experiencePillars.map(([title, text], index) => (
-              <article
-                key={title}
-                className="signature-panel interactive-card flex min-h-[18rem] flex-col justify-between rounded-[2rem] border border-white/10 bg-white/[0.055] p-7 shadow-premium backdrop-blur-2xl lg:min-h-[19rem]"
-              >
-                <span className="text-xs font-black uppercase tracking-[0.24em] text-white/38">
-                  0{index + 1}
-                </span>
-                <div>
-                  <h3 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl xl:text-3xl">
-                    {title}
-                  </h3>
-                  <p className="mt-5 text-base leading-8 text-white/58">
-                    {text}
-                  </p>
-                </div>
-              </article>
-            ))}
+  <div className="container-premium">
+    <div className="max-w-5xl">
+      <p className="eyebrow">Weboltrix signature</p>
+      <h2 className="mt-5 max-w-4xl text-4xl font-black leading-tight tracking-tight text-balance sm:text-5xl lg:text-6xl">
+        A scroll experience that feels premium, but still sells.
+      </h2>
+      <p className="mt-6 max-w-4xl text-lg leading-8 text-white/58 sm:text-xl sm:leading-9">
+        The motion system is built to guide attention: reveal proof, slow
+        down important decisions, and make each page feel custom.
+      </p>
+    </div>
+
+    {/* Mobile — editorial numbered list, no card chrome */}
+    <div className="mt-10 divide-y divide-white/10 border-t border-white/10 md:hidden">
+      {experiencePillars.map(([title, text], index) => (
+        <div key={title} className="flex gap-5 py-7">
+          <span className="flex-none text-3xl font-black leading-none tracking-tight text-white/22">
+            0{index + 1}
+          </span>
+          <div className="pt-1">
+            <h3 className="text-2xl font-black leading-tight tracking-tight">{title}</h3>
+            <p className="mt-3 text-base leading-7 text-white/58">{text}</p>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+
+    {/* md+ — your original panel grid, untouched */}
+    <div className="stagger-grid mt-8 hidden gap-5 md:grid md:grid-cols-2 xl:grid-cols-4">
+      {experiencePillars.map(([title, text], index) => (
+        <article
+          key={title}
+          className="signature-panel interactive-card flex min-h-[18rem] flex-col justify-between rounded-[2rem] border border-white/10 bg-white/[0.055] p-7 shadow-premium backdrop-blur-2xl lg:min-h-[19rem]"
+        >
+          <span className="text-xs font-black uppercase tracking-[0.24em] text-white/38">
+            0{index + 1}
+          </span>
+          <div>
+            <h3 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl xl:text-3xl">
+              {title}
+            </h3>
+            <p className="mt-5 text-base leading-8 text-white/58">
+              {text}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
 
       <section
         id="why-choose-us"
