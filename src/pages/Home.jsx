@@ -215,7 +215,7 @@ export default function Home() {
     <div className="mt-10 divide-y divide-white/10 border-t border-white/10 md:hidden">
       {experiencePillars.map(([title, text], index) => (
         <div key={title} className="flex gap-5 py-7">
-          <span className="flex-none text-3xl font-black leading-none tracking-tight text-white/22">
+          <span className="flex h-14 w-14 flex-none items-center justify-center rounded-2xl border border-white/10 bg-white/[0.055] text-xl font-black text-white/70 shadow-premium backdrop-blur-2xl">
             0{index + 1}
           </span>
           <div className="pt-1">
