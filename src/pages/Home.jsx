@@ -364,7 +364,24 @@ export default function Home() {
             text="Flexible pricing based on your business needs. Final cost depends on pages, design depth, content, and integrations."
           />
           <div>
-            <div className="stagger-grid grid gap-5 sm:grid-cols-2">
+            {/* Mobile — one unified pricing block */}
+            <div className="glass divide-y divide-white/10 rounded-[2rem] sm:hidden">
+              <div className="p-7">
+                <p className="eyebrow">Setup</p>
+                <p className="mt-4 text-3xl font-black">
+                  &#8377;5,000 &ndash; &#8377;25,000
+                </p>
+              </div>
+              <div className="p-7">
+                <p className="eyebrow">Maintenance</p>
+                <p className="mt-4 text-3xl font-black">
+                  &#8377;900 &ndash; &#8377;2700/year
+                </p>
+              </div>
+            </div>
+                
+            {/* sm+ — your original two-tile grid, untouched */}
+            <div className="stagger-grid hidden gap-5 sm:grid sm:grid-cols-2">
               <div className="glass rounded-[2rem] p-8">
                 <p className="eyebrow">Setup</p>
                 <p className="mt-5 text-4xl font-black">
@@ -378,6 +395,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
+                
             <p className="mt-5 rounded-full border border-white/10 bg-white/[0.045] px-5 py-3 text-center text-sm font-bold text-white/62">
               No hidden costs. No long-term lock-ins.
             </p>
