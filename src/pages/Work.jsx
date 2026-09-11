@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import BeforeAfter from "../components/BeforeAfter.jsx";
 import CTASection from "../components/CTASection.jsx";
-import PageHero from "../components/PageHero.jsx";
+import WorkHero from "../components/WorkHero.jsx";
 import { Link } from "react-router-dom";
 import { projects } from "../data/siteData.js";
 import "./work-parallax.css";
@@ -84,12 +84,10 @@ export default function Work() {
 
   return (
     <>
-      <PageHero eyebrow="Portfolio" title="Our Work">
-        Websites shaped for clarity, premium perception, and better customer enquiries.
-      </PageHero>
+      <WorkHero projects={projects} />
 
       {/* KEY: fixed-height wrapper, right panel scrolls internally */}
-      <div className="sb-layout">
+      <div className="sb-layout" id="project-index">
 
         {/* LEFT — static sidebar, doesn't scroll */}
         <nav className="sb-sidebar" aria-label="Project index">
