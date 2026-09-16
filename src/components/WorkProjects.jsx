@@ -9,6 +9,102 @@ export default function WorkProjects({ projects }) {
   const isSyncingRef = useRef(false);
   const settleTimeoutRef = useRef(null);
 
+  // ── Floating jump-to-project button (mobile only) ──
+  // Positioned relative to the section itself (.sb-layout), not the
+  // viewport, so it can never be dragged out of the section and
+  // naturally scrolls away with it (nothing above/below the section
+  // ever sees it).
+  const FAB_SIZE = 56;
+  const FAB_MARGIN = 8;
+  const layoutRef = useRef(null);
+  const fabRef = useRef(null);
+  const fabDragRef = useRef({ startX: 0, startY: 0, originX: 0, originY: 0, moved: false, dragging: false });
+  const [fabPos, setFabPos] = useState({ x: FAB_MARGIN, y: FAB_MARGIN });
+  const [isFabOpen, setIsFabOpen] = useState(false);
+  const [fabPlacement, setFabPlacement] = useState({ v: "up", h: "left" });
+
+  const getSectionSize = () => {
+    const layout = layoutRef.current;
+    return {
+      width: layout ? layout.clientWidth : 0,
+      height: layout ? layout.clientHeight : 0,
+    };
+  };
+
+  const clampFabPos = (x, y) => {
+    const { width, height } = getSectionSize();
+    const maxX = Math.max(FAB_MARGIN, width - FAB_SIZE - FAB_MARGIN);
+    const maxY = Math.max(FAB_MARGIN, height - FAB_SIZE - FAB_MARGIN);
+    return {
+      x: Math.min(Math.max(x, FAB_MARGIN), maxX),
+      y: Math.min(Math.max(y, FAB_MARGIN), maxY),
+    };
+  };
+
+  // Set the initial resting spot once the section has actually mounted
+  // and has real dimensions — right side, well clear of the top bar.
+  useEffect(() => {
+    const { width, height } = getSectionSize();
+    if (!width || !height) return;
+    setFabPos(clampFabPos(width - FAB_SIZE - 16, height - FAB_SIZE - 96));
+  }, []);
+
+  useEffect(() => {
+    const onResize = () => setFabPos((pos) => clampFabPos(pos.x, pos.y));
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    if (!isFabOpen) return undefined;
+    const handleOutside = (event) => {
+      if (fabRef.current && !fabRef.current.contains(event.target)) setIsFabOpen(false);
+    };
+    document.addEventListener("pointerdown", handleOutside);
+    return () => document.removeEventListener("pointerdown", handleOutside);
+  }, [isFabOpen]);
+
+  const openFabNav = () => {
+    const { width, height } = getSectionSize();
+    const vertical = fabPos.y + FAB_SIZE / 2 > height / 2 ? "up" : "down";
+    const horizontal = fabPos.x + FAB_SIZE / 2 > width / 2 ? "left" : "right";
+    setFabPlacement({ v: vertical, h: horizontal });
+    setIsFabOpen(true);
+  };
+
+  const handleFabPointerDown = (event) => {
+    const state = fabDragRef.current;
+    state.startX = event.clientX;
+    state.startY = event.clientY;
+    state.originX = fabPos.x;
+    state.originY = fabPos.y;
+    state.moved = false;
+    state.dragging = true;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handleFabPointerMove = (event) => {
+    const state = fabDragRef.current;
+    if (!state.dragging) return;
+    const dx = event.clientX - state.startX;
+    const dy = event.clientY - state.startY;
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) state.moved = true;
+    setFabPos(clampFabPos(state.originX + dx, state.originY + dy));
+  };
+
+  const handleFabPointerUp = (event) => {
+    const state = fabDragRef.current;
+    if (!state.dragging) return;
+    state.dragging = false;
+    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    if (!state.moved) {
+      if (isFabOpen) setIsFabOpen(false);
+      else openFabNav();
+    }
+  };
+
   useEffect(() => {
     const main = mainRef.current;
     if (!main) return undefined;
@@ -70,7 +166,7 @@ export default function WorkProjects({ projects }) {
   const progressPct = total > 1 ? (activeIndex / (total - 1)) * 100 : 100;
 
   return (
-    <div className="sb-layout" id="project-index">
+    <div className="sb-layout" id="project-index" ref={layoutRef}>
       <nav className="sb-sidebar" aria-label="Project index">
         <p className="sb-section-label">Projects</p>
         <ul className="sb-list" role="list">
@@ -78,7 +174,9 @@ export default function WorkProjects({ projects }) {
             <li key={project.slug}>
               <button
                 type="button"
-                className={`sb-item${index === activeIndex ? " sb-item--active" : ""}`}
+                className={`sb-item${
+                  index === activeIndex ? " sb-item--active" : index < activeIndex ? " sb-item--done" : ""
+                }`}
                 onClick={() => scrollToProject(index)}
                 aria-current={index === activeIndex ? "true" : undefined}
               >
@@ -158,6 +256,54 @@ export default function WorkProjects({ projects }) {
             </section>
           );
         })}
+      </div>
+
+      <div
+        className="sb-fab-wrap"
+        ref={fabRef}
+        style={{ transform: `translate(${fabPos.x}px, ${fabPos.y}px)` }}
+      >
+        <button
+          type="button"
+          className="sb-fab-btn"
+          onPointerDown={handleFabPointerDown}
+          onPointerMove={handleFabPointerMove}
+          onPointerUp={handleFabPointerUp}
+          onPointerCancel={handleFabPointerUp}
+          aria-expanded={isFabOpen}
+          aria-label="Jump to a project"
+        >
+          <span className="sb-fab-num">{String(activeIndex + 1).padStart(2, "0")}</span>
+          <span className="sb-fab-sub">
+            /{String(total).padStart(2, "0")}
+            <span className="sb-fab-grip" aria-hidden="true" />
+          </span>
+        </button>
+
+        {isFabOpen && (
+          <div
+            className={`sb-fab-panel sb-fab-panel--${fabPlacement.v} sb-fab-panel--${fabPlacement.h}`}
+            role="menu"
+            aria-label="Jump to project"
+          >
+            {projects.map((project, index) => (
+              <button
+                key={project.slug}
+                type="button"
+                role="menuitem"
+                className={`sb-fab-cell${
+                  index === activeIndex ? " sb-fab-cell--active" : index < activeIndex ? " sb-fab-cell--done" : ""
+                }`}
+                onClick={() => {
+                  scrollToProject(index);
+                  setIsFabOpen(false);
+                }}
+              >
+                {String(index + 1).padStart(2, "0")}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

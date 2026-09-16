@@ -9,7 +9,7 @@ export default function WorkHero({ projects }) {
       <div className="fine-grid absolute inset-0 -z-10" />
       <div className="work-hero-glow" aria-hidden="true" />
 
-      <div className="container-premium relative z-10 grid items-end gap-10 pb-12 pt-36 sm:pb-16 lg:min-h-[82vh] lg:grid-cols-[minmax(0,1fr)_0.9fr] lg:gap-12 lg:pb-20">
+      <div className="container-premium relative z-10 hidden items-end gap-10 pb-12 pt-36 sm:pb-16 lg:grid lg:min-h-[82vh] lg:grid-cols-[minmax(0,1fr)_0.9fr] lg:gap-12 lg:pb-20">
         <div className="pb-[0.35rem]">
           <p className="eyebrow">Selected work · {projects.length} transformations</p>
           <h1 className="mt-5 max-w-4xl text-5xl font-black leading-[0.94] tracking-tight text-balance sm:text-7xl lg:text-8xl">
@@ -59,6 +59,56 @@ export default function WorkHero({ projects }) {
             })}
           </div>
         </div>
+      </div>
+
+      <div className="container-premium relative z-10 flex flex-col gap-9 px-5 pb-14 pt-28 lg:hidden">
+        <div>
+          <p className="eyebrow text-[0.65rem]">
+            Selected work · {projects.length} transformations
+          </p>
+          <h1 className="mt-4 text-[2.5rem] font-black leading-[1.02] tracking-tight text-balance sm:text-5xl">
+            Proof that premium changes perception.
+          </h1>
+          <p className="mt-4 text-base leading-7 text-white/64 sm:text-lg">
+            A considered collection of websites designed to make businesses look established,
+            earn trust faster, and turn attention into enquiries.
+          </p>
+        </div>
+
+        <div>
+          <p className="mb-3 text-[0.625rem] font-black uppercase tracking-[0.16em] text-white/34">
+            A few of the transformations
+          </p>
+          <div className="work-hero-scroller -mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-1">
+            {featuredProjects.map((project, index) => (
+              <article
+                className="relative aspect-[4/5] w-[68%] flex-none snap-start overflow-hidden rounded-[0.85rem] border border-white/[0.14] bg-[#101010] shadow-[0_18px_50px_rgba(0,0,0,0.35)] sm:w-[46%]"
+                key={project.slug}
+              >
+                <img src={project.image} alt="" className="work-hero-card-image" />
+                <div className="absolute inset-0 work-hero-card-overlay" />
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-3 text-[0.5625rem] font-black uppercase tracking-[0.12em] text-white/54">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong className="overflow-hidden whitespace-nowrap text-ellipsis text-[0.625rem] text-white">
+                    {project.title}
+                  </strong>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.6rem] font-black uppercase tracking-[0.14em] text-white/48">
+          <span>{projects.length} selected projects</span>
+          <span className="h-1 w-1 rounded-full bg-white/40" aria-hidden="true" />
+          <span>{industryCount} business categories</span>
+          <span className="h-1 w-1 rounded-full bg-white/40" aria-hidden="true" />
+          <span>Built for clarity</span>
+        </div>
+
+        <a href="#project-index" className="work-hero-explore">
+          Explore the work <span aria-hidden="true">↓</span>
+        </a>
       </div>
     </section>
   );
@@ -111,5 +161,15 @@ const workHeroStyles = `
 
   .work-hero-card-overlay {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.82), transparent 57%);
+  }
+
+  .work-hero-scroller {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+  }
+
+  .work-hero-scroller::-webkit-scrollbar {
+    display: none;
   }
 `;
