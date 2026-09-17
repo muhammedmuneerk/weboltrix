@@ -337,9 +337,9 @@
    inert and receives no pointer events on desktop. */
 .sb-fab-wrap { display: none; }
 
-/* Lock/unlock toggle — hidden on desktop, styled under the mobile
+/* Step/Flow mode toggle — hidden on desktop, styled under the mobile
    breakpoint below. */
-.sb-lock-toggle { display: none; }
+.sb-mode-toggle { display: none; }
 
 /* ══════════════════════════════════════════════════════
    Mobile — same pinned, full-viewport, snap-scrolled index
@@ -429,7 +429,7 @@
   }
   .sb-progress { display: none; }
 
-  .sb-lock-toggle {
+  .sb-mode-toggle {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
@@ -440,13 +440,13 @@
     color: #fff;
     cursor: pointer;
   }
-  .sb-lock-toggle--unlocked {
+  .sb-mode-toggle--flow {
     border-color: rgba(255, 255, 255, 0.08);
     background: transparent;
     color: rgba(255, 255, 255, 0.4);
   }
-  .sb-lock-icon { flex-shrink: 0; }
-  .sb-lock-label {
+  .sb-mode-icon { flex-shrink: 0; }
+  .sb-mode-label {
     font-size: 0.5rem;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -625,22 +625,28 @@
   .sb-fab-mini--down { margin-top: 6px; }
   .sb-fab-mini:disabled { opacity: 0.3; cursor: default; }
 
-  /* ── Unlocked mode — drop the pin/hijack entirely so an ordinary
+  /* ── Flow mode — drop the pin/hijack entirely so an ordinary
      scroll carries straight through the section, same as any other
      part of the page, instead of stopping at each project. ── */
-  .sb-layout.sb-layout--unlocked {
+  .sb-layout.sb-layout--flow {
     position: relative;
     top: auto;
     height: auto;
     overflow: visible;
   }
-  .sb-layout--unlocked .sb-main {
+  .sb-layout--flow .sb-main {
     height: auto;
     overflow: visible;
     scroll-snap-type: none;
   }
-  .sb-layout--unlocked .sb-project {
+  .sb-layout--flow .sb-project {
     scroll-snap-align: none;
     scroll-snap-stop: normal;
+  }
+  /* Only the active project is shown in Flow mode — the section then
+     sizes itself to that one project, so a normal scroll carries past
+     it in a single motion instead of flowing through every project. */
+  .sb-layout--flow .sb-project--flow-hidden {
+    display: none;
   }
 }

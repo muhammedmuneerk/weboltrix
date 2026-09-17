@@ -9,20 +9,32 @@ export default function WorkProjects({ projects }) {
   const isSyncingRef = useRef(false);
   const settleTimeoutRef = useRef(null);
 
-  // ── Lock / unlock the immersive per-project scroll (mobile only) ──
-  // Locked (default): current behaviour — the section pins and steps
-  // through one project at a time (mirrors the desktop rail).
-  // Unlocked: the section drops to a normal, continuously scrollable
-  // block, so an ordinary scroll/flick carries straight through it
-  // instead of stopping at every project.
-  const [isLocked, setIsLocked] = useState(true);
-  const wasLockedRef = useRef(true);
+  // ── Step / Flow mobile interaction mode ──
+  // Step (default): the section pins and its inner panel scrolls one
+  // project at a time — a finger scroll inside the section moves
+  // between projects and only passes through to the rest of the page
+  // once you're at the first/last project.
+  // Flow: the section stops trapping scroll entirely. It drops into
+  // normal page flow sized to whichever project is currently active,
+  // so an ordinary flick carries straight past it to the next page
+  // section. The active project stays visible and doesn't change from
+  // finger-scrolling in this mode — only the FAB panel or the index
+  // list can change which project is shown.
+  const [isStepMode, setIsStepMode] = useState(true);
+  const wasStepModeRef = useRef(true);
+
+  // Whether there's a section before/after this one in the DOM, used
+  // by the chevrons when they mean "jump to hero / jump to next
+  // section" (Step mode) rather than "previous/next project" (Flow
+  // mode). Computed once from the static page structure.
+  const [sectionNav, setSectionNav] = useState({ hasPrev: false, hasNext: false });
 
   // ── Floating jump-to-project button (mobile only) ──
   // Positioned relative to the section itself (.sb-layout), not the
   // viewport, so it can never be dragged out of the section and
   // naturally scrolls away with it (nothing above/below the section
-  // ever sees it).
+  // ever sees it). Always mounted — visible in both Step and Flow —
+  // so drag state and position persist across a mode switch.
   const FAB_SIZE = 56;
   const FAB_MARGIN = 8;
   const layoutRef = useRef(null);
@@ -85,6 +97,18 @@ export default function WorkProjects({ projects }) {
     document.addEventListener("pointerdown", handleOutside);
     return () => document.removeEventListener("pointerdown", handleOutside);
   }, [isFabOpen]);
+
+  // Which sibling sections exist, for the Step-mode chevrons. The page
+  // structure around this component is static, so this only needs to
+  // run once after mount.
+  useEffect(() => {
+    const layout = layoutRef.current;
+    if (!layout) return;
+    setSectionNav({
+      hasPrev: !!layout.previousElementSibling,
+      hasNext: !!layout.nextElementSibling,
+    });
+  }, []);
 
   const openFabNav = () => {
     const { width, height } = getSectionSize();
@@ -170,13 +194,23 @@ export default function WorkProjects({ projects }) {
     };
   }, []);
 
+  // Jump to a project — used by the sidebar list, the progress bar,
+  // and the FAB panel in both modes.
+  // Step mode: the panel is the scroll container, so this scrolls it.
+  // Flow mode: nothing internally scrolls — swapping which project is
+  // active is enough, since CSS shows only the active one.
   const scrollToProject = (index) => {
     const element = sectionRefs.current[index];
+    if (!element) return;
+
+    setActiveIndex(index);
+
+    if (!isStepMode) return;
+
     const main = mainRef.current;
-    if (!element || !main) return;
+    if (!main) return;
 
     isSyncingRef.current = true;
-    setActiveIndex(index);
     main.scrollTo({ top: element.offsetTop, behavior: "smooth" });
 
     clearTimeout(settleTimeoutRef.current);
@@ -188,27 +222,55 @@ export default function WorkProjects({ projects }) {
   const total = projects.length;
   const progressPct = total > 1 ? (activeIndex / (total - 1)) * 100 : 100;
 
-  const goToPrev = () => {
+  // Project navigation — the chevrons' meaning in Flow mode (finger
+  // scrolling between projects is off there, so this is the substitute).
+  const goToPrevProject = () => {
     if (activeIndex <= 0) return;
     scrollToProject(activeIndex - 1);
   };
-  const goToNext = () => {
+  const goToNextProject = () => {
     if (activeIndex >= total - 1) return;
     scrollToProject(activeIndex + 1);
   };
 
-  // On re-lock, resync the pinned view to whichever project was on
-  // screen when unlocked — avoids landing back at project 01.
+  // Section navigation — the chevrons' meaning in Step mode. Project
+  // navigation is already covered by scrolling, the FAB panel, and the
+  // progress bar there, so the chevrons take on a different job: jump
+  // to whatever comes immediately before/after this component in the
+  // page. Found via DOM traversal from the layout root rather than a
+  // hardcoded id, so it works wherever this section is placed.
+  const goToPrevSection = () => {
+    const target = layoutRef.current?.previousElementSibling;
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  const goToNextSection = () => {
+    const target = layoutRef.current?.nextElementSibling;
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleChevronUp = isStepMode ? goToPrevSection : goToPrevProject;
+  const handleChevronDown = isStepMode ? goToNextSection : goToNextProject;
+
+  const chevronUpDisabled = isStepMode ? !sectionNav.hasPrev : activeIndex === 0;
+  const chevronDownDisabled = isStepMode ? !sectionNav.hasNext : activeIndex === total - 1;
+
+  const chevronUpLabel = isStepMode ? "Jump up to previous section" : "Previous project";
+  const chevronDownLabel = isStepMode ? "Jump down to next section" : "Next project";
+
+  // On switching back to Step mode, resync the pinned view to whichever
+  // project was active while in Flow — avoids landing back at project 01.
   useEffect(() => {
-    if (isLocked && !wasLockedRef.current) {
+    if (isStepMode && !wasStepModeRef.current) {
       requestAnimationFrame(() => scrollToProject(activeIndex));
     }
-    wasLockedRef.current = isLocked;
-  }, [isLocked]);
+    wasStepModeRef.current = isStepMode;
+  }, [isStepMode]);
 
   return (
     <div
-      className={`sb-layout${isLocked ? "" : " sb-layout--unlocked"}`}
+      className={`sb-layout${isStepMode ? "" : " sb-layout--flow"}`}
       id="project-index"
       ref={layoutRef}
     >
@@ -240,24 +302,38 @@ export default function WorkProjects({ projects }) {
           <span className="sb-count">{activeIndex + 1} of {total}</span>
           <button
             type="button"
-            className={`sb-lock-toggle${isLocked ? "" : " sb-lock-toggle--unlocked"}`}
-            onClick={() => setIsLocked((value) => !value)}
-            aria-pressed={isLocked}
+            className={`sb-mode-toggle${isStepMode ? "" : " sb-mode-toggle--flow"}`}
+            onClick={() => setIsStepMode((value) => !value)}
+            aria-pressed={isStepMode}
             aria-label={
-              isLocked
-                ? "Unlock scrolling — swipe past this section freely"
-                : "Lock scrolling — step through one project at a time"
+              isStepMode
+                ? "Switch to Flow mode — scroll past this section freely"
+                : "Switch to Step mode — step through one project at a time"
             }
+            title={isStepMode ? "Switch to Flow mode" : "Switch to Step mode"}
           >
-            <svg className="sb-lock-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
-              <rect x="5" y="11" width="14" height="9" rx="2.5" fill="currentColor" />
-              {isLocked ? (
-                <path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <svg className="sb-mode-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+              {isStepMode ? (
+                <path
+                  d="M4 19h3v-4h4v-4h4v-4h3"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               ) : (
-                <path d="M8 11V8a4 4 0 0 1 7.3-2.4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <path
+                  d="M3 12c2-3.5 4-3.5 6 0s4 3.5 6 0 4-3.5 6 0"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               )}
             </svg>
-            <span className="sb-lock-label">{isLocked ? "Locked" : "Free scroll"}</span>
+            <span className="sb-mode-label">{isStepMode ? "Step" : "Flow"}</span>
           </button>
           <div className="sb-progress">
             <div className="sb-progress-fill" style={{ width: `${progressPct}%` }} />
@@ -268,11 +344,14 @@ export default function WorkProjects({ projects }) {
       <div className="sb-main" ref={mainRef}>
         {projects.map((project, index) => {
           const liveLink = project.linkAfter || project.link;
+          const isHiddenInFlow = !isStepMode && index !== activeIndex;
           return (
             <section
               key={project.slug}
               id={`project-${project.slug}`}
-              className={`sb-project${index === activeIndex ? " sb-project--active" : ""}`}
+              className={`sb-project${index === activeIndex ? " sb-project--active" : ""}${
+                isHiddenInFlow ? " sb-project--flow-hidden" : ""
+              }`}
               ref={(element) => (sectionRefs.current[index] = element)}
             >
               <span className="sb-ghost" aria-hidden="true">
@@ -324,75 +403,75 @@ export default function WorkProjects({ projects }) {
         })}
       </div>
 
-      {isLocked && (
-        <div
-          className="sb-fab-wrap"
-          ref={fabRef}
-          style={{ transform: `translate(${fabPos.x}px, ${fabPos.y}px)` }}
+      <div
+        className="sb-fab-wrap"
+        ref={fabRef}
+        style={{ transform: `translate(${fabPos.x}px, ${fabPos.y}px)` }}
+      >
+        <button
+          type="button"
+          className="sb-fab-mini sb-fab-mini--up"
+          onClick={handleChevronUp}
+          disabled={chevronUpDisabled}
+          aria-label={chevronUpLabel}
+          title={chevronUpLabel}
         >
-          <button
-            type="button"
-            className="sb-fab-mini sb-fab-mini--up"
-            onClick={goToPrev}
-            disabled={activeIndex === 0}
-            aria-label="Previous project"
-          >
-            ↑
-          </button>
+          ↑
+        </button>
 
-          <button
-            type="button"
-            className="sb-fab-btn"
-            onPointerDown={handleFabPointerDown}
-            onPointerMove={handleFabPointerMove}
-            onPointerUp={handleFabPointerUp}
-            onPointerCancel={handleFabPointerUp}
-            aria-expanded={isFabOpen}
-            aria-label="Jump to a project"
-          >
-            <span className="sb-fab-num">{String(activeIndex + 1).padStart(2, "0")}</span>
-            <span className="sb-fab-sub">
-              /{String(total).padStart(2, "0")}
-              <span className="sb-fab-grip" aria-hidden="true" />
-            </span>
-          </button>
+        <button
+          type="button"
+          className="sb-fab-btn"
+          onPointerDown={handleFabPointerDown}
+          onPointerMove={handleFabPointerMove}
+          onPointerUp={handleFabPointerUp}
+          onPointerCancel={handleFabPointerUp}
+          aria-expanded={isFabOpen}
+          aria-label="Jump to a project"
+        >
+          <span className="sb-fab-num">{String(activeIndex + 1).padStart(2, "0")}</span>
+          <span className="sb-fab-sub">
+            /{String(total).padStart(2, "0")}
+            <span className="sb-fab-grip" aria-hidden="true" />
+          </span>
+        </button>
 
-          <button
-            type="button"
-            className="sb-fab-mini sb-fab-mini--down"
-            onClick={goToNext}
-            disabled={activeIndex === total - 1}
-            aria-label="Next project"
-          >
-            ↓
-          </button>
+        <button
+          type="button"
+          className="sb-fab-mini sb-fab-mini--down"
+          onClick={handleChevronDown}
+          disabled={chevronDownDisabled}
+          aria-label={chevronDownLabel}
+          title={chevronDownLabel}
+        >
+          ↓
+        </button>
 
-          {isFabOpen && (
-            <div
-              className={`sb-fab-panel sb-fab-panel--${fabPlacement.v} sb-fab-panel--${fabPlacement.h}`}
-              role="menu"
-              aria-label="Jump to project"
-            >
-              {projects.map((project, index) => (
-                <button
-                  key={project.slug}
-                  type="button"
-                  role="menuitem"
-                  className={`sb-fab-cell${
-                    index === activeIndex ? " sb-fab-cell--active" : index < activeIndex ? " sb-fab-cell--done" : ""
-                  }`}
-                  onClick={() => {
-                    scrollToProject(index);
-                    setIsFabOpen(false);
-                  }}
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+        {isFabOpen && (
+          <div
+            className={`sb-fab-panel sb-fab-panel--${fabPlacement.v} sb-fab-panel--${fabPlacement.h}`}
+            role="menu"
+            aria-label="Jump to project"
+          >
+            {projects.map((project, index) => (
+              <button
+                key={project.slug}
+                type="button"
+                role="menuitem"
+                className={`sb-fab-cell${
+                  index === activeIndex ? " sb-fab-cell--active" : index < activeIndex ? " sb-fab-cell--done" : ""
+                }`}
+                onClick={() => {
+                  scrollToProject(index);
+                  setIsFabOpen(false);
+                }}
+              >
+                {String(index + 1).padStart(2, "0")}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
