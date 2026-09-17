@@ -9,6 +9,15 @@ export default function WorkProjects({ projects }) {
   const isSyncingRef = useRef(false);
   const settleTimeoutRef = useRef(null);
 
+  // ── Lock / unlock the immersive per-project scroll (mobile only) ──
+  // Locked (default): current behaviour — the section pins and steps
+  // through one project at a time (mirrors the desktop rail).
+  // Unlocked: the section drops to a normal, continuously scrollable
+  // block, so an ordinary scroll/flick carries straight through it
+  // instead of stopping at every project.
+  const [isLocked, setIsLocked] = useState(true);
+  const wasLockedRef = useRef(true);
+
   // ── Floating jump-to-project button (mobile only) ──
   // Positioned relative to the section itself (.sb-layout), not the
   // viewport, so it can never be dragged out of the section and
@@ -31,10 +40,22 @@ export default function WorkProjects({ projects }) {
     };
   };
 
+  // The cluster is now taller than it is wide (up chevron + main + down
+  // chevron), so clamp/placement math measures its real rendered box
+  // rather than assuming a fixed square.
+  const getFabSize = () => {
+    const el = fabRef.current;
+    return {
+      w: el ? el.offsetWidth : FAB_SIZE,
+      h: el ? el.offsetHeight : FAB_SIZE,
+    };
+  };
+
   const clampFabPos = (x, y) => {
     const { width, height } = getSectionSize();
-    const maxX = Math.max(FAB_MARGIN, width - FAB_SIZE - FAB_MARGIN);
-    const maxY = Math.max(FAB_MARGIN, height - FAB_SIZE - FAB_MARGIN);
+    const { w, h } = getFabSize();
+    const maxX = Math.max(FAB_MARGIN, width - w - FAB_MARGIN);
+    const maxY = Math.max(FAB_MARGIN, height - h - FAB_MARGIN);
     return {
       x: Math.min(Math.max(x, FAB_MARGIN), maxX),
       y: Math.min(Math.max(y, FAB_MARGIN), maxY),
@@ -45,8 +66,9 @@ export default function WorkProjects({ projects }) {
   // and has real dimensions — right side, well clear of the top bar.
   useEffect(() => {
     const { width, height } = getSectionSize();
+    const { w, h } = getFabSize();
     if (!width || !height) return;
-    setFabPos(clampFabPos(width - FAB_SIZE - 16, height - FAB_SIZE - 96));
+    setFabPos(clampFabPos(width - w - 16, height - h - 56));
   }, []);
 
   useEffect(() => {
@@ -66,8 +88,9 @@ export default function WorkProjects({ projects }) {
 
   const openFabNav = () => {
     const { width, height } = getSectionSize();
-    const vertical = fabPos.y + FAB_SIZE / 2 > height / 2 ? "up" : "down";
-    const horizontal = fabPos.x + FAB_SIZE / 2 > width / 2 ? "left" : "right";
+    const { w, h } = getFabSize();
+    const vertical = fabPos.y + h / 2 > height / 2 ? "up" : "down";
+    const horizontal = fabPos.x + w / 2 > width / 2 ? "left" : "right";
     setFabPlacement({ v: vertical, h: horizontal });
     setIsFabOpen(true);
   };
@@ -165,8 +188,30 @@ export default function WorkProjects({ projects }) {
   const total = projects.length;
   const progressPct = total > 1 ? (activeIndex / (total - 1)) * 100 : 100;
 
+  const goToPrev = () => {
+    if (activeIndex <= 0) return;
+    scrollToProject(activeIndex - 1);
+  };
+  const goToNext = () => {
+    if (activeIndex >= total - 1) return;
+    scrollToProject(activeIndex + 1);
+  };
+
+  // On re-lock, resync the pinned view to whichever project was on
+  // screen when unlocked — avoids landing back at project 01.
+  useEffect(() => {
+    if (isLocked && !wasLockedRef.current) {
+      requestAnimationFrame(() => scrollToProject(activeIndex));
+    }
+    wasLockedRef.current = isLocked;
+  }, [isLocked]);
+
   return (
-    <div className="sb-layout" id="project-index" ref={layoutRef}>
+    <div
+      className={`sb-layout${isLocked ? "" : " sb-layout--unlocked"}`}
+      id="project-index"
+      ref={layoutRef}
+    >
       <nav className="sb-sidebar" aria-label="Project index">
         <p className="sb-section-label">Projects</p>
         <ul className="sb-list" role="list">
@@ -193,6 +238,27 @@ export default function WorkProjects({ projects }) {
 
         <div className="sb-footer">
           <span className="sb-count">{activeIndex + 1} of {total}</span>
+          <button
+            type="button"
+            className={`sb-lock-toggle${isLocked ? "" : " sb-lock-toggle--unlocked"}`}
+            onClick={() => setIsLocked((value) => !value)}
+            aria-pressed={isLocked}
+            aria-label={
+              isLocked
+                ? "Unlock scrolling — swipe past this section freely"
+                : "Lock scrolling — step through one project at a time"
+            }
+          >
+            <svg className="sb-lock-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+              <rect x="5" y="11" width="14" height="9" rx="2.5" fill="currentColor" />
+              {isLocked ? (
+                <path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              ) : (
+                <path d="M8 11V8a4 4 0 0 1 7.3-2.4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              )}
+            </svg>
+            <span className="sb-lock-label">{isLocked ? "Locked" : "Free scroll"}</span>
+          </button>
           <div className="sb-progress">
             <div className="sb-progress-fill" style={{ width: `${progressPct}%` }} />
           </div>
@@ -258,53 +324,75 @@ export default function WorkProjects({ projects }) {
         })}
       </div>
 
-      <div
-        className="sb-fab-wrap"
-        ref={fabRef}
-        style={{ transform: `translate(${fabPos.x}px, ${fabPos.y}px)` }}
-      >
-        <button
-          type="button"
-          className="sb-fab-btn"
-          onPointerDown={handleFabPointerDown}
-          onPointerMove={handleFabPointerMove}
-          onPointerUp={handleFabPointerUp}
-          onPointerCancel={handleFabPointerUp}
-          aria-expanded={isFabOpen}
-          aria-label="Jump to a project"
+      {isLocked && (
+        <div
+          className="sb-fab-wrap"
+          ref={fabRef}
+          style={{ transform: `translate(${fabPos.x}px, ${fabPos.y}px)` }}
         >
-          <span className="sb-fab-num">{String(activeIndex + 1).padStart(2, "0")}</span>
-          <span className="sb-fab-sub">
-            /{String(total).padStart(2, "0")}
-            <span className="sb-fab-grip" aria-hidden="true" />
-          </span>
-        </button>
-
-        {isFabOpen && (
-          <div
-            className={`sb-fab-panel sb-fab-panel--${fabPlacement.v} sb-fab-panel--${fabPlacement.h}`}
-            role="menu"
-            aria-label="Jump to project"
+          <button
+            type="button"
+            className="sb-fab-mini sb-fab-mini--up"
+            onClick={goToPrev}
+            disabled={activeIndex === 0}
+            aria-label="Previous project"
           >
-            {projects.map((project, index) => (
-              <button
-                key={project.slug}
-                type="button"
-                role="menuitem"
-                className={`sb-fab-cell${
-                  index === activeIndex ? " sb-fab-cell--active" : index < activeIndex ? " sb-fab-cell--done" : ""
-                }`}
-                onClick={() => {
-                  scrollToProject(index);
-                  setIsFabOpen(false);
-                }}
-              >
-                {String(index + 1).padStart(2, "0")}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
+            ↑
+          </button>
+
+          <button
+            type="button"
+            className="sb-fab-btn"
+            onPointerDown={handleFabPointerDown}
+            onPointerMove={handleFabPointerMove}
+            onPointerUp={handleFabPointerUp}
+            onPointerCancel={handleFabPointerUp}
+            aria-expanded={isFabOpen}
+            aria-label="Jump to a project"
+          >
+            <span className="sb-fab-num">{String(activeIndex + 1).padStart(2, "0")}</span>
+            <span className="sb-fab-sub">
+              /{String(total).padStart(2, "0")}
+              <span className="sb-fab-grip" aria-hidden="true" />
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className="sb-fab-mini sb-fab-mini--down"
+            onClick={goToNext}
+            disabled={activeIndex === total - 1}
+            aria-label="Next project"
+          >
+            ↓
+          </button>
+
+          {isFabOpen && (
+            <div
+              className={`sb-fab-panel sb-fab-panel--${fabPlacement.v} sb-fab-panel--${fabPlacement.h}`}
+              role="menu"
+              aria-label="Jump to project"
+            >
+              {projects.map((project, index) => (
+                <button
+                  key={project.slug}
+                  type="button"
+                  role="menuitem"
+                  className={`sb-fab-cell${
+                    index === activeIndex ? " sb-fab-cell--active" : index < activeIndex ? " sb-fab-cell--done" : ""
+                  }`}
+                  onClick={() => {
+                    scrollToProject(index);
+                    setIsFabOpen(false);
+                  }}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

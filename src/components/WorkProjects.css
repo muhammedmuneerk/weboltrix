@@ -337,6 +337,10 @@
    inert and receives no pointer events on desktop. */
 .sb-fab-wrap { display: none; }
 
+/* Lock/unlock toggle — hidden on desktop, styled under the mobile
+   breakpoint below. */
+.sb-lock-toggle { display: none; }
+
 /* ══════════════════════════════════════════════════════
    Mobile — same pinned, full-viewport, snap-scrolled index
    experience as desktop. The vertical sidebar rail becomes a
@@ -407,13 +411,15 @@
 
   .sb-indicator, .sb-num, .sb-info { display: none; }
 
-  /* Small "N of total" counter, right-aligned under the segments;
-     the full progress bar is redundant with the segments now. */
+  /* "N of total" counter + lock toggle, right-aligned under the
+     segments; the full progress bar is redundant with the segments now. */
   .sb-footer {
     padding: 0.55rem 1rem 0;
     border-top: none;
     display: flex;
+    align-items: center;
     justify-content: flex-end;
+    gap: 0.6rem;
   }
   .sb-count {
     margin-bottom: 0;
@@ -422,6 +428,31 @@
     color: rgba(255, 255, 255, 0.34);
   }
   .sb-progress { display: none; }
+
+  .sb-lock-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+  }
+  .sb-lock-toggle--unlocked {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .sb-lock-icon { flex-shrink: 0; }
+  .sb-lock-label {
+    font-size: 0.5rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
 
   /* ── Main: same internal scroll-snap panel-per-project as desktop ── */
   .sb-main {
@@ -569,5 +600,47 @@
   @keyframes sb-fab-pop {
     from { opacity: 0; transform: scale(0.92); }
     to { opacity: 1; transform: scale(1); }
+  }
+
+  /* Prev/next chevrons flanking the main jump button — part of the
+     same draggable cluster, so they move together. */
+  .sb-fab-mini {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 30px;
+    margin: 0 auto;
+    border-radius: 10px;
+    background: rgba(20, 20, 20, 0.85);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.8rem;
+    line-height: 1;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+  }
+  .sb-fab-mini--up { margin-bottom: 6px; }
+  .sb-fab-mini--down { margin-top: 6px; }
+  .sb-fab-mini:disabled { opacity: 0.3; cursor: default; }
+
+  /* ── Unlocked mode — drop the pin/hijack entirely so an ordinary
+     scroll carries straight through the section, same as any other
+     part of the page, instead of stopping at each project. ── */
+  .sb-layout.sb-layout--unlocked {
+    position: relative;
+    top: auto;
+    height: auto;
+    overflow: visible;
+  }
+  .sb-layout--unlocked .sb-main {
+    height: auto;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+  .sb-layout--unlocked .sb-project {
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
   }
 }
