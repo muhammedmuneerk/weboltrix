@@ -300,41 +300,35 @@ export default function WorkProjects({ projects }) {
 
         <div className="sb-footer">
           <span className="sb-count">{activeIndex + 1} of {total}</span>
-          <button
-            type="button"
-            className={`sb-mode-toggle${isStepMode ? "" : " sb-mode-toggle--flow"}`}
-            onClick={() => setIsStepMode((value) => !value)}
-            aria-pressed={isStepMode}
-            aria-label={
-              isStepMode
-                ? "Switch to Flow mode — scroll past this section freely"
-                : "Switch to Step mode — step through one project at a time"
-            }
-            title={isStepMode ? "Switch to Flow mode" : "Switch to Step mode"}
+          <div
+            className="sb-mode-toggle"
+            role="tablist"
+            aria-label="Section scroll mode"
           >
-            <svg className="sb-mode-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
-              {isStepMode ? (
-                <path
-                  d="M4 19h3v-4h4v-4h4v-4h3"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              ) : (
-                <path
-                  d="M3 12c2-3.5 4-3.5 6 0s4 3.5 6 0 4-3.5 6 0"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              )}
-            </svg>
-            <span className="sb-mode-label">{isStepMode ? "Step" : "Flow"}</span>
-          </button>
+            <span
+              className="sb-mode-thumb"
+              aria-hidden="true"
+              style={{ transform: `translateX(${isStepMode ? "0%" : "100%"})` }}
+            />
+            <button
+              type="button"
+              role="tab"
+              aria-selected={isStepMode}
+              className={`sb-mode-option${isStepMode ? " sb-mode-option--active" : ""}`}
+              onClick={() => setIsStepMode(true)}
+            >
+              Step
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={!isStepMode}
+              className={`sb-mode-option${isStepMode ? "" : " sb-mode-option--active"}`}
+              onClick={() => setIsStepMode(false)}
+            >
+              Flow
+            </button>
+          </div>
           <div className="sb-progress">
             <div className="sb-progress-fill" style={{ width: `${progressPct}%` }} />
           </div>

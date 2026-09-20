@@ -429,30 +429,49 @@
   }
   .sb-progress { display: none; }
 
+  /* Step/Flow switch — a real two-sided toggle: both labels always
+     visible in one pill-shaped track, with a solid thumb that slides
+     to sit behind whichever is active. Fixed width so the thumb's
+     translateX(100%) (which moves it by exactly its own width — i.e.
+     half the track) lands precisely on the other side. */
   .sb-mode-toggle {
+    position: relative;
     display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0.3rem 0.55rem;
+    width: 92px;
+    padding: 3px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
-    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.05);
   }
-  .sb-mode-toggle--flow {
-    border-color: rgba(255, 255, 255, 0.08);
-    background: transparent;
-    color: rgba(255, 255, 255, 0.4);
+  .sb-mode-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: calc(50% - 3px);
+    height: calc(100% - 6px);
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    transition: transform 0.32s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 0;
   }
-  .sb-mode-icon { flex-shrink: 0; }
-  .sb-mode-label {
+  .sb-mode-option {
+    all: unset;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 0.32rem 0;
     font-size: 0.5rem;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+    transition: color 0.25s ease;
   }
+  .sb-mode-option--active { color: #0a0a0a; }
 
   /* ── Main: same internal scroll-snap panel-per-project as desktop ── */
   .sb-main {
