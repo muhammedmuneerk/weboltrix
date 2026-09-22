@@ -38,7 +38,6 @@ export default function WorkProjects({ projects }) {
   const FAB_SIZE = 56;
   const FAB_MARGIN = 8;
   const layoutRef = useRef(null);
-  const sidebarRef = useRef(null);
   const fabRef = useRef(null);
   const fabDragRef = useRef({ startX: 0, startY: 0, originX: 0, originY: 0, moved: false, dragging: false });
   const [fabPos, setFabPos] = useState({ x: FAB_MARGIN, y: FAB_MARGIN });
@@ -76,20 +75,19 @@ export default function WorkProjects({ projects }) {
   };
 
   // Set the initial resting spot once the section has actually mounted
-  // and has real dimensions. Right side, just below the top bar (not
-  // near the bottom) — with 10 projects to scroll through in Step
-  // mode, a button parked near the bottom risked never being seen
-  // before someone was already several projects deep. Measured off
-  // the real top-bar height rather than a guessed pixel value, so it
-  // still clears it correctly if that bar's height ever changes.
-  // Draggable range is untouched — still the full section, via
-  // clampFabPos below.
+  // and has real dimensions. Right side, vertically centered — visible
+  // immediately (no scrolling needed to discover it), and resting over
+  // the project image rather than the tags row above it (small text,
+  // variable height per project) or the CTA buttons below it (real
+  // tap targets it shouldn't sit on). The image is one large, uniform
+  // block, so a corner of it is the safest thing to rest over across
+  // all 10 projects. Draggable range is untouched — still the full
+  // section, via clampFabPos below.
   useEffect(() => {
     const { width, height } = getSectionSize();
     const { w, h } = getFabSize();
     if (!width || !height) return;
-    const topBarHeight = sidebarRef.current?.offsetHeight || 0;
-    setFabPos(clampFabPos(width - w - 16, topBarHeight + 14));
+    setFabPos(clampFabPos(width - w - 16, height / 2 - h / 2));
   }, []);
 
   useEffect(() => {
@@ -283,7 +281,7 @@ export default function WorkProjects({ projects }) {
       id="project-index"
       ref={layoutRef}
     >
-      <nav className="sb-sidebar" aria-label="Project index" ref={sidebarRef}>
+      <nav className="sb-sidebar" aria-label="Project index">
         <p className="sb-section-label">Projects</p>
         <ul className="sb-list" role="list">
           {projects.map((project, index) => (
