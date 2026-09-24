@@ -1,15 +1,16 @@
 import CTASection from "../components/CTASection.jsx";
 import PageHero from "../components/PageHero.jsx";
+import ProcessHero from "../components/ProcessHero.jsx";
 import SectionHeading from "../components/SectionHeading.jsx";
 import { faqs, processDetails } from "../data/siteData.js";
 
 export default function Process() {
   return (
     <>
-      <PageHero eyebrow="Process" title="How we turn a local business into a premium website.">
+      <ProcessHero eyebrow="Process" title="How we turn a local business into a premium website.">
         A focused build rhythm: clarity first, design second, conversion always. Every step is shaped
         to get the website launched cleanly and ready for real customer action.
-      </PageHero>
+      </ProcessHero>
 
       <section className="section-padding">
         <div className="container-premium">
