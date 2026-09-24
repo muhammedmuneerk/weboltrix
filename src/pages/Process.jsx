@@ -2,6 +2,7 @@ import CTASection from "../components/CTASection.jsx";
 import PageHero from "../components/PageHero.jsx";
 import ProcessHero from "../components/ProcessHero.jsx";
 import SectionHeading from "../components/SectionHeading.jsx";
+import ProcessSteps from "../components/ProcessSteps.jsx";
 import { faqs, processDetails } from "../data/siteData.js";
 
 export default function Process() {
@@ -12,26 +13,7 @@ export default function Process() {
         to get the website launched cleanly and ready for real customer action.
       </ProcessHero>
 
-      <section className="section-padding">
-        <div className="container-premium">
-          <SectionHeading
-            eyebrow="Build rhythm"
-            title="Four moves from idea to launch."
-            text="The process stays lean, but the details stay premium: strategy, layout, content, animation, contact flow, and final polish."
-          />
-          <div className="stagger-grid mt-14 grid gap-5 lg:grid-cols-4">
-            {processDetails.map((step) => (
-              <article key={step.title} className="glass card-hover rounded-[1.8rem] p-7">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/38">
-                  {step.eyebrow}
-                </p>
-                <h2 className="mt-8 text-3xl font-black tracking-tight">{step.title}</h2>
-                <p className="mt-5 text-sm leading-7 text-white/58">{step.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ProcessSteps />
 
       <section className="section-padding border-y border-white/10 bg-white/[0.025]">
         <div className="container-premium grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
