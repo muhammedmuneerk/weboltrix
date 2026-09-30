@@ -17,11 +17,40 @@ const ITEMS = [
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const close = (a, b, tolerance = 0.5) => Math.abs(a - b) < tolerance;
 
-// A plain right-angle elbow: down from the first node, across, down into
-// the second — no curve, a sharp 90° turn at each corner.
-const elbowPath = (x1, y1, x2, y2) => {
+// A right-angle elbow (down, across, down) with the two corners rounded
+// off by a small curve, instead of a sharp 90° turn.
+const CORNER_RADIUS = 10;
+const elbowPath = (x1, y1, x2, y2, radius = CORNER_RADIUS) => {
   const midY = (y1 + y2) / 2;
-  return `M${x1},${y1} L${x1},${midY} L${x2},${midY} L${x2},${y2}`;
+  const dirX = x2 >= x1 ? 1 : -1;
+  const dirY1 = midY >= y1 ? 1 : -1;
+  const dirY2 = y2 >= midY ? 1 : -1;
+
+  // Never round away more than a segment actually has to give — avoids
+  // overshoot on very short hops (e.g. two nodes almost level with each other).
+  const r = Math.max(
+    0,
+    Math.min(radius, Math.abs(midY - y1), Math.abs(x2 - x1) / 2, Math.abs(y2 - midY))
+  );
+
+  if (r < 1) {
+    // Too tight for a visible curve — fall back to a plain sharp elbow.
+    return `M${x1},${y1} L${x1},${midY} L${x2},${midY} L${x2},${y2}`;
+  }
+
+  const beforeCorner1Y = midY - dirY1 * r;
+  const afterCorner1X = x1 + dirX * r;
+  const beforeCorner2X = x2 - dirX * r;
+  const afterCorner2Y = midY + dirY2 * r;
+
+  return [
+    `M${x1},${y1}`,
+    `L${x1},${beforeCorner1Y}`,
+    `Q${x1},${midY} ${afterCorner1X},${midY}`,
+    `L${beforeCorner2X},${midY}`,
+    `Q${x2},${midY} ${x2},${afterCorner2Y}`,
+    `L${x2},${y2}`,
+  ].join(" ");
 };
 
 export default function ProcessQuality() {
@@ -34,7 +63,7 @@ export default function ProcessQuality() {
   // going back up).
   const [active, setActive] = useState(-1);
   const [dims, setDims] = useState({ width: 0, height: 0 });
-  const [segments, setSegments] = useState([]); // {d, progress}
+  const [segments, setSegments] = useState([]); // {x1,y1,x2,y2,progress}
   const [reduceMotion, setReduceMotion] = useState(false);
 
   const containerRef = useRef(null);
@@ -199,8 +228,8 @@ export default function ProcessQuality() {
         </div>
         <p className="mt-5 max-w-md text-base leading-7 text-white/58">{TEXT}</p>
 
-        {/* Nodes settle into a center / left / right column pattern, joined
-            by right-angle "circuit trace" connectors. */}
+        {/* Bolt path: nodes alternate hard left / hard right, joined by
+            diagonal connectors instead of one straight rail. */}
         <div ref={containerRef} className="relative mx-auto mt-10 max-w-xl">
           <svg
             aria-hidden="true"
