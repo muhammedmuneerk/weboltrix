@@ -53,6 +53,33 @@ const elbowPath = (x1, y1, x2, y2, radius = CORNER_RADIUS) => {
   ].join(" ");
 };
 
+// Where a marker sits along that same elbow at fraction f (0–1) of its
+// length — walks the same three straight stages (down, across, down),
+// ignoring the corners' small curvature, which is not worth the extra math
+// for a few px of a travelling dot.
+const pointAlongElbow = (x1, y1, x2, y2, f) => {
+  const midY = (y1 + y2) / 2;
+  const len1 = Math.abs(midY - y1);
+  const len2 = Math.abs(x2 - x1);
+  const len3 = Math.abs(y2 - midY);
+  const total = len1 + len2 + len3;
+  if (total <= 0) return { x: x1, y: y1 };
+
+  const t1 = len1 / total;
+  const t2 = (len1 + len2) / total;
+
+  if (f <= t1) {
+    const local = t1 > 0 ? f / t1 : 0;
+    return { x: x1, y: y1 + (midY - y1) * local };
+  }
+  if (f <= t2) {
+    const local = t2 > t1 ? (f - t1) / (t2 - t1) : 0;
+    return { x: x1 + (x2 - x1) * local, y: midY };
+  }
+  const local = 1 - t2 > 0 ? (f - t2) / (1 - t2) : 0;
+  return { x: x2, y: midY + (y2 - midY) * local };
+};
+
 export default function ProcessQuality() {
   const total = ITEMS.length;
 
@@ -64,6 +91,7 @@ export default function ProcessQuality() {
   const [active, setActive] = useState(-1);
   const [dims, setDims] = useState({ width: 0, height: 0 });
   const [segments, setSegments] = useState([]); // {x1,y1,x2,y2,progress}
+  const [pulse, setPulse] = useState(null); // {x, y} — travelling dot on the segment mid-fill
   const [reduceMotion, setReduceMotion] = useState(false);
 
   const containerRef = useRef(null);
@@ -88,9 +116,10 @@ export default function ProcessQuality() {
       setSegments(
         points.slice(0, -1).map((p, i) => {
           const next = points[i + 1];
-          return { d: elbowPath(p.x, p.y, next.x, next.y), progress: 1 };
+          return { d: elbowPath(p.x, p.y, next.x, next.y), progress: 1, x1: p.x, y1: p.y, x2: next.x, y2: next.y };
         })
       );
+      setPulse(null);
       setActive(total - 1);
       return undefined;
     }
@@ -114,16 +143,25 @@ export default function ProcessQuality() {
       const line = window.innerHeight * 0.75;
       const centersY = nodeRefs.current.map((node) => node.getBoundingClientRect().y + node.getBoundingClientRect().height / 2);
 
-      setSegments(
-        points.slice(0, -1).map((p, i) => {
-          const next = points[i + 1];
-          const y1 = centersY[i];
-          const y2 = centersY[i + 1];
-          const progress = clamp((line - y1) / (y2 - y1), 0, 1);
-          const d = elbowPath(p.x, p.y, next.x, next.y);
-          return { d, progress };
-        })
-      );
+      const nextSegments = points.slice(0, -1).map((p, i) => {
+        const next = points[i + 1];
+        const y1 = centersY[i];
+        const y2 = centersY[i + 1];
+        const progress = clamp((line - y1) / (y2 - y1), 0, 1);
+        const d = elbowPath(p.x, p.y, next.x, next.y);
+        return { d, progress, x1: p.x, y1: p.y, x2: next.x, y2: next.y };
+      });
+      setSegments(nextSegments);
+
+      // The one segment currently mid-fill (strictly between its two nodes)
+      // gets a small dot riding along it at that same progress — a sense of
+      // flow into the node that is about to tick, not just an instant fill.
+      const filling = nextSegments.find((seg) => seg.progress > 0 && seg.progress < 1);
+      setPulse((prev) => {
+        if (!filling) return prev === null ? prev : null;
+        const next = pointAlongElbow(filling.x1, filling.y1, filling.x2, filling.y2, filling.progress);
+        return prev && close(prev.x, next.x, 0.3) && close(prev.y, next.y, 0.3) ? prev : next;
+      });
 
       setDims((prev) =>
         close(prev.width, cRect.width) && close(prev.height, cRect.height)
@@ -231,6 +269,12 @@ export default function ProcessQuality() {
         {/* Bolt path: nodes alternate hard left / hard right, joined by
             diagonal connectors instead of one straight rail. */}
         <div ref={containerRef} className="relative mx-auto mt-10 max-w-xl">
+          <style>{`
+            @keyframes process-flow-glow {
+              0%, 100% { transform: scale(1); opacity: 0.32; }
+              50% { transform: scale(2); opacity: 0.05; }
+            }
+          `}</style>
           <svg
             aria-hidden="true"
             className="pointer-events-none absolute inset-0"
@@ -256,6 +300,21 @@ export default function ProcessQuality() {
                 />
               </g>
             ))}
+
+            {pulse && (
+              <g style={{ transform: `translate(${pulse.x}px, ${pulse.y}px)` }}>
+                <circle
+                  r="6"
+                  fill="#f5f3ef"
+                  style={{
+                    transformBox: "fill-box",
+                    transformOrigin: "center",
+                    animation: "process-flow-glow 1.3s ease-in-out infinite",
+                  }}
+                />
+                <circle r="2.4" fill="#f5f3ef" />
+              </g>
+            )}
           </svg>
 
           <ol className="relative z-10 px-2">
