@@ -21,10 +21,10 @@ export default function ProcessQuality() {
   const total = ITEMS.length;
 
   // ---- Mobile / tablet bolt-path state ----
-  // Nodes alternate hard left / hard right instead of sitting on one
-  // straight rail, so the connectors become smooth S-curves crossing the
-  // width — a bolder shape than a plain vertical list, still driven by
-  // live scroll position (ticks going down, un-ticks going back up).
+  // Nodes settle into a center / left / right column pattern instead of
+  // swinging to the hard edges, joined by smooth S-curve connectors —
+  // still driven by live scroll position (ticks going down, un-ticks
+  // going back up).
   const [active, setActive] = useState(-1);
   const [dims, setDims] = useState({ width: 0, height: 0 });
   const [segments, setSegments] = useState([]); // {d, progress}
@@ -126,6 +126,21 @@ export default function ProcessQuality() {
   const count = reduceMotion ? total : active + 1;
   const complete = count === total;
 
+  // Column pattern: first and last nodes anchor near the center like
+  // bookends; the interior nodes settle into just two fixed columns
+  // (alternating left / right) instead of swinging to the hard edges —
+  // a calmer, more repeatable zigzag.
+  const EDGE_INSET = "15%";
+  const getColumn = (index) => {
+    if (index === 0 || index === total - 1) return "center";
+    return index % 2 === 1 ? "left" : "right";
+  };
+  const getLabelSide = (index) => {
+    if (index === 0) return "left";
+    if (index === total - 1) return "right";
+    return getColumn(index) === "left" ? "right" : "left";
+  };
+
   return (
     <section className="section-padding border-y border-white/10 bg-white/[0.025]">
       {/* ───────── Desktop layout (lg and up) – unchanged ───────── */}
@@ -167,9 +182,9 @@ export default function ProcessQuality() {
         </div>
         <p className="mt-5 max-w-md text-base leading-7 text-white/58">{TEXT}</p>
 
-        {/* Bolt path: nodes alternate hard left / hard right, joined by
-            smooth S-curve connectors instead of one straight rail. */}
-        <div ref={containerRef} className="relative mt-10">
+        {/* Bolt path: nodes settle into a center / left / right column
+            pattern, joined by smooth S-curve connectors. */}
+        <div ref={containerRef} className="relative mx-auto mt-10 max-w-xl">
           <svg
             aria-hidden="true"
             className="pointer-events-none absolute inset-0"
@@ -202,16 +217,31 @@ export default function ProcessQuality() {
               const isDone = index <= active;
               const isCurrent = index === active;
               const isLast = index === total - 1;
-              const onRight = index % 2 === 1;
+              const column = getColumn(index);
+              const labelOnLeft = getLabelSide(index) === "left";
+
+              const outerClass =
+                column === "center"
+                  ? "justify-center"
+                  : column === "left"
+                    ? "justify-start"
+                    : "justify-end";
+              const outerStyle =
+                column === "left"
+                  ? { paddingLeft: EDGE_INSET }
+                  : column === "right"
+                    ? { paddingRight: EDGE_INSET }
+                    : undefined;
 
               return (
                 <li
                   key={item}
-                  className={`flex ${isLast ? "" : "pb-12"} ${onRight ? "justify-end" : "justify-start"}`}
+                  className={`flex ${isLast ? "" : "pb-12"} ${outerClass}`}
+                  style={outerStyle}
                 >
                   <div
-                    className={`flex max-w-[72%] items-center gap-3 ${
-                      onRight ? "flex-row-reverse text-right" : "text-left"
+                    className={`flex max-w-[62%] items-center gap-3 ${
+                      labelOnLeft ? "flex-row-reverse text-right" : "text-left"
                     }`}
                   >
                     <span
