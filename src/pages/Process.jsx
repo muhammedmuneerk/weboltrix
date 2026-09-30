@@ -3,6 +3,7 @@ import PageHero from "../components/PageHero.jsx";
 import ProcessHero from "../components/ProcessHero.jsx";
 import SectionHeading from "../components/SectionHeading.jsx";
 import ProcessSteps from "../components/ProcessSteps.jsx";
+import ProcessQuality from "../components/ProcessQuality.jsx";
 import { faqs, processDetails } from "../data/siteData.js";
 
 export default function Process() {
@@ -15,22 +16,7 @@ export default function Process() {
 
       <ProcessSteps />
 
-      <section className="section-padding border-y border-white/10 bg-white/[0.025]">
-        <div className="container-premium grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-          <SectionHeading
-            eyebrow="Quality checks"
-            title="Launch polish is treated like part of the design."
-            text="Before handoff, the site is checked for mobile fit, CTA clarity, section rhythm, asset loading, and a clean first impression."
-          />
-          <div className="stagger-grid grid gap-4 sm:grid-cols-2">
-            {["Mobile flow", "Animation timing", "Contact path", "Image polish", "Content clarity", "Speed basics"].map((item) => (
-              <div key={item} className="interactive-card rounded-[1.4rem] border border-white/10 bg-white/[0.055] p-5 text-lg font-black">
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ProcessQuality />
 
       <section className="section-padding">
         <div className="container-premium">

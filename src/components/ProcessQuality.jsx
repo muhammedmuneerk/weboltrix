@@ -1,0 +1,259 @@
+import { useEffect, useRef, useState } from "react";
+import SectionHeading from "./SectionHeading.jsx";
+
+const EYEBROW = "Quality checks";
+const TITLE = "Launch polish is treated like part of the design.";
+const TEXT =
+  "Before handoff, the site is checked for mobile fit, CTA clarity, section rhythm, asset loading, and a clean first impression.";
+const ITEMS = [
+  "Mobile flow",
+  "Animation timing",
+  "Contact path",
+  "Image polish",
+  "Content clarity",
+  "Speed basics",
+];
+
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+const close = (a, b, tolerance = 0.5) => Math.abs(a - b) < tolerance;
+
+export default function ProcessQuality() {
+  const total = ITEMS.length;
+
+  // ---- Mobile / tablet bolt-path state ----
+  // Nodes alternate hard left / hard right instead of sitting on one
+  // straight rail, so the connectors become smooth S-curves crossing the
+  // width — a bolder shape than a plain vertical list, still driven by
+  // live scroll position (ticks going down, un-ticks going back up).
+  const [active, setActive] = useState(-1);
+  const [dims, setDims] = useState({ width: 0, height: 0 });
+  const [segments, setSegments] = useState([]); // {d, progress}
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  const containerRef = useRef(null);
+  const nodeRefs = useRef([]);
+  const activeRef = useRef(-1);
+
+  useEffect(() => {
+    setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (reduceMotion) {
+      // Lay the finished path out once, no scroll-driven changes.
+      const container = containerRef.current;
+      if (!container) return undefined;
+      const cRect = container.getBoundingClientRect();
+      const points = nodeRefs.current.map((node) => {
+        const r = node.getBoundingClientRect();
+        return { x: r.left - cRect.left + r.width / 2, y: r.top - cRect.top + r.height / 2 };
+      });
+      setDims({ width: cRect.width, height: cRect.height });
+      setSegments(
+        points.slice(0, -1).map((p, i) => {
+          const next = points[i + 1];
+          const midX = (p.x + next.x) / 2;
+          return { d: `M${p.x},${p.y} C${midX},${p.y} ${midX},${next.y} ${next.x},${next.y}`, progress: 1 };
+        })
+      );
+      setActive(total - 1);
+      return undefined;
+    }
+
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const container = containerRef.current;
+      if (!container || !container.offsetHeight) return; // hidden on desktop
+
+      const cRect = container.getBoundingClientRect();
+      const points = nodeRefs.current.map((node) => {
+        const r = node.getBoundingClientRect();
+        return { x: r.left - cRect.left + r.width / 2, y: r.top - cRect.top + r.height / 2 };
+      });
+
+      // Reading line: the middle of the screen's bottom half, so a node is
+      // well inside view — and has had a moment to be seen unticked — before
+      // it ticks.
+      const line = window.innerHeight * 0.75;
+      const centersY = nodeRefs.current.map((node) => node.getBoundingClientRect().y + node.getBoundingClientRect().height / 2);
+
+      setSegments(
+        points.slice(0, -1).map((p, i) => {
+          const next = points[i + 1];
+          const y1 = centersY[i];
+          const y2 = centersY[i + 1];
+          const progress = clamp((line - y1) / (y2 - y1), 0, 1);
+          // Smooth S-curve rather than a sharp straight diagonal — calmer
+          // where paths cross, still reads as a clear zigzag.
+          const midX = (p.x + next.x) / 2;
+          const d = `M${p.x},${p.y} C${midX},${p.y} ${midX},${next.y} ${next.x},${next.y}`;
+          return { d, progress };
+        })
+      );
+
+      setDims((prev) =>
+        close(prev.width, cRect.width) && close(prev.height, cRect.height)
+          ? prev
+          : { width: cRect.width, height: cRect.height }
+      );
+
+      let next = -1;
+      centersY.forEach((y, i) => {
+        if (y <= line) next = i;
+      });
+      if (next !== activeRef.current) {
+        activeRef.current = next;
+        setActive(next);
+      }
+    };
+
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      window.cancelAnimationFrame(frame);
+    };
+  }, [reduceMotion, total]);
+
+  const count = reduceMotion ? total : active + 1;
+  const complete = count === total;
+
+  return (
+    <section className="section-padding border-y border-white/10 bg-white/[0.025]">
+      {/* ───────── Desktop layout (lg and up) – unchanged ───────── */}
+      <div className="container-premium hidden gap-12 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+        <SectionHeading eyebrow={EYEBROW} title={TITLE} text={TEXT} />
+        <div className="stagger-grid grid gap-4 sm:grid-cols-2">
+          {ITEMS.map((item) => (
+            <div
+              key={item}
+              className="interactive-card rounded-[1.4rem] border border-white/10 bg-white/[0.055] p-5 text-lg font-black"
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ───────── Mobile / tablet layout (below lg) ───────── */}
+      <div className="container-premium lg:hidden">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="eyebrow">{EYEBROW}</p>
+            <h2
+              className="mt-4 max-w-md font-black leading-[1.02] tracking-tight text-balance"
+              style={{ fontSize: "clamp(2rem, 9vw, 3.25rem)" }}
+            >
+              {TITLE}
+            </h2>
+          </div>
+          <p
+            className={`shrink-0 pt-1 text-right text-xs font-bold transition-colors duration-500 ${
+              complete ? "text-bone" : "text-white/50"
+            }`}
+            aria-live="polite"
+          >
+            {Math.max(count, 0)}/{total}
+            <span className="mt-0.5 block font-normal text-white/40">checked</span>
+          </p>
+        </div>
+        <p className="mt-5 max-w-md text-base leading-7 text-white/58">{TEXT}</p>
+
+        {/* Bolt path: nodes alternate hard left / hard right, joined by
+            smooth S-curve connectors instead of one straight rail. */}
+        <div ref={containerRef} className="relative mt-10">
+          <svg
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            width={dims.width || undefined}
+            height={dims.height || undefined}
+            viewBox={`0 0 ${dims.width || 0} ${dims.height || 0}`}
+            preserveAspectRatio="none"
+          >
+            {segments.map((seg, i) => (
+              <g key={i}>
+                <path d={seg.d} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.4" />
+                <path
+                  d={seg.d}
+                  fill="none"
+                  stroke="#f5f3ef"
+                  strokeOpacity="0.7"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  pathLength="1"
+                  strokeDasharray="1"
+                  strokeDashoffset={1 - seg.progress}
+                  className="transition-[stroke-dashoffset] duration-500 ease-out motion-reduce:transition-none"
+                />
+              </g>
+            ))}
+          </svg>
+
+          <ol className="relative z-10 px-2">
+            {ITEMS.map((item, index) => {
+              const isDone = index <= active;
+              const isCurrent = index === active;
+              const isLast = index === total - 1;
+              const onRight = index % 2 === 1;
+
+              return (
+                <li
+                  key={item}
+                  className={`flex ${isLast ? "" : "pb-12"} ${onRight ? "justify-end" : "justify-start"}`}
+                >
+                  <div
+                    className={`flex max-w-[72%] items-center gap-3 ${
+                      onRight ? "flex-row-reverse text-right" : "text-left"
+                    }`}
+                  >
+                    <span
+                      ref={(el) => {
+                        nodeRefs.current[index] = el;
+                      }}
+                      className="flex h-8 w-8 shrink-0 items-center justify-center"
+                    >
+                      <svg viewBox="0 0 24 24" className="h-8 w-8 fill-none stroke-current" strokeWidth="2.2">
+                        <circle
+                          cx="12"
+                          cy="12"
+                          r="9.5"
+                          className={`transition-colors duration-500 motion-reduce:transition-none ${
+                            isDone ? "text-bone" : "text-white/20"
+                          }`}
+                        />
+                        <path
+                          d="M7.5 12.5l3 3L16.5 9"
+                          pathLength="1"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="text-bone transition-[stroke-dashoffset] duration-500 ease-out motion-reduce:transition-none"
+                          style={{ strokeDasharray: 1, strokeDashoffset: isDone ? 0 : 1 }}
+                        />
+                      </svg>
+                    </span>
+
+                    <span
+                      className={`text-base font-black leading-tight tracking-tight transition-colors duration-500 sm:text-lg ${
+                        isCurrent ? "text-bone" : isDone ? "text-white/70" : "text-white/40"
+                      }`}
+                    >
+                      {item}
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
+}
