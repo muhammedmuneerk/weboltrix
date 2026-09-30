@@ -17,12 +17,19 @@ const ITEMS = [
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const close = (a, b, tolerance = 0.5) => Math.abs(a - b) < tolerance;
 
+// A plain right-angle elbow: down from the first node, across, down into
+// the second — no curve, a sharp 90° turn at each corner.
+const elbowPath = (x1, y1, x2, y2) => {
+  const midY = (y1 + y2) / 2;
+  return `M${x1},${y1} L${x1},${midY} L${x2},${midY} L${x2},${y2}`;
+};
+
 export default function ProcessQuality() {
   const total = ITEMS.length;
 
-  // ---- Mobile / tablet bolt-path state ----
-  // Nodes settle into a center / left / right column pattern instead of
-  // swinging to the hard edges, joined by smooth S-curve connectors —
+  // ---- Mobile / tablet elbow-path state ----
+  // Nodes settle into a center / left / right column pattern, joined by
+  // right-angle "circuit trace" connectors instead of a straight rail —
   // still driven by live scroll position (ticks going down, un-ticks
   // going back up).
   const [active, setActive] = useState(-1);
@@ -52,8 +59,7 @@ export default function ProcessQuality() {
       setSegments(
         points.slice(0, -1).map((p, i) => {
           const next = points[i + 1];
-          const midX = (p.x + next.x) / 2;
-          return { d: `M${p.x},${p.y} C${midX},${p.y} ${midX},${next.y} ${next.x},${next.y}`, progress: 1 };
+          return { d: elbowPath(p.x, p.y, next.x, next.y), progress: 1 };
         })
       );
       setActive(total - 1);
@@ -65,7 +71,7 @@ export default function ProcessQuality() {
     const update = () => {
       frame = 0;
       const container = containerRef.current;
-      if (!container || !container.offsetHeight) return; // hidden on desktop
+      if (!container) return; // unmounted, or hidden on desktop
 
       const cRect = container.getBoundingClientRect();
       const points = nodeRefs.current.map((node) => {
@@ -85,10 +91,7 @@ export default function ProcessQuality() {
           const y1 = centersY[i];
           const y2 = centersY[i + 1];
           const progress = clamp((line - y1) / (y2 - y1), 0, 1);
-          // Smooth S-curve rather than a sharp straight diagonal — calmer
-          // where paths cross, still reads as a clear zigzag.
-          const midX = (p.x + next.x) / 2;
-          const d = `M${p.x},${p.y} C${midX},${p.y} ${midX},${next.y} ${next.x},${next.y}`;
+          const d = elbowPath(p.x, p.y, next.x, next.y);
           return { d, progress };
         })
       );
@@ -114,12 +117,26 @@ export default function ProcessQuality() {
     };
 
     update();
+    // Layout can still shift after this first pass (web fonts swapping in,
+    // the page settling), so re-measure a couple more times shortly after
+    // mount rather than only reacting to scroll/resize.
+    const settleTimers = [window.setTimeout(schedule, 150), window.setTimeout(schedule, 500)];
+
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
+
+    let resizeObserver;
+    if (containerRef.current && "ResizeObserver" in window) {
+      resizeObserver = new ResizeObserver(schedule);
+      resizeObserver.observe(containerRef.current);
+    }
+
     return () => {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
       window.cancelAnimationFrame(frame);
+      settleTimers.forEach(window.clearTimeout);
+      resizeObserver?.disconnect();
     };
   }, [reduceMotion, total]);
 
@@ -182,8 +199,8 @@ export default function ProcessQuality() {
         </div>
         <p className="mt-5 max-w-md text-base leading-7 text-white/58">{TEXT}</p>
 
-        {/* Bolt path: nodes settle into a center / left / right column
-            pattern, joined by smooth S-curve connectors. */}
+        {/* Nodes settle into a center / left / right column pattern, joined
+            by right-angle "circuit trace" connectors. */}
         <div ref={containerRef} className="relative mx-auto mt-10 max-w-xl">
           <svg
             aria-hidden="true"
