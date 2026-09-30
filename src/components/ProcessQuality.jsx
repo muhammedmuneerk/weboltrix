@@ -322,6 +322,10 @@ export default function ProcessQuality() {
               const isDone = index <= active;
               const isCurrent = index === active;
               const isLast = index === total - 1;
+              // Mobile flow and Speed basics anchor the path as bookends —
+              // give them a touch more visual weight, and a soft glow while
+              // they're the one currently active.
+              const isBookend = index === 0 || index === total - 1;
               const column = getColumn(index);
               const labelOnLeft = getLabelSide(index) === "left";
 
@@ -353,9 +357,11 @@ export default function ProcessQuality() {
                       ref={(el) => {
                         nodeRefs.current[index] = el;
                       }}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center"
+                      className={`flex shrink-0 items-center justify-center rounded-full transition-shadow duration-500 motion-reduce:transition-none ${
+                        isBookend ? "h-9 w-9 sm:h-10 sm:w-10" : "h-8 w-8"
+                      } ${isCurrent && isBookend ? "shadow-glow" : ""}`}
                     >
-                      <svg viewBox="0 0 24 24" className="h-8 w-8 fill-none stroke-current" strokeWidth="2.2">
+                      <svg viewBox="0 0 24 24" className="h-full w-full fill-none stroke-current" strokeWidth="2.2">
                         <circle
                           cx="12"
                           cy="12"
