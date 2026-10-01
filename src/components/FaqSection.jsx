@@ -13,9 +13,10 @@ export default function FaqSection() {
       <div className="container-premium grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 xl:gap-24">
         {/* ───────── Left: heading + direct-contact panel (sticky on desktop) ───────── */}
         <div className="lg:sticky lg:top-32 lg:self-start">
+          <p className="eyebrow">FAQ</p>
           <h2
             id={`${baseId}-heading`}
-            className="max-w-xl text-4xl font-black leading-[1.02] tracking-tight text-balance sm:text-6xl sm:leading-[0.98]"
+            className="mt-5 max-w-xl text-4xl font-black leading-[1.02] tracking-tight text-balance sm:text-6xl sm:leading-[0.98]"
           >
             Straight answers before we start.
           </h2>
