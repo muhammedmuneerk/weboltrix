@@ -16,7 +16,7 @@ export default function FaqSection() {
 
   return (
     <section className="section-padding">
-      <div className="container-premium grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 xl:gap-24">
+      <div className="container-premium grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
         {/* ───────── Left: heading + direct-contact panel (sticky on desktop) ───────── */}
         <div className="lg:sticky lg:top-32 lg:self-start">
           <SectionHeading eyebrow={EYEBROW} title={TITLE} text={TEXT} />
