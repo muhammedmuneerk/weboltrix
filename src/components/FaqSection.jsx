@@ -1,6 +1,12 @@
 import { useId, useState } from "react";
 import { Link } from "react-router-dom";
+import SectionHeading from "./SectionHeading.jsx";
 import { faqs, whatsappLink } from "../data/siteData.js";
+
+const EYEBROW = "FAQ";
+const TITLE = "Straight answers before we start.";
+const TEXT =
+  "The questions most business owners ask before kicking off a website. Anything not covered here, ask us directly.";
 
 export default function FaqSection() {
   const baseId = useId();
@@ -9,21 +15,11 @@ export default function FaqSection() {
   const toggle = (index) => setOpenIndex((current) => (current === index ? -1 : index));
 
   return (
-    <section className="section-padding" aria-labelledby={`${baseId}-heading`}>
+    <section className="section-padding">
       <div className="container-premium grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 xl:gap-24">
         {/* ───────── Left: heading + direct-contact panel (sticky on desktop) ───────── */}
         <div className="lg:sticky lg:top-32 lg:self-start">
-          <p className="eyebrow">FAQ</p>
-          <h2
-            id={`${baseId}-heading`}
-            className="mt-5 max-w-xl text-4xl font-black leading-[1.02] tracking-tight text-balance sm:text-6xl sm:leading-[0.98]"
-          >
-            Straight answers before we start.
-          </h2>
-          <p className="mt-6 max-w-md text-base leading-8 text-white/58 sm:text-lg">
-            The questions most business owners ask before kicking off a website. Anything not
-            covered here, ask us directly.
-          </p>
+          <SectionHeading eyebrow={EYEBROW} title={TITLE} text={TEXT} />
 
           <div className="mt-10 rounded-[2rem] border border-white/10 bg-bone p-7 text-ink shadow-premium sm:p-8">
             <h3 className="text-2xl font-black leading-tight tracking-tight">
