@@ -1,5 +1,5 @@
 import CTASection from "../components/CTASection.jsx";
-import PageHero from "../components/PageHero.jsx";
+import ServicesHero from "../components/ServicesHero.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import SectionHeading from "../components/SectionHeading.jsx";
 import { services } from "../data/siteData.js";
@@ -7,9 +7,7 @@ import { services } from "../data/siteData.js";
 export default function Services() {
   return (
     <>
-      <PageHero eyebrow="Services" title="Our Services">
-        Premium website packages for businesses that need more than a basic online brochure.
-      </PageHero>
+      <ServicesHero />
 
       <section className="section-padding">
         <div className="container-premium">
