@@ -48,46 +48,64 @@ export default function ServicesHero({ eyebrow = EYEBROW, title = TITLE, childre
   };
 
   return (
+    // Same shell as ProcessHero: on desktop the hero fills the screen height
+    // and centres its content, so it fits short laptop viewports too.
     <section className="hero-mesh relative isolate overflow-hidden lg:flex lg:min-h-[100svh] lg:items-center">
       <div className="fine-grid absolute inset-0 -z-10" />
 
-      <div className="container-premium grid w-full gap-12 pb-14 pt-28 sm:pt-32 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-12 lg:pb-8 lg:pt-24 xl:gap-16">
+      <div className="container-premium grid w-full gap-12 pb-14 pt-28 sm:pt-32 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-12 lg:pb-8 lg:pt-24 xl:gap-16">
         {/* ───────── Left: message, actions, quick facts ───────── */}
         <div className="min-w-0">
-          <p className="hero-kicker eyebrow">{eyebrow}</p>
-          <h1 className="hero-title mt-5 max-w-3xl text-4xl font-black leading-[1.02] tracking-tight text-balance sm:text-6xl sm:leading-[0.96] lg:text-[length:clamp(2.25rem,min(5.2vw,7.6vh),4.5rem)] lg:leading-[0.98]">
+          {eyebrow && <p className="hero-kicker eyebrow">{eyebrow}</p>}
+
+          {/* Fluid size: below lg by width only, at lg limited by width AND height (same as ProcessHero) */}
+          <h1 className="hero-title mt-4 max-w-2xl text-[length:clamp(2.25rem,10vw,3.75rem)] font-black leading-[1] tracking-tight text-balance lg:max-w-3xl lg:text-[length:clamp(2.25rem,min(6vw,9vh),4.75rem)] lg:leading-[0.98]">
             {title}
           </h1>
-          <div className="hero-copy mt-6 max-w-xl text-base leading-8 text-white/62 sm:text-lg lg:mt-5 lg:leading-7 [@media(min-height:900px)]:lg:text-lg [@media(min-height:900px)]:lg:leading-8">
+
+          <div className="hero-copy mt-5 max-w-xl text-base leading-7 text-white/62 lg:leading-6">
             {children ?? <p>{COPY}</p>}
           </div>
 
-          <div className="hero-actions mt-8 lg:mt-7 flex flex-col gap-3 sm:flex-row">
-            <Link to="/contact" className="premium-button-light w-full sm:w-auto">
+          <div className="mt-7 grid gap-3 sm:max-w-md sm:grid-cols-2 lg:mt-6 lg:flex lg:max-w-none lg:flex-wrap lg:items-center">
+            <Link to="/contact" className="premium-button-light w-full lg:w-auto">
               Get Your Website
             </Link>
             <a
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="premium-button-dark w-full sm:w-auto"
+              className="premium-button-dark w-full lg:w-auto"
             >
               Chat on WhatsApp
             </a>
           </div>
 
-          <dl className="mt-10 grid max-w-xl grid-cols-3 lg:mt-8 [@media(max-height:560px)]:lg:hidden divide-x divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04]">
+          {/* Mobile / tablet: boxed reassurance row, right under the buttons */}
+          <dl className="mt-6 grid grid-cols-3 divide-x divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] sm:max-w-md lg:hidden">
             {STATS.map(([term, detail]) => (
-              <div key={term} className="px-2 py-4 text-center sm:px-4 sm:text-left lg:py-3.5">
-                <dt className="text-sm font-black tracking-tight text-bone sm:text-base">{term}</dt>
-                <dd className="mt-1 text-[0.7rem] leading-4 text-white/50 sm:text-xs">{detail}</dd>
+              <div key={term} className="px-2 py-3.5 text-center">
+                <dt className="text-sm font-black tracking-tight text-bone">{term}</dt>
+                <dd className="mt-1 text-[0.7rem] leading-4 text-white/50">{detail}</dd>
               </div>
             ))}
           </dl>
+
+          {/* Desktop: compact ruled strip, hidden only on extremely short windows */}
+          <div className="hidden lg:block">
+            <dl className="mt-8 grid max-w-xl grid-cols-3 gap-4 border-t border-white/10 pt-5 sm:gap-6 lg:mt-6 lg:pt-4 [@media(max-height:500px)]:hidden">
+              {STATS.map(([term, detail]) => (
+                <div key={term}>
+                  <dt className="text-sm font-black tracking-tight text-bone sm:text-base">{term}</dt>
+                  <dd className="mt-0.5 text-xs leading-5 text-white/50">{detail}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
 
         {/* ───────── Right: interactive package finder ───────── */}
-        <div className="glass min-w-0 rounded-[2rem] p-5 sm:p-7 lg:p-6">
+        <div className="glass min-w-0 rounded-[1.75rem] p-5 sm:p-7 lg:mt-2 xl:p-8">
           <div className="flex items-center justify-between gap-4">
             <p className="eyebrow">Find your fit</p>
             <p className="text-xs font-bold text-white/50" aria-live="polite">
@@ -100,7 +118,7 @@ export default function ServicesHero({ eyebrow = EYEBROW, title = TITLE, childre
             role="tablist"
             aria-label="Website packages"
             onKeyDown={handleKeyDown}
-            className="relative mt-5 lg:mt-4 grid grid-cols-3 rounded-full border border-white/10 bg-white/[0.05] p-1"
+            className="relative mt-5 grid grid-cols-3 rounded-full border border-white/10 bg-white/[0.05] p-1"
           >
             <span
               aria-hidden="true"
@@ -138,15 +156,19 @@ export default function ServicesHero({ eyebrow = EYEBROW, title = TITLE, childre
             role="tabpanel"
             id="services-hero-panel"
             aria-labelledby={`services-hero-tab-${active}`}
-            className="mt-7 min-h-[19rem] animate-fade-up motion-reduce:animate-none lg:mt-5 lg:min-h-0"
+            className="mt-7 min-h-[19rem] animate-fade-up motion-reduce:animate-none lg:mt-6 lg:min-h-[15.5rem]"
           >
             <p className="text-xs font-black uppercase tracking-[0.25em] text-white/42">
               {current.price}
             </p>
-            <h2 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl lg:mt-2 lg:text-3xl">{current.name}</h2>
-            <p className="mt-4 text-sm leading-7 text-white/58 sm:text-base lg:mt-2 lg:text-sm lg:leading-6">{current.audience}</p>
+            <h2 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl lg:mt-2 lg:text-4xl">
+              {current.name}
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-white/58 sm:text-base lg:mt-3 lg:text-sm lg:leading-6">
+              {current.audience}
+            </p>
 
-            <ul className="mt-6 space-y-3 lg:mt-3 lg:space-y-1.5">
+            <ul className="mt-6 space-y-3 lg:mt-4 lg:space-y-2">
               {current.features.map((feature) => (
                 <li
                   key={feature}
@@ -159,7 +181,7 @@ export default function ServicesHero({ eyebrow = EYEBROW, title = TITLE, childre
             </ul>
 
             {/* Scope meter: how far the package goes */}
-            <div className="mt-7 flex items-center gap-4 lg:mt-4">
+            <div className="mt-7 flex items-center gap-4 lg:mt-5">
               <p className="text-[0.7rem] font-black uppercase tracking-[0.22em] text-white/40">
                 Scope
               </p>
@@ -177,7 +199,7 @@ export default function ServicesHero({ eyebrow = EYEBROW, title = TITLE, childre
 
             <Link
               to="/contact"
-              className="mt-7 inline-flex items-center gap-2 lg:mt-4 text-sm font-bold text-white transition hover:translate-x-1"
+              className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-white transition hover:translate-x-1 lg:mt-5"
             >
               Start with {current.name} <span aria-hidden="true">&rarr;</span>
             </Link>
