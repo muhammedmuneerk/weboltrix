@@ -412,7 +412,7 @@ export default function ServicesHero({
       {/* ───────── Desktop layout (lg and up) – unchanged ───────── */}
       <div className="container-premium hidden w-full gap-12 lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start lg:gap-12 lg:pb-8 lg:pt-24 xl:gap-16">
         {/* Left: message + actions */}
-        <div className="min-w-0">
+        <div className="min-w-0 lg:mt-8">
           {eyebrow && <p className="hero-kicker eyebrow">{eyebrow}</p>}
 
           <h1
@@ -474,7 +474,7 @@ export default function ServicesHero({
             role="tablist"
             aria-label="Website packages"
             onKeyDown={handleDesktopKeyDown}
-            className="relative mt-5 grid grid-cols-3 rounded-full border border-white/10 bg-white/[0.05] p-1"
+            className="relative mt-3 grid grid-cols-3 rounded-full border border-white/10 bg-white/[0.05] p-1"
           >
             <span
               aria-hidden="true"
@@ -512,19 +512,19 @@ export default function ServicesHero({
             role="tabpanel"
             id="services-hero-panel"
             aria-labelledby={`services-hero-tab-${active}`}
-            className="mt-7 min-h-[16.5rem] animate-fade-up motion-reduce:animate-none"
+            className="mt-5 min-h-[16.5rem] animate-fade-up motion-reduce:animate-none"
           >
             <p className="text-xs font-black uppercase tracking-[0.25em] text-white/42">
               {activeService.price}
             </p>
-            <h2 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl">
+            <h2 className="mt-2 text-4xl font-black tracking-tight sm:text-5xl">
               {activeService.name}
             </h2>
-            <p className="mt-4 text-sm leading-7 text-white/58 sm:text-base">
+            <p className="mt-3 text-sm leading-7 text-white/58 sm:text-base">
               {activeService.audience}
             </p>
 
-            <ul className="mt-6 space-y-3">
+            <ul className="mt-5 space-y-1">
               {activeService.features.map((feature) => (
                 <li
                   key={feature}
