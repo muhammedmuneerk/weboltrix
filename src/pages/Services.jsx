@@ -3,6 +3,7 @@ import ServicesHero from "../components/ServicesHero.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import SectionHeading from "../components/SectionHeading.jsx";
 import { services } from "../data/siteData.js";
+import DetailedBreakdown from "../components/DetailedBreakdown.jsx";
 
 export default function Services() {
   return (
@@ -19,33 +20,7 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="section-padding border-y border-white/10 bg-white/[0.025]">
-        <div className="container-premium">
-          <SectionHeading
-            eyebrow="Detailed breakdown"
-            title="Every package is shaped around trust, speed, and enquiries."
-            text="The level changes, but the goal stays the same: a clean website that makes customers confident enough to contact you."
-          />
-          <div className="stagger-grid mt-12 grid gap-5 lg:grid-cols-3">
-            {services.map((service) => (
-              <article key={service.name} className="glass card-hover rounded-[1.8rem] p-7">
-                <p className="text-xs font-black uppercase tracking-[0.25em] text-white/40">
-                  {service.price}
-                </p>
-                <h2 className="mt-4 text-3xl font-black">{service.name}</h2>
-                <ul className="mt-7 space-y-4">
-                  {service.details.map((detail) => (
-                    <li key={detail} className="flex gap-3 text-sm leading-7 text-white/60">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white/70" />
-                      {detail}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <DetailedBreakdown services={services} />
 
       <section className="section-padding">
         <div className="container-premium">
