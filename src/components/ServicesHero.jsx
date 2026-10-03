@@ -30,6 +30,29 @@ export default function ServicesHero({
 
   const total = services.length;
   const activeService = services[active];
+  const tabRefs = useRef([]);
+
+  const selectDesktop = (index, focus = false) => {
+    setActive(index);
+    if (focus) tabRefs.current[index]?.focus();
+  };
+
+  // Arrow-key navigation for the desktop tab group (roving tabindex).
+  const handleDesktopKeyDown = (event) => {
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      selectDesktop((active + 1) % total, true);
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      selectDesktop((active - 1 + total) % total, true);
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      selectDesktop(0, true);
+    } else if (event.key === "End") {
+      event.preventDefault();
+      selectDesktop(total - 1, true);
+    }
+  };
 
   // ---- Mobile / tablet carousel (independent of the desktop timer) ----
   const [mStep, setMStep] = useState(0);
@@ -440,84 +463,102 @@ export default function ServicesHero({
           onBlur={() => setPaused(false)}
         >
           <div className="flex items-center justify-between gap-4">
-            <p className="eyebrow">Pick a level</p>
+            <p className="eyebrow">Find your fit</p>
             <p className="text-xs font-bold text-white/50" aria-live="polite">
-              {active + 1} of {total}
+              Package {active + 1} of {total}
             </p>
           </div>
 
-          {/* Tabs */}
-          <div className="mt-5 grid grid-cols-3 gap-2">
+          {/* Segmented control with a sliding thumb */}
+          <div
+            role="tablist"
+            aria-label="Website packages"
+            onKeyDown={handleDesktopKeyDown}
+            className="relative mt-5 grid grid-cols-3 rounded-full border border-white/10 bg-white/[0.05] p-1"
+          >
+            <span
+              aria-hidden="true"
+              className="absolute bottom-1 left-1 top-1 w-[calc((100%-0.5rem)/3)] rounded-full bg-bone shadow-glow transition-transform duration-500 ease-out motion-reduce:transition-none"
+              style={{ transform: `translateX(${active * 100}%)` }}
+            />
             {services.map((service, index) => {
               const isActive = index === active;
               return (
                 <button
                   key={service.name}
+                  ref={(el) => {
+                    tabRefs.current[index] = el;
+                  }}
                   type="button"
-                  onClick={() => setActive(index)}
-                  aria-pressed={isActive}
-                  className={`relative rounded-full border px-3 py-2.5 text-xs font-black uppercase tracking-[0.1em] transition duration-500 ${
-                    isActive
-                      ? "border-bone bg-bone text-ink shadow-glow"
-                      : "border-white/15 bg-white/[0.04] text-white/55 hover:border-white/30 hover:text-bone"
+                  role="tab"
+                  id={`services-hero-tab-${index}`}
+                  aria-selected={isActive}
+                  aria-controls="services-hero-panel"
+                  tabIndex={isActive ? 0 : -1}
+                  onClick={() => selectDesktop(index)}
+                  className={`relative z-10 rounded-full px-2 py-3 text-sm font-black transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone motion-reduce:transition-none ${
+                    isActive ? "text-ink" : "text-white/60 hover:text-bone"
                   }`}
                 >
                   {service.name}
-                  {service.featured && (
-                    <span
-                      aria-hidden="true"
-                      className={`absolute -top-2 left-1/2 -translate-x-1/2 rounded-full px-2 py-0.5 text-[0.55rem] font-black uppercase tracking-[0.08em] ${
-                        isActive ? "bg-ink text-bone" : "bg-bone text-ink"
-                      }`}
-                    >
-                      Popular
-                    </span>
-                  )}
                 </button>
               );
             })}
           </div>
 
-          {/* Active tier detail */}
-          <div className="mt-7">
-            <p className="text-xs font-black uppercase tracking-[0.25em] text-white/40">
+          {/* Selected package */}
+          <div
+            key={activeService.name}
+            role="tabpanel"
+            id="services-hero-panel"
+            aria-labelledby={`services-hero-tab-${active}`}
+            className="mt-7 min-h-[16.5rem] animate-fade-up motion-reduce:animate-none"
+          >
+            <p className="text-xs font-black uppercase tracking-[0.25em] text-white/42">
               {activeService.price}
             </p>
-            <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
+            <h2 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl">
               {activeService.name}
             </h2>
-            <p className="mt-3 text-sm leading-7 text-white/58">{activeService.audience}</p>
+            <p className="mt-4 text-sm leading-7 text-white/58 sm:text-base">
+              {activeService.audience}
+            </p>
 
             <ul className="mt-6 space-y-3">
               {activeService.features.map((feature) => (
-                <li key={feature} className="flex items-center gap-3 text-sm font-semibold text-white/75">
-                  <span className="flex h-5 w-5 flex-none items-center justify-center rounded-full border border-white/20 bg-white/5">
-                    <svg viewBox="0 0 24 24" className="h-3 w-3 fill-none stroke-bone" strokeWidth="3">
-                      <path d="M5 12.5l4.5 4.5L19 7.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
+                <li
+                  key={feature}
+                  className="flex items-center gap-3 text-sm font-semibold text-white/72 sm:text-base"
+                >
+                  <span className="h-2 w-2 shrink-0 rounded-full border border-white/50" />
                   {feature}
                 </li>
               ))}
             </ul>
 
+            {/* Scope meter: how far the package goes */}
+            <div className="mt-7 flex items-center gap-4">
+              <p className="text-[0.7rem] font-black uppercase tracking-[0.22em] text-white/40">
+                Scope
+              </p>
+              <div className="grid flex-1 grid-cols-3 gap-2" aria-hidden="true">
+                {services.map((service, index) => (
+                  <span
+                    key={service.name}
+                    className={`h-1 rounded-full transition-colors duration-500 motion-reduce:transition-none ${
+                      index <= active ? "bg-bone" : "bg-white/12"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+
             <Link
               to="/contact"
-              className="premium-button-light mt-7 w-full"
+              className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-white transition hover:translate-x-1"
             >
-              Start with {activeService.name}
+              Start with {activeService.name} <span aria-hidden="true">&rarr;</span>
             </Link>
-          </div>
-
-          <div className="mt-5 grid grid-cols-3 gap-2" aria-hidden="true">
-            {services.map((service, index) => (
-              <span
-                key={service.name}
-                className={`h-1 rounded-full transition-colors duration-500 ${
-                  index === active ? "bg-bone" : "bg-white/12"
-                }`}
-              />
-            ))}
           </div>
         </div>
       </div>
