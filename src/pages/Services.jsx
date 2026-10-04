@@ -20,7 +20,7 @@ export default function Services() {
         </div>
       </section>
 
-      <DetailedBreakdown services={services} />
+      <DetailedBreakdown />
 
       <section className="section-padding">
         <div className="container-premium">
