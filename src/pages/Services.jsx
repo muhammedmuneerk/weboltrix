@@ -4,6 +4,7 @@ import ServiceCard from "../components/ServiceCard.jsx";
 import SectionHeading from "../components/SectionHeading.jsx";
 import { services } from "../data/siteData.js";
 import DetailedBreakdown from "../components/DetailedBreakdown.jsx";
+import WhoItsFor from "../components/WhoItsFor.jsx";
 
 export default function Services() {
   return (
@@ -22,19 +23,7 @@ export default function Services() {
 
       <DetailedBreakdown />
 
-      <section className="section-padding">
-        <div className="container-premium">
-          <SectionHeading eyebrow="Who it's for" title="Made for local brands with ambition." />
-          <div className="stagger-grid mt-10 grid gap-5 md:grid-cols-3">
-            {services.map((service) => (
-              <div key={service.name} className="glass card-hover rounded-[1.7rem] p-7">
-                <h3 className="text-2xl font-black">{service.name}</h3>
-                <p className="mt-4 text-sm leading-7 text-white/58">{service.audience}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <WhoItsFor />
 
       <section className="section-padding border-y border-white/10 bg-white/[0.025]">
         <div className="container-premium grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
