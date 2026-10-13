@@ -1,10 +1,10 @@
 import CTASection from "../components/CTASection.jsx";
 import ServicesHero from "../components/ServicesHero.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
-import SectionHeading from "../components/SectionHeading.jsx";
 import { services } from "../data/siteData.js";
 import DetailedBreakdown from "../components/DetailedBreakdown.jsx";
 import WhoItsFor from "../components/WhoItsFor.jsx";
+import AddOns from "../components/Addons.jsx";
 
 export default function Services() {
   return (
@@ -25,26 +25,7 @@ export default function Services() {
 
       <WhoItsFor />
 
-      <section className="section-padding border-y border-white/10 bg-white/[0.025]">
-        <div className="container-premium grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-          <SectionHeading
-            eyebrow="Add-ons"
-            title="Keep the website running cleanly after launch."
-            text="Add only what your business needs. The goal is a sharp site that stays reliable."
-          />
-          <div className="stagger-grid grid gap-5 sm:grid-cols-2">
-            {[
-              ["Hosting", "Fast, stable hosting guidance so your website stays accessible and professional."],
-              ["Maintenance", "Updates, small edits, performance checks, and yearly care for peace of mind."],
-            ].map(([title, text]) => (
-              <div key={title} className="glass rounded-[1.8rem] p-7">
-                <h3 className="text-2xl font-black">{title}</h3>
-                <p className="mt-4 text-sm leading-7 text-white/58">{text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <AddOns />
 
       <CTASection title="Choose a website package and start stronger." />
     </>
