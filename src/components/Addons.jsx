@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import SectionHeading from "./SectionHeading.jsx";
+import { useAddOnsMotion } from "../hooks/useSiteMotion.js";
 
 const EYEBROW = "Add-ons";
 const TITLE = "Keep the website running cleanly after launch.";
@@ -103,13 +104,13 @@ function Decal({ label, isActive }) {
 }
 
 // An exploded-view diagram: the website sits on top of its add-ons.
-// - It pulls apart once on its own when it scrolls into view (so touch screens see it too)
-// - Hover the diagram or pick an add-on (list, plate or legend) and it pulls apart again;
-//   the picked layer lights up and lifts out of the stack
+// - Scroll-driven (GSAP ScrollTrigger): the layers pull apart every time the diagram scrolls
+//   well into view, and close back into the stack (and the picked add-on resets) as it leaves
+// - While it is in view, hovering or picking an add-on lights that layer up and lifts it
+//   out of the stack
 export default function AddOns() {
   const [active, setActive] = useState(-1);
-  const [hovered, setHovered] = useState(false);
-  const [intro, setIntro] = useState(false);
+  const [exploded, setExploded] = useState(false);
   const [compact, setCompact] = useState(false);
   const diagramRef = useRef(null);
 
@@ -122,33 +123,15 @@ export default function AddOns() {
     return () => query.removeEventListener("change", update);
   }, []);
 
-  // One-time "assemble" demo when the diagram first scrolls into view
-  useEffect(() => {
-    const el = diagramRef.current;
-    if (!el || !("IntersectionObserver" in window)) return undefined;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
-
-    let startTimer;
-    let endTimer;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        observer.disconnect();
-        startTimer = window.setTimeout(() => setIntro(true), 300);
-        endTimer = window.setTimeout(() => setIntro(false), 2800);
-      },
-      { threshold: 0.5 }
-    );
-    observer.observe(el);
-
-    return () => {
-      observer.disconnect();
-      window.clearTimeout(startTimer);
-      window.clearTimeout(endTimer);
-    };
+  // Scroll trigger (GSAP ScrollTrigger, see useSiteMotion.js): open after the diagram has
+  // scrolled well into view, close as soon as it starts leaving. Re-arms on every pass.
+  const open = useCallback(() => setExploded(true), []);
+  const close = useCallback(() => {
+    setExploded(false);
+    setActive(-1);
   }, []);
+  useAddOnsMotion(diagramRef, { onOpen: open, onClose: close });
 
-  const exploded = hovered || active !== -1 || intro;
   const [gapStacked, gapExploded] = compact ? GAPS.compact : GAPS.desktop;
   const gap = exploded ? gapExploded : gapStacked;
 
@@ -164,8 +147,6 @@ export default function AddOns() {
           <div
             ref={diagramRef}
             aria-hidden="true"
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
             className="relative flex flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] px-4 py-8 shadow-premium sm:px-8 lg:min-h-[30rem]"
           >
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-40">

@@ -133,3 +133,43 @@ export function useWhyChooseMotion(sectionRef) {
     };
   }, [sectionRef]);
 }
+
+// Add-ons exploded diagram.
+// Opens the stack once the diagram has scrolled well into the viewport (after a short
+// pause) and closes it again as soon as it starts leaving, in either scroll direction.
+// Tune these to taste:
+//   OPEN_START  - diagram top reaches this line of the viewport  -> layers separate
+//   CLOSE_END   - diagram bottom reaches this line of the viewport -> layers close
+//   OPEN_DELAY  - ms to wait after entering before separating
+//   ("top 40%" = later open; a larger "bottom" % = earlier close when scrolling down)
+const ADDONS_OPEN_START = "top 40%";
+const ADDONS_CLOSE_END = "bottom 62%";
+const ADDONS_OPEN_DELAY = 500;
+
+export function useAddOnsMotion(targetRef, { onOpen, onClose }) {
+  useLayoutEffect(() => {
+    const target = targetRef.current;
+    if (!target) return undefined;
+
+    let openTimer;
+
+    const trigger = ScrollTrigger.create({
+      trigger: target,
+      start: ADDONS_OPEN_START,
+      end: ADDONS_CLOSE_END,
+      onToggle: (self) => {
+        window.clearTimeout(openTimer);
+        if (self.isActive) {
+          openTimer = window.setTimeout(onOpen, ADDONS_OPEN_DELAY);
+        } else {
+          onClose();
+        }
+      },
+    });
+
+    return () => {
+      window.clearTimeout(openTimer);
+      trigger.kill();
+    };
+  }, [targetRef, onOpen, onClose]);
+}
