@@ -338,162 +338,138 @@ export default function AddOns() {
       {/* ───────── Mobile / tablet layout (below lg) ───────── */}
       <div className="container-premium lg:hidden">
         <SectionHeading eyebrow={EYEBROW} title={TITLE} text={TEXT} />
-        <MobileSheets />
+        <MobileStage />
       </div>
     </section>
   );
 }
 
-// Mobile: pinned, scroll-scrubbed "layer sheets" (GSAP ScrollTrigger — see
-// useAddOnsMobileMotion in useSiteMotion.js). Pure visual + information: each layer is a
-// sheet that rises over the one before it, leaving a title strip peeking out, so the
-// stack builds up exactly like website -> hosting -> maintenance.
-// The markup is the finished (fully stacked) state; GSAP animates sheets in from below.
-const SHEET_PEEK = 40; // px of each covered sheet that stays visible (= its header strip)
-const SHEET_STYLES = [
-  "border-bone bg-bone text-ink",
-  "border-white/20 bg-[#141414] text-bone",
-  "border-white/20 bg-[#1f1f1f] text-bone",
-];
+// Mobile: a pinned, scroll-scrubbed exploded stack (GSAP ScrollTrigger — see
+// useAddOnsMobileMotion in useSiteMotion.js). Pure visual + information: the plates
+// pull apart, then Hosting and Maintenance take turns lighting up while the caption
+// underneath follows. The markup is the finished (pulled-apart) state; GSAP animates
+// from the closed stack.
+const MOBILE_GAP_OPEN = 88; // px between plate centres, pulled apart
+const MOBILE_GAP_CLOSED = 44; // px between plate centres, stacked
 
-function SheetDecal({ layer }) {
-  if (layer.addon === null) {
-    return (
-      <div className="relative flex h-full flex-col gap-3 rounded-2xl border border-ink/10 bg-ink/[0.05] p-4">
-        <span className="h-2 w-1/3 rounded-full bg-ink/25" />
-        <span className="h-2 w-2/3 rounded-full bg-ink/15" />
-        <span className="mt-auto h-9 w-full rounded-xl bg-ink/10" />
-      </div>
-    );
-  }
-
-  if (layer.label === "Hosting") {
-    return (
-      <div className="relative flex h-full flex-col justify-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-        {[0, 1, 2].map((slot) => (
-          <span
-            key={slot}
-            className="relative h-3.5 rounded-full border border-white/20 bg-white/[0.12]"
-          >
-            <span
-              className={`absolute right-2.5 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-bone ${
-                slot === 0 ? "addon-blink" : "opacity-60"
-              }`}
-            />
-          </span>
-        ))}
-      </div>
-    );
-  }
-
-  return (
-    <div className="relative flex h-full flex-col justify-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-      {["22%", "64%", "42%"].map((knob) => (
-        <span key={knob} className="relative h-1.5 rounded-full bg-white/25">
-          <span
-            className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border border-ink/40 bg-bone"
-            style={{ left: knob }}
-          />
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function MobileSheets() {
+function MobileStage() {
   const stageRef = useRef(null);
   useAddOnsMobileMotion(stageRef);
 
-  // With reduced motion there is no pin, so the sheets are simply listed
+  // With reduced motion there is no pin, so captions are listed instead of swapped
   const [reduce] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
 
-  const total = LAYERS.length;
+  const captions = LAYERS.map((layer) => ({
+    key: layer.label,
+    name: layer.label,
+    tag: layer.addon === null ? "Included" : `${pad(layer.addon)} · Add-on`,
+    text: layer.addon === null ? null : ADDONS[layer.addon].text,
+  }));
 
   return (
-    <div className="mt-12">
-      <div ref={stageRef}>
-        {/* Meter: fills as each layer arrives */}
-        <div aria-hidden="true" className="mb-4 grid grid-cols-3 gap-2">
-          {LAYERS.map((layer) => (
-            <div key={layer.label}>
-              <span className="block h-1 overflow-hidden rounded-full bg-white/12">
-                <span data-meter-bar className="block h-full origin-left bg-bone" />
-              </span>
-              <span
-                data-meter-label
-                className="mt-2 block text-[0.6rem] font-black uppercase tracking-[0.16em] text-bone"
-              >
-                {layerText(layer)}
-              </span>
-            </div>
-          ))}
-        </div>
+    <div
+      ref={stageRef}
+      className="relative mt-12 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] px-5 pb-8 pt-4 shadow-premium"
+    >
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-40">
+        <div className="fine-grid h-full w-full" />
+      </div>
 
-        {/* Stage */}
-        <div
-          data-sheet-stage
-          className={
-            reduce
-              ? "space-y-4"
-              : "relative h-[min(30rem,calc(100svh-11rem))] min-h-[24rem] overflow-hidden rounded-[2rem]"
-          }
-        >
-          {LAYERS.map((layer, index) => {
-            const isSite = layer.addon === null;
-            const tag = isSite ? "Included" : `${pad(layer.addon)} · Add-on`;
+      {/* Plates */}
+      <div aria-hidden="true" className="relative h-[19rem] w-full">
+        <span className="absolute bottom-2 left-1/2 h-12 w-64 -translate-x-1/2 rounded-full bg-white/[0.07] blur-2xl" />
 
-            return (
-              <article
-                key={layer.label}
-                data-sheet
-                className={`flex flex-col overflow-hidden rounded-[2rem] border ${
-                  SHEET_STYLES[index] ?? SHEET_STYLES[SHEET_STYLES.length - 1]
-                } ${reduce ? "relative" : "absolute inset-x-0"}`}
-                style={
-                  reduce
-                    ? undefined
-                    : {
-                        top: index * SHEET_PEEK,
-                        height: `calc(100% - ${(total - 1) * SHEET_PEEK}px)`,
-                        zIndex: index + 1,
-                      }
-                }
+        {LAYERS.map((layer, index) => {
+          const isSite = layer.addon === null;
+          return (
+            <div
+              key={layer.label}
+              data-plate
+              data-closed-offset={(index - 1) * (MOBILE_GAP_CLOSED - MOBILE_GAP_OPEN)}
+              className="absolute left-1/2 -ml-20 h-40 w-40"
+              style={{
+                top: `calc(50% - 5rem + ${(index - 1) * MOBILE_GAP_OPEN}px)`,
+                zIndex: LAYERS.length - index,
+              }}
+            >
+              <div
+                className="absolute inset-0 [transform-style:preserve-3d]"
+                style={{ transform: "rotateX(62deg) rotateZ(-45deg)" }}
               >
-                {/* Title strip — the part that stays visible once covered */}
-                <header
-                  className={`flex h-10 flex-none items-center justify-between gap-4 border-b px-5 text-[0.65rem] font-black uppercase tracking-[0.2em] ${
-                    isSite ? "border-black/10" : "border-white/10"
+                {EDGE_DEPTHS.map((depth) => (
+                  <span
+                    key={depth}
+                    className={`absolute inset-0 rounded-[1.6rem] border ${
+                      isSite ? "border-[#b9b5ab] bg-[#cfcbc1]" : "border-white/10 bg-[#0d0d0d]"
+                    }`}
+                    style={{ transform: `translateZ(-${depth}px)` }}
+                  />
+                ))}
+
+                <div
+                  data-plate-face
+                  className={`absolute inset-0 overflow-hidden rounded-[1.6rem] border ${
+                    isSite ? "border-bone bg-bone shadow-glow" : "border-white/20 bg-[#181818]"
                   }`}
                 >
-                  <span>{layer.label}</span>
-                  <span className="opacity-50">{tag}</span>
-                </header>
-
-                <div className="flex min-h-0 flex-1 flex-col p-5">
-                  <div className="min-h-[4.5rem] flex-1">
-                    <SheetDecal layer={layer} />
-                  </div>
-                  <h3 className="mt-5 text-5xl font-black leading-[0.95] tracking-tight">
-                    {layer.label}
-                  </h3>
-                  {!isSite && (
-                    <p className="mt-3 text-sm leading-7 text-white/62">
-                      {ADDONS[layer.addon].text}
-                    </p>
+                  <span
+                    className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${
+                      isSite
+                        ? "from-white via-transparent to-black/[0.08]"
+                        : "from-white/20 via-white/[0.03] to-transparent"
+                    }`}
+                  />
+                  {isSite ? (
+                    <div className="relative flex h-full flex-col gap-3 p-5">
+                      <span className="h-2 w-1/2 rounded-full bg-ink/25" />
+                      <span className="h-2 w-3/4 rounded-full bg-ink/15" />
+                      <span className="mt-auto h-10 w-full rounded-xl bg-ink/10" />
+                    </div>
+                  ) : (
+                    <Decal label={layer.label} isActive={false} />
                   )}
                 </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
-                <span
-                  data-sheet-shade
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-black opacity-0"
-                />
-              </article>
-            );
-          })}
-        </div>
+      {/* Legend: the same names as the desktop tags */}
+      <div aria-hidden="true" className="relative mt-1 flex flex-wrap justify-center gap-2">
+        {LAYERS.map((layer) => {
+          const isSite = layer.addon === null;
+          return (
+            <span
+              key={layer.label}
+              data-legend
+              className={`rounded-full border px-3 py-1 text-[0.6rem] font-black uppercase tracking-[0.16em] ${
+                isSite
+                  ? "border-bone bg-bone text-ink"
+                  : "border-white/20 bg-ink text-white/60"
+              }`}
+            >
+              {layerText(layer)}
+            </span>
+          );
+        })}
+      </div>
+
+      {/* Captions: swapped as you scroll (listed when motion is reduced) */}
+      <div className={`relative mt-8 ${reduce ? "space-y-8" : "grid"}`}>
+        {captions.map((caption) => (
+          <div key={caption.key} data-caption className={reduce ? "" : "[grid-area:1/1]"}>
+            <p className="eyebrow">{caption.tag}</p>
+            <h3 className="mt-3 text-4xl font-black leading-[0.98] tracking-tight">
+              {caption.name}
+            </h3>
+            {caption.text && (
+              <p className="mt-4 text-sm leading-7 text-white/62">{caption.text}</p>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
