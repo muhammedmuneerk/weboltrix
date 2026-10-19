@@ -173,3 +173,91 @@ export function useAddOnsMotion(targetRef, { onOpen, onClose }) {
     };
   }, [targetRef, onOpen, onClose]);
 }
+
+// Add-ons — mobile "layer sheets" (below lg).
+// The stage pins to the screen while you scroll through it. Each add-on is a sheet that
+// rises from the bottom and lays itself over the one before, leaving that sheet's title
+// strip peeking out above — the website, then hosting on top of it, then maintenance on
+// top of that. A three-part meter above the stage fills as each layer arrives.
+// Scrolling back up lifts the sheets off again. The markup is written in its finished
+// (fully stacked) state, so reduced-motion still shows everything.
+// Tune these to taste:
+//   ADDONS_STAGE_TOP     - where the stage pins (below the fixed navbar)
+//   ADDONS_SCROLL_RUNWAY - scroll distance used, as a multiple of the screen height
+const ADDONS_SHEETS_TOP = "top 100px";
+const ADDONS_SHEETS_RUNWAY = 1.4;
+
+export function useAddOnsMobileMotion(stageRef) {
+  useLayoutEffect(() => {
+    if (prefersReducedMotion()) return undefined;
+
+    const root = stageRef.current;
+    if (!root) return undefined;
+
+    const mm = gsap.matchMedia();
+    const refreshFrame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
+
+    mm.add("(max-width: 1023px)", () => {
+      const stage = root.querySelector("[data-sheet-stage]");
+      const sheets = gsap.utils.toArray(root.querySelectorAll("[data-sheet]"));
+      const shades = gsap.utils.toArray(root.querySelectorAll("[data-sheet-shade]"));
+      const bars = gsap.utils.toArray(root.querySelectorAll("[data-meter-bar]"));
+      const labels = gsap.utils.toArray(root.querySelectorAll("[data-meter-label]"));
+      if (!stage || sheets.length < 2) return undefined;
+
+      const total = sheets.length;
+      const labelLit = { color: "rgba(245,243,239,1)" };
+      const labelDim = { color: "rgba(245,243,239,0.35)" };
+
+      const timeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: root,
+          start: ADDONS_SHEETS_TOP,
+          end: () => `+=${window.innerHeight * ADDONS_SHEETS_RUNWAY}`,
+          pin: true,
+          anticipatePin: 1,
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // Sheets are laid out stacked (their final spot), so tween *from* below the stage.
+      for (let i = 1; i < total; i += 1) {
+        const at = i - 1;
+
+        timeline.fromTo(
+          sheets[i],
+          { y: () => stage.offsetHeight },
+          { y: 0, duration: 1 },
+          at
+        );
+
+        // The sheet being covered dims, so the new one reads as the top layer
+        if (shades[i - 1]) {
+          timeline.fromTo(shades[i - 1], { opacity: 0 }, { opacity: 0.5, duration: 1 }, at);
+        }
+
+        // Meter: this layer's bar fills, its label lights, the previous one dims
+        if (bars[i]) timeline.fromTo(bars[i], { scaleX: 0 }, { scaleX: 1, duration: 1 }, at);
+        if (labels[i]) {
+          timeline.fromTo(labels[i], labelDim, { ...labelLit, duration: 0.4 }, at + 0.6);
+        }
+        if (labels[i - 1]) timeline.to(labels[i - 1], { ...labelDim, duration: 0.4 }, at + 0.6);
+      }
+
+      // Hold the finished stack for a beat before the pin releases
+      timeline.to({}, { duration: 0.4 }, total - 1);
+
+      return () => {
+        timeline.scrollTrigger?.kill();
+        timeline.kill();
+      };
+    });
+
+    return () => {
+      window.cancelAnimationFrame(refreshFrame);
+      mm.revert();
+    };
+  }, [stageRef]);
+}
