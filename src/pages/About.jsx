@@ -1,14 +1,14 @@
 import CTASection from "../components/CTASection.jsx";
-import PageHero from "../components/PageHero.jsx";
+import AboutHero from "../components/AboutHero.jsx";
 import SectionHeading from "../components/SectionHeading.jsx";
 
 export default function About() {
   return (
     <>
-      <PageHero eyebrow="About" title="About Weboltrix">
+      <AboutHero eyebrow="About" title="About Weboltrix">
         A boutique web design studio focused on making local businesses look premium, move faster,
         and win more trust online.
-      </PageHero>
+      </AboutHero>
 
       <section className="section-padding">
         <div className="container-premium grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
