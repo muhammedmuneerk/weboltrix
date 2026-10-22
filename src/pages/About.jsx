@@ -2,6 +2,7 @@ import CTASection from "../components/CTASection.jsx";
 import AboutHero from "../components/AboutHero.jsx";
 import SectionHeading from "../components/SectionHeading.jsx";
 import AboutStory from "../components/AboutStory.jsx";
+import AboutPrinciples from "../components/AboutPrinciples.jsx";
 
 export default function About() {
   return (
@@ -13,20 +14,7 @@ export default function About() {
 
       <AboutStory />
 
-      <section className="section-padding border-y border-white/10 bg-white/[0.025]">
-        <div className="container-premium stagger-grid grid gap-5 md:grid-cols-3">
-          {[
-            ["Mission", "Help ambitious businesses earn trust online before the first conversation."],
-            ["Approach", "Design with restraint, build with speed, and keep every page focused on business action."],
-            ["Mindset", "Fast, modern, premium thinking without clutter or unnecessary complexity."],
-          ].map(([title, text]) => (
-            <div key={title} className="glass card-hover rounded-[1.8rem] p-7">
-              <h2 className="text-3xl font-black">{title}</h2>
-              <p className="mt-5 text-sm leading-7 text-white/58">{text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <AboutPrinciples />
 
       <section className="section-padding">
         <div className="container-premium">
