@@ -1,6 +1,7 @@
 import CTASection from "../components/CTASection.jsx";
 import AboutHero from "../components/AboutHero.jsx";
 import SectionHeading from "../components/SectionHeading.jsx";
+import AboutStory from "../components/AboutStory.jsx";
 
 export default function About() {
   return (
@@ -10,19 +11,7 @@ export default function About() {
         and win more trust online.
       </AboutHero>
 
-      <section className="section-padding">
-        <div className="container-premium grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <SectionHeading
-            eyebrow="Story"
-            title="We believe small businesses should not look small online."
-            text="Weboltrix was built for owners who care about quality but need a website that is practical, fast, and easy for customers to act on."
-          />
-          <div className="glass rounded-[2rem] p-8 text-lg leading-9 text-white/65">
-            We combine high-end visual taste with the direct needs of local business: clear offers,
-            mobile-first layouts, WhatsApp contact paths, and a polished brand feeling from the first scroll.
-          </div>
-        </div>
-      </section>
+      <AboutStory />
 
       <section className="section-padding border-y border-white/10 bg-white/[0.025]">
         <div className="container-premium stagger-grid grid gap-5 md:grid-cols-3">
