@@ -17,6 +17,8 @@ export default function Layout() {
       <main>
         <Outlet />
       </main>
+      {/* The Contact hero already has its own WhatsApp button */}
+      {/* {location.pathname !== "/contact" && <WhatsAppFloat />} */}
       <WhatsAppFloat />
       <Footer />
       <CursorGlow />

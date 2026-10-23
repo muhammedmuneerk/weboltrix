@@ -1,4 +1,4 @@
-import PageHero from "../components/PageHero.jsx";
+import ContactHero from "../components/ContactHero.jsx";
 import { contactDetails, whatsappLink } from "../data/siteData.js";
 
 export default function Contact() {
@@ -19,12 +19,12 @@ export default function Contact() {
 
   return (
     <>
-      <PageHero eyebrow="Contact" title="Let's Build Your Website">
+      <ContactHero eyebrow="Contact" title="Let's Build Your Website">
         Tell us about your business and the kind of website you want. We will help shape it into a
         premium, high-converting online presence.
-      </PageHero>
+      </ContactHero>
 
-      <section className="section-padding">
+      <section id="enquiry-form" className="section-padding scroll-mt-20">
         <div className="container-premium stagger-grid grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <form className="glass rounded-[2rem] p-6 sm:p-8" onSubmit={handleSubmit}>
             <div className="grid gap-5 sm:grid-cols-2">
