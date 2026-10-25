@@ -52,9 +52,9 @@ export default function ContactEnquiryCompose() {
 
   const buildMessage = () =>
     [
-      "Hi, I want a website for my business.",
+      `Hi, I want a website${v.business.trim() ? " for my business" : ""}.`,
       `Name: ${v.name.trim()}`,
-      `Business: ${v.business.trim()}`,
+      v.business.trim() && `Business: ${v.business.trim()}`,
       `Phone: ${v.phone.trim()}`,
       v.pack && `Package: ${v.pack}`,
       v.timeline && `Launch: ${v.timeline}`,
@@ -131,7 +131,7 @@ export default function ContactEnquiryCompose() {
               <input id="compose-name" type="text" autoComplete="name" required value={v.name} onChange={set("name")} placeholder="Your full name" className={rowInput} />
             </Row>
             <Row label="Business" htmlFor="compose-business">
-              <input id="compose-business" type="text" autoComplete="organization" required value={v.business} onChange={set("business")} placeholder="Your business name" className={rowInput} />
+              <input id="compose-business" type="text" autoComplete="organization" value={v.business} onChange={set("business")} placeholder="Your business or project (optional)" className={rowInput} />
             </Row>
             <Row label="Phone" htmlFor="compose-phone">
               <input id="compose-phone" type="tel" autoComplete="tel" required value={v.phone} onChange={set("phone")} placeholder="+91 00000 00000" className={rowInput} />

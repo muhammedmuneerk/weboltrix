@@ -6,7 +6,7 @@ const PACKAGES = services.map((service) => service.name);
 const TIMELINES = ["Within 2 weeks", "This month", "No rush"];
 
 const STEPS = [
-  { label: "About you", title: "Who are we talking to?", hint: "Your name and your business." },
+  { label: "About you", title: "Who are we talking to?", hint: "Your name, and your business or project if you have one." },
   { label: "Contact", title: "What number can we reach you on?", hint: "We will use it to get back to you." },
   { label: "Your site", title: "What are you looking for?", hint: "Both are optional. Pick what fits, or continue." },
   { label: "Details", title: "Anything else we should know?", hint: "Pages you need, websites you like, or questions. Optional." },
@@ -67,7 +67,7 @@ export default function ContactEnquiryFlow() {
   const moved = useRef(false); // only manage focus after the visitor has used the controls
 
   const isValid = (index) => {
-    if (index === 0) return Boolean(v.name.trim() && v.business.trim());
+    if (index === 0) return Boolean(v.name.trim());
     if (index === 1) return v.phone.replace(/\D/g, "").length >= 7;
     return true;
   };
@@ -84,7 +84,7 @@ export default function ContactEnquiryFlow() {
   }, [step]);
 
   const message = [
-    "Hi, I want a website for my business.",
+    `Hi, I want a website${v.business.trim() ? " for my business" : ""}.`,
     v.name && `Name: ${v.name.trim()}`,
     v.business && `Business: ${v.business.trim()}`,
     v.phone && `Phone: ${v.phone.trim()}`,
@@ -222,8 +222,8 @@ export default function ContactEnquiryFlow() {
                     <Field label="Your name" htmlFor="flow-name">
                       <input id="flow-name" type="text" autoComplete="name" value={v.name} onChange={set("name")} placeholder="Full name" className={inputClass} />
                     </Field>
-                    <Field label="Business name" htmlFor="flow-business">
-                      <input id="flow-business" type="text" autoComplete="organization" value={v.business} onChange={set("business")} placeholder="Business name" className={inputClass} />
+                    <Field label="Business or project (optional)" htmlFor="flow-business">
+                      <input id="flow-business" type="text" autoComplete="organization" value={v.business} onChange={set("business")} placeholder="Business or project name" className={inputClass} />
                     </Field>
                   </>
                 )}

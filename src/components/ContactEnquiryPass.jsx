@@ -76,9 +76,9 @@ export default function ContactEnquiryPass() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const message = [
-      "Hi, I want a website for my business.",
+      `Hi, I want a website${v.business.trim() ? " for my business" : ""}.`,
       `Name: ${v.name.trim()}`,
-      `Business: ${v.business.trim()}`,
+      v.business.trim() && `Business: ${v.business.trim()}`,
       `Phone: ${v.phone.trim()}`,
       v.pack && `Package: ${v.pack}`,
       v.timeline && `Launch: ${v.timeline}`,
@@ -129,7 +129,7 @@ export default function ContactEnquiryPass() {
                 <input id="pass-name" type="text" autoComplete="name" required value={v.name} onChange={set("name")} placeholder="Full name" className={cellInput} />
               </Cell>
               <Cell label="Business" htmlFor="pass-business" className="sm:border-l">
-                <input id="pass-business" type="text" autoComplete="organization" required value={v.business} onChange={set("business")} placeholder="Business name" className={cellInput} />
+                <input id="pass-business" type="text" autoComplete="organization" value={v.business} onChange={set("business")} placeholder="Business or project (optional)" className={cellInput} />
               </Cell>
               <Cell label="Contact" htmlFor="pass-phone">
                 <input id="pass-phone" type="tel" autoComplete="tel" required value={v.phone} onChange={set("phone")} placeholder="+91 00000 00000" className={cellInput} />

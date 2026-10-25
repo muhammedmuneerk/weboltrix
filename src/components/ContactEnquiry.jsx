@@ -57,7 +57,7 @@ export default function ContactEnquiry() {
 
   // One message, used for both the live preview and the WhatsApp hand-off.
   const lines = [
-    "Hi, I want a website for my business.",
+    `Hi, I want a website${values.business.trim() ? " for my business" : ""}.`,
     values.name && `Name: ${values.name}`,
     values.business && `Business: ${values.business}`,
     values.phone && `Phone: ${values.phone}`,
@@ -106,16 +106,15 @@ export default function ContactEnquiry() {
                   className={inputClass}
                 />
               </Field>
-              <Field label="Business name" htmlFor="enquiry-business">
+              <Field label="Business or project (optional)" htmlFor="enquiry-business">
                 <input
                   id="enquiry-business"
                   name="business"
                   type="text"
                   autoComplete="organization"
-                  required
                   value={values.business}
                   onChange={set("business")}
-                  placeholder="Business name"
+                  placeholder="Business or project name"
                   className={inputClass}
                 />
               </Field>

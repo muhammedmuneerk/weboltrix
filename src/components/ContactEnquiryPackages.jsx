@@ -19,9 +19,9 @@ export default function ContactEnquiryPackages() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const message = [
-      "Hi, I want a website for my business.",
+      `Hi, I want a website${v.business.trim() ? " for my business" : ""}.`,
       `Name: ${v.name.trim()}`,
-      `Business: ${v.business.trim()}`,
+      v.business.trim() && `Business: ${v.business.trim()}`,
       `Phone: ${v.phone.trim()}`,
       chosen && `Package: ${chosen.name}`,
       `Launch: ${TIMELINES[timeline]}`,
@@ -137,8 +137,8 @@ export default function ContactEnquiryPackages() {
                 <input className={fieldClass} type="text" name="name" autoComplete="name" required value={v.name} onChange={set("name")} />
               </label>
               <label className="grid gap-2 text-sm font-bold text-white/75">
-                Business name
-                <input className={fieldClass} type="text" name="business" autoComplete="organization" required value={v.business} onChange={set("business")} />
+                Business or project (optional)
+                <input className={fieldClass} type="text" name="business" autoComplete="organization" value={v.business} onChange={set("business")} />
               </label>
             </div>
 

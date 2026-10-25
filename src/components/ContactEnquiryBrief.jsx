@@ -22,13 +22,13 @@ const css = `
 
 const lineClass = (filled) => (filled ? "border-bone/70" : "border-white/20");
 
-function Blank({ label, value, onChange, placeholder, type = "text", autoComplete }) {
+function Blank({ label, value, onChange, placeholder, type = "text", autoComplete, required = true }) {
   return (
     <input
       type={type}
       aria-label={label}
       autoComplete={autoComplete}
-      required
+      required={required}
       value={value}
       onChange={onChange}
       placeholder={placeholder}
@@ -70,9 +70,9 @@ export default function ContactEnquiryBrief() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const message = [
-      "Hi, I want a website for my business.",
+      `Hi, I want a website${v.business.trim() ? " for my business" : ""}.`,
       `Name: ${v.name.trim()}`,
-      `Business: ${v.business.trim()}`,
+      v.business.trim() && `Business: ${v.business.trim()}`,
       `Phone: ${v.phone.trim()}`,
       v.pack && `Package: ${v.pack}`,
       v.timeline && `Launch: ${v.timeline}`,
@@ -100,7 +100,7 @@ export default function ContactEnquiryBrief() {
             Hi, I&rsquo;m{" "}
             <Blank label="Your name" value={v.name} onChange={set("name")} placeholder="your name" autoComplete="name" />{" "}
             from{" "}
-            <Blank label="Business name" value={v.business} onChange={set("business")} placeholder="your business" autoComplete="organization" />
+            <Blank label="Business name" value={v.business} onChange={set("business")} placeholder="your business or project" autoComplete="organization" required={false} />
             . As for the package, I&rsquo;m{" "}
             <Pick label="Package" value={v.pack} onChange={set("pack")} options={PACKAGE_OPTIONS} />. I&rsquo;d like to
             launch{" "}

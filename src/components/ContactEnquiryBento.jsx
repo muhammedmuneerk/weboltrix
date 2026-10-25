@@ -73,15 +73,15 @@ export default function ContactEnquiryBento() {
   const set = (key) => (event) => setV((s) => ({ ...s, [key]: event.target.value }));
   const choose = (key) => (next) => setV((s) => ({ ...s, [key]: next }));
 
-  const required = [v.name.trim(), v.business.trim(), v.phone.trim()];
+  const required = [v.name.trim(), v.phone.trim()];
   const done = required.filter(Boolean).length;
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const message = [
-      "Hi, I want a website for my business.",
+      `Hi, I want a website${v.business.trim() ? " for my business" : ""}.`,
       `Name: ${v.name.trim()}`,
-      `Business: ${v.business.trim()}`,
+      v.business.trim() && `Business: ${v.business.trim()}`,
       `Phone: ${v.phone.trim()}`,
       v.pack && `Package: ${v.pack}`,
       v.timeline && `Launch: ${v.timeline}`,
@@ -100,7 +100,7 @@ export default function ContactEnquiryBento() {
           layout="split"
           eyebrow="Enquiry"
           title="Build your enquiry, piece by piece."
-          text="Six small pieces, and only three are required. Each one lights up as you fill it in, then everything goes to WhatsApp in one tap."
+          text="Six small pieces, and only two are required. Each one lights up as you fill it in, then everything goes to WhatsApp in one tap."
         />
 
         <form onSubmit={handleSubmit} className="mt-14 grid gap-4 lg:mt-20 lg:grid-cols-12">
@@ -108,8 +108,8 @@ export default function ContactEnquiryBento() {
             <input id="bento-name" type="text" autoComplete="name" required value={v.name} onChange={set("name")} placeholder="Full name" className={inputClass} />
           </Tile>
 
-          <Tile label="Business name" htmlFor="bento-business" filled={Boolean(v.business.trim())} className="lg:col-span-7">
-            <input id="bento-business" type="text" autoComplete="organization" required value={v.business} onChange={set("business")} placeholder="Business name" className={inputClass} />
+          <Tile label="Business or project" htmlFor="bento-business" optional filled={Boolean(v.business.trim())} className="lg:col-span-7">
+            <input id="bento-business" type="text" autoComplete="organization" value={v.business} onChange={set("business")} placeholder="Business or project name" className={inputClass} />
           </Tile>
 
           <Tile label="Phone" htmlFor="bento-phone" filled={Boolean(v.phone.trim())} className="lg:col-span-5">
@@ -137,7 +137,7 @@ export default function ContactEnquiryBento() {
           {/* Send tile */}
           <div className="flex flex-col justify-between gap-8 rounded-[2rem] border border-bone bg-bone p-6 text-ink shadow-glow sm:p-7 lg:col-span-5">
             <div>
-              <div className="grid grid-cols-3 gap-2" aria-hidden="true">
+              <div className="grid grid-cols-2 gap-2" aria-hidden="true">
                 {required.map((value, index) => (
                   <span
                     key={index}
@@ -148,10 +148,10 @@ export default function ContactEnquiryBento() {
                 ))}
               </div>
               <p className="mt-5 text-3xl font-black leading-[1.05] tracking-tight">
-                {done === 3 ? "All set. Send it over." : "Ready when you are."}
+                {done === 2 ? "All set. Send it over." : "Ready when you are."}
               </p>
               <p className="mt-3 text-sm font-semibold leading-6 text-black/55" aria-live="polite">
-                {done} of 3 required details added. Nothing is stored on this site.
+                {done} of 2 required details added. Nothing is stored on this site.
               </p>
             </div>
             <button type="submit" className="premium-button bg-ink text-bone hover:-translate-y-0.5 hover:bg-neutral-800 w-full">
