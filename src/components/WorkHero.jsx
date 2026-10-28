@@ -33,7 +33,7 @@ export default function WorkHero({ projects }) {
           </a>
         </div>
 
-        <div className="w-[min(100%,37rem)] justify-self-end max-[860px]:w-[min(100%,31rem)] max-[860px]:justify-self-start" aria-label="A preview of selected Weboltrix projects">
+        <div className="w-[min(100%,37rem)] justify-self-end max-[860px]:w-[min(100%,31rem)] max-[860px]:justify-self-start lg:mb-44" aria-label="A preview of selected Weboltrix projects">
           <p className="mb-[0.85rem] text-[0.625rem] font-black uppercase tracking-[0.16em] text-white/34">
             A few of the transformations
           </p>
