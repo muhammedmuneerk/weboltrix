@@ -11,6 +11,8 @@ import mmkflixImage from "../assets/preview/collage-mmkflix-1.png";
 import todoImage from "../assets/preview/screencapture-mmk-todoapp-vercel-app-2024-10-24-06_39_05.png";
 import airbnbImage from "../assets/preview/collage-airbnb.png";
 import noirCuisineImage from "../assets/preview/noir-cuisine.png";
+import shazRealtyImage from "../assets/preview/ShazRealty-Preview.png";
+import jandmSpicesImage from "../assets/preview/J&M Spices-Preview.png";
 import amorWeddingsBefore from "../assets/preview/before-after/AmorWeddings-Before.png";
 import amorWeddingsAfter from "../assets/preview/before-after/AmorWeddings-After.png";
 import spicenzaBefore from "../assets/preview/before-after/Spicenza-Before.png";
@@ -294,6 +296,65 @@ export const projects = [
       "The black theme creates a stronger dining mood without hiding the practical content.",
       "Menu and brand sections are arranged for fast scanning by hungry visitors.",
       "The static build keeps the experience fast and reliable.",
+    ],
+  },
+  {
+    slug: "shaz-realty",
+    title: "SHAZ Realty",
+    category: "Real Estate & Property Advisory",
+    image: shazRealtyImage,
+    visualAlt:
+      "SHAZ Realty premium real estate website showcasing property services, listings, inquiry forms, and elegant navy-and-gold layouts.",
+    description:
+      "A premium real estate website showcasing property services, advisory, and client inquiries.",
+    link: "https://shazrealty.in",
+    tags: ["React", "Vite", "Tailwind CSS", "Motion", "React Router"],
+    transformation:
+      "From traditional property advisory -> premium digital real estate presence",
+    impact:
+      "Stronger brand positioning, clearer service discovery, and more accessible property inquiries",
+    problem:
+      "SHAZ Realty needed a trusted online presence to showcase its services and attract property clients.",
+    solution:
+      "We built a navy-and-gold site with service pages, property highlights, and WhatsApp contact.",
+    result:
+      "A refined website that helps visitors explore property services and connect with the team.",
+    metrics: ["Property exploration", "WhatsApp integration", "Responsive design"],
+    caseNotes: [
+      "The navy-and-gold visual identity creates a refined, trustworthy atmosphere suited to premium real estate.",
+      "Dedicated sections explain property buying, selling, renting, management, and investment advisory services.",
+      "Property exploration interfaces and inquiry interactions help visitors discover opportunities and express interest.",
+      "WhatsApp integration provides a direct channel for confirming current availability and discussing property requirements.",
+    ],
+  },
+  {
+    slug: "jandm-spices",
+    title: "J&M Spices",
+    category: "B2B Spice Export & International Trade",
+    image: jandmSpicesImage,
+    visualAlt:
+      "J&M Spices premium export company website featuring spice catalogs, international trade information, certification showcases, and luxury editorial layouts.",
+    description:
+      "A premium B2B spice export website showcasing products, certifications, and trade inquiries.",
+    link: "https://jandmspices.com",
+    tags: ["React", "TypeScript", "Vite", "Tailwind CSS", "Motion"],
+    transformation:
+      "From traditional spice trading identity -> premium international B2B digital presence",
+    impact:
+      "Stronger global brand positioning, clearer product discovery, and a structured international buyer journey",
+    problem:
+      "J&M Spices needed a professional website to present its products and build trust with global buyers.",
+    solution:
+      "We designed an export website with spice catalogs, quality credentials, and an RFQ interface.",
+    result:
+      "A polished trade presence that makes products easier to explore and bulk inquiries simpler.",
+    metrics: ["B2B product catalog", "Multi-step RFQ", "International trade"],
+    caseNotes: [
+      "A distinctive cream, chocolate, and gold design system connects Kerala's spice heritage with contemporary international trade aesthetics.",
+      "Searchable product catalogs and detailed specification pages help wholesale buyers explore available spice categories.",
+      "Dedicated sections organize certifications, export markets, packaging capabilities, logistics, and quality-assurance information.",
+      "The multi-step RFQ interface demonstrates a structured inquiry journey for bulk orders, shipping preferences, and packaging requirements.",
+      "SEO metadata, responsive layouts, and motion-driven interactions support discoverability and a polished browsing experience.",
     ],
   },
 ];
