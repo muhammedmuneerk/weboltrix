@@ -13,6 +13,7 @@ import airbnbImage from "../assets/preview/collage-airbnb.png";
 import noirCuisineImage from "../assets/preview/noir-cuisine.png";
 import shazRealtyImage from "../assets/preview/ShazRealty-Preview.png";
 import jandmSpicesImage from "../assets/preview/J&M Spices-Preview.png";
+import autoShineProImage from "../assets/preview/AutoShinePro-Preview.png";
 import amorWeddingsBefore from "../assets/preview/before-after/AmorWeddings-Before.png";
 import amorWeddingsAfter from "../assets/preview/before-after/AmorWeddings-After.png";
 import spicenzaBefore from "../assets/preview/before-after/Spicenza-Before.png";
@@ -355,6 +356,37 @@ export const projects = [
       "Dedicated sections organize certifications, export markets, packaging capabilities, logistics, and quality-assurance information.",
       "The multi-step RFQ interface demonstrates a structured inquiry journey for bulk orders, shipping preferences, and packaging requirements.",
       "SEO metadata, responsive layouts, and motion-driven interactions support discoverability and a polished browsing experience.",
+    ],
+  },
+  {
+    slug: "autoshine-pro",
+    title: "AutoShine Pro",
+    category: "Automotive Detailing & Car Care",
+    image: autoShineProImage,
+    visualAlt:
+      "AutoShine Pro automotive detailing website featuring car care services, interactive comparisons, galleries, and booking screens.",
+    description:
+      "An automotive detailing website featuring car care services, interactive galleries, and online booking requests.",
+    link: "https://autoshinepro-ten.vercel.app/",
+    tags: ["React", "Vite", "Tailwind CSS", "Motion", "Lucide React"],
+    transformation:
+      "From traditional car care services -> interactive automotive digital experience",
+    impact:
+      "Clearer service discovery, engaging visuals, and simpler booking inquiries",
+    problem:
+      "AutoShine Pro needed a website to showcase detailing services and simplify customer booking inquiries.",
+    solution:
+      "We built an automotive website with service pricing, before-and-after comparisons, and WhatsApp booking.",
+    result:
+      "An interactive website that helps customers explore services, compare results, and request appointments.",
+    metrics: ["Interactive comparison", "Service catalog", "WhatsApp booking"],
+    caseNotes: [
+      "A dark automotive-inspired interface with blue accents and an optional light mode establishes a distinct visual identity.",
+      "An interactive before-and-after slider helps visitors compare vehicle detailing results.",
+      "A filterable project gallery organizes car, bike, interior, and ceramic coating showcases.",
+      "Service pages present detailing packages, pricing, benefits, and frequently asked questions.",
+      "A multi-step booking interface collects vehicle details, services, and preferred dates before preparing a WhatsApp request.",
+      "Responsive layouts, animated transitions, and scroll interactions create a consistent browsing experience.",
     ],
   },
 ];
