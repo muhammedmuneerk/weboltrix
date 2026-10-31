@@ -2,18 +2,20 @@ import heroStudio from "../assets/mmk-hero-studio.jpg";
 import logoSquare from "../assets/logos/weboltrix-bgremoved.png";
 import logoWide from "../assets/logos/MMKWebsites-Logo-crop-2--2-1-bgremoved.png";
 import mmkShopImage from "../assets/preview/screens.png";
-import amorWeddingsImage from "../assets/preview/collage-amorweddings-3.png";
+import amorWeddingsImage from "../assets/preview/AmorWeddings-Preview.png";
 import amorUniformsImage from "../assets/preview/AmorUniforms-Preview.png";
 import shazzzImage from "../assets/preview/collage-shazzz-2.png";
-import spicenzaImage from "../assets/preview/spicenza-2.png";
-import artisanCreationsImage from "../assets/preview/artisancreations-2.png";
+import spicenzaImage from "../assets/preview/Spicenza-Preview.png";
+import artisanCreationsImage from "../assets/preview/ArtisanCreations-Preview.png";
 import mmkflixImage from "../assets/preview/collage-mmkflix-1.png";
 import todoImage from "../assets/preview/screencapture-mmk-todoapp-vercel-app-2024-10-24-06_39_05.png";
 import airbnbImage from "../assets/preview/collage-airbnb.png";
-import noirCuisineImage from "../assets/preview/noir-cuisine.png";
+import noirCuisineImage from "../assets/preview/NoirCuisine-Preview.png";
 import shazRealtyImage from "../assets/preview/ShazRealty-Preview.png";
 import jandmSpicesImage from "../assets/preview/J&M Spices-Preview.png";
 import autoShineProImage from "../assets/preview/AutoShinePro-Preview.png";
+import aurelStudioImagechatgpt from "../assets/preview/AurelStudio-Preview-chatgpt.png";
+import aurelStudioImage from "../assets/preview/AurelStudio-Preview.png";
 import amorWeddingsBefore from "../assets/preview/before-after/AmorWeddings-Before.png";
 import amorWeddingsAfter from "../assets/preview/before-after/AmorWeddings-After.png";
 import spicenzaBefore from "../assets/preview/before-after/Spicenza-Before.png";
@@ -42,31 +44,31 @@ export const studioAssets = {
 };
 
 export const projects = [
-  {
-    slug: "mmk-shop",
-    title: "MMK Shop",
-    category: "E-commerce Platform",
-    image: mmkShopImage,
-    visualAlt: "MMK Shop e-commerce screens showing storefront and admin interface previews.",
-    description: "A full-stack e-commerce application with admin panel and PayPal integration.",
-    link: "https://mmk-shop.onrender.com",
-    github: "https://github.com/muhammedmuneerk/mmk-shop",
-    tags: ["MongoDB", "Express", "React", "Node.js", "Bootstrap"],
-    transformation: "From simple product browsing -> complete online selling system",
-    impact: "A more serious shopping experience with admin control and payment flow",
-    problem:
-      "The shop needed more than a visual storefront. It needed product management, checkout confidence, and a real selling workflow.",
-    solution:
-      "We built a full-stack MERN commerce flow with product pages, admin controls, cart logic, and PayPal integration.",
-    result:
-      "A functional e-commerce platform that can present products, manage orders, and support customer checkout.",
-    metrics: ["Admin panel", "PayPal checkout", "MERN stack"],
-    caseNotes: [
-      "The admin panel keeps product management practical instead of forcing every edit through code.",
-      "Checkout and cart flows are structured to reduce confusion before payment.",
-      "The stack gives the project room to expand with more store features later.",
-    ],
-  },
+  // {
+  //   slug: "mmk-shop",
+  //   title: "MMK Shop",
+  //   category: "E-commerce Platform",
+  //   image: mmkShopImage,
+  //   visualAlt: "MMK Shop e-commerce screens showing storefront and admin interface previews.",
+  //   description: "A full-stack e-commerce application with admin panel and PayPal integration.",
+  //   link: "https://mmk-shop.onrender.com",
+  //   github: "https://github.com/muhammedmuneerk/mmk-shop",
+  //   tags: ["MongoDB", "Express", "React", "Node.js", "Bootstrap"],
+  //   transformation: "From simple product browsing -> complete online selling system",
+  //   impact: "A more serious shopping experience with admin control and payment flow",
+  //   problem:
+  //     "The shop needed more than a visual storefront. It needed product management, checkout confidence, and a real selling workflow.",
+  //   solution:
+  //     "We built a full-stack MERN commerce flow with product pages, admin controls, cart logic, and PayPal integration.",
+  //   result:
+  //     "A functional e-commerce platform that can present products, manage orders, and support customer checkout.",
+  //   metrics: ["Admin panel", "PayPal checkout", "MERN stack"],
+  //   caseNotes: [
+  //     "The admin panel keeps product management practical instead of forcing every edit through code.",
+  //     "Checkout and cart flows are structured to reduce confusion before payment.",
+  //     "The stack gives the project room to expand with more store features later.",
+  //   ],
+  // },
   {
     slug: "amor-weddings",
     title: "AMOR WEDDINGS",
@@ -199,81 +201,81 @@ export const projects = [
       "Soft visual sections help the craft brand feel more memorable and premium.",
     ],
   },
-  {
-    slug: "mmkflix",
-    title: "MMKflix",
-    category: "Streaming UI Clone",
-    image: mmkflixImage,
-    visualAlt: "MMKflix Netflix clone preview with movie rows and dark streaming interface.",
-    description: "A Netflix clone built with React and TMDB API integration.",
-    link: "https://mmkflix.vercel.app",
-    github: "https://github.com/muhammedmuneerk/mmkflix",
-    tags: ["React", "Node.js", "CSS", "TMDB API"],
-    transformation: "From static movie layout -> dynamic API-powered streaming interface",
-    impact: "A richer React experience with real content discovery behavior",
-    problem:
-      "The project needed to feel like a real streaming interface instead of a static gallery of posters.",
-    solution:
-      "We built a React interface connected to TMDB data, with content rows and a familiar dark entertainment layout.",
-    result:
-      "A polished clone experience that demonstrates component structure, API usage, and modern UI flow.",
-    metrics: ["React UI", "TMDB API", "Streaming layout"],
-    caseNotes: [
-      "Dynamic movie data makes the interface feel active and closer to a production entertainment product.",
-      "Reusable rows and cards keep the layout scalable as more categories are added.",
-      "The dark visual system keeps attention on posters and discovery behavior.",
-    ],
-  },
-  {
-    slug: "todo-app",
-    title: "ToDo App",
-    category: "Productivity Tool",
-    image: todoImage,
-    visualAlt: "Modern Todo App screenshot with task list interface.",
-    description: "A modern todolist application.",
-    link: "https://mmk-todoapp.vercel.app",
-    github: "https://github.com/muhammedmuneerk/todoapp",
-    tags: ["React", "CSS"],
-    transformation: "From plain task list -> cleaner everyday productivity tool",
-    impact: "A focused interface for quickly managing simple tasks",
-    problem:
-      "The app needed to keep task management simple while still feeling cleaner than a basic browser exercise.",
-    solution:
-      "We built a modern React task interface with clear actions, tidy spacing, and a lightweight visual system.",
-    result:
-      "A simple productivity app that feels easy to use and direct.",
-    metrics: ["React app", "Task flow", "Clean UI"],
-    caseNotes: [
-      "The UI keeps the core workflow visible instead of hiding task actions behind extra complexity.",
-      "React state keeps the interaction quick and responsive.",
-      "The restrained styling helps the app feel useful without feeling over-designed.",
-    ],
-  },
-  {
-    slug: "airbnb-clone",
-    title: "Airbnb Clone",
-    category: "Full-stack Booking UI",
-    image: airbnbImage,
-    visualAlt: "Airbnb clone website collage with listing cards, booking interface, and travel UI screens.",
-    description: "A full-stack Airbnb clone with modern UI and cloud image storage.",
-    link: "https://mmbnb.vercel.app",
-    github: "https://github.com/muhammedmuneerk/mmbnb",
-    tags: ["MongoDB", "Express", "React", "Node.js", "Tailwind CSS", "Cloudinary"],
-    transformation: "From listing concept -> full-stack booking-style platform",
-    impact: "A stronger product demo with listings, media, and modern interface flow",
-    problem:
-      "The project needed to demonstrate more than layout skill. It needed full-stack structure, listings, and cloud media handling.",
-    solution:
-      "We built a MERN-style Airbnb clone with a modern React interface, Tailwind styling, and Cloudinary image storage.",
-    result:
-      "A fuller product experience that shows how marketplace-style interfaces can be structured and scaled.",
-    metrics: ["Cloudinary", "Full stack", "Marketplace UI"],
-    caseNotes: [
-      "Cloud image storage supports listing visuals without bloating the app structure.",
-      "The listing layout mirrors a familiar booking pattern so users understand it quickly.",
-      "Full-stack foundations give the clone stronger portfolio value than a static UI mockup.",
-    ],
-  },
+  // {
+  //   slug: "mmkflix",
+  //   title: "MMKflix",
+  //   category: "Streaming UI Clone",
+  //   image: mmkflixImage,
+  //   visualAlt: "MMKflix Netflix clone preview with movie rows and dark streaming interface.",
+  //   description: "A Netflix clone built with React and TMDB API integration.",
+  //   link: "https://mmkflix.vercel.app",
+  //   github: "https://github.com/muhammedmuneerk/mmkflix",
+  //   tags: ["React", "Node.js", "CSS", "TMDB API"],
+  //   transformation: "From static movie layout -> dynamic API-powered streaming interface",
+  //   impact: "A richer React experience with real content discovery behavior",
+  //   problem:
+  //     "The project needed to feel like a real streaming interface instead of a static gallery of posters.",
+  //   solution:
+  //     "We built a React interface connected to TMDB data, with content rows and a familiar dark entertainment layout.",
+  //   result:
+  //     "A polished clone experience that demonstrates component structure, API usage, and modern UI flow.",
+  //   metrics: ["React UI", "TMDB API", "Streaming layout"],
+  //   caseNotes: [
+  //     "Dynamic movie data makes the interface feel active and closer to a production entertainment product.",
+  //     "Reusable rows and cards keep the layout scalable as more categories are added.",
+  //     "The dark visual system keeps attention on posters and discovery behavior.",
+  //   ],
+  // },
+  // {
+  //   slug: "todo-app",
+  //   title: "ToDo App",
+  //   category: "Productivity Tool",
+  //   image: todoImage,
+  //   visualAlt: "Modern Todo App screenshot with task list interface.",
+  //   description: "A modern todolist application.",
+  //   link: "https://mmk-todoapp.vercel.app",
+  //   github: "https://github.com/muhammedmuneerk/todoapp",
+  //   tags: ["React", "CSS"],
+  //   transformation: "From plain task list -> cleaner everyday productivity tool",
+  //   impact: "A focused interface for quickly managing simple tasks",
+  //   problem:
+  //     "The app needed to keep task management simple while still feeling cleaner than a basic browser exercise.",
+  //   solution:
+  //     "We built a modern React task interface with clear actions, tidy spacing, and a lightweight visual system.",
+  //   result:
+  //     "A simple productivity app that feels easy to use and direct.",
+  //   metrics: ["React app", "Task flow", "Clean UI"],
+  //   caseNotes: [
+  //     "The UI keeps the core workflow visible instead of hiding task actions behind extra complexity.",
+  //     "React state keeps the interaction quick and responsive.",
+  //     "The restrained styling helps the app feel useful without feeling over-designed.",
+  //   ],
+  // },
+  // {
+  //   slug: "airbnb-clone",
+  //   title: "Airbnb Clone",
+  //   category: "Full-stack Booking UI",
+  //   image: airbnbImage,
+  //   visualAlt: "Airbnb clone website collage with listing cards, booking interface, and travel UI screens.",
+  //   description: "A full-stack Airbnb clone with modern UI and cloud image storage.",
+  //   link: "https://mmbnb.vercel.app",
+  //   github: "https://github.com/muhammedmuneerk/mmbnb",
+  //   tags: ["MongoDB", "Express", "React", "Node.js", "Tailwind CSS", "Cloudinary"],
+  //   transformation: "From listing concept -> full-stack booking-style platform",
+  //   impact: "A stronger product demo with listings, media, and modern interface flow",
+  //   problem:
+  //     "The project needed to demonstrate more than layout skill. It needed full-stack structure, listings, and cloud media handling.",
+  //   solution:
+  //     "We built a MERN-style Airbnb clone with a modern React interface, Tailwind styling, and Cloudinary image storage.",
+  //   result:
+  //     "A fuller product experience that shows how marketplace-style interfaces can be structured and scaled.",
+  //   metrics: ["Cloudinary", "Full stack", "Marketplace UI"],
+  //   caseNotes: [
+  //     "Cloud image storage supports listing visuals without bloating the app structure.",
+  //     "The listing layout mirrors a familiar booking pattern so users understand it quickly.",
+  //     "Full-stack foundations give the clone stronger portfolio value than a static UI mockup.",
+  //   ],
+  // },
   {
     slug: "noir-cuisine",
     title: "Noir Cuisine",
@@ -387,6 +389,37 @@ export const projects = [
       "Service pages present detailing packages, pricing, benefits, and frequently asked questions.",
       "A multi-step booking interface collects vehicle details, services, and preferred dates before preparing a WhatsApp request.",
       "Responsive layouts, animated transitions, and scroll interactions create a consistent browsing experience.",
+    ],
+  },
+  {
+    slug: "aurel-studio",
+    title: "AUREL Studio",
+    category: "Architecture & Interior Design",
+    image: aurelStudioImage,
+    visualAlt:
+      "AUREL Studio architecture website showcasing editorial layouts, architectural photography, project galleries, and interactive exploration.",
+    description:
+      "An architecture studio website featuring editorial project galleries, interactive exploration, and design services.",
+    link: "https://aurelstudio-xi.vercel.app/",
+    tags: ["React", "Vite", "Tailwind CSS", "Motion", "React Router"],
+    transformation:
+      "From architectural studio concept -> interactive editorial portfolio",
+    impact:
+      "Clearer project discovery, engaging visual storytelling, and streamlined inquiries",
+    problem:
+      "The studio concept needed a clear way to present architectural work, services, and design philosophy.",
+    solution:
+      "We built an editorial website with project filtering, immersive galleries, and detailed case studies.",
+    result:
+      "A cohesive showcase that helps visitors explore projects and understand the studio's design approach.",
+    metrics: ["Interactive explorer", "Project galleries", "Responsive design"],
+    caseNotes: [
+      "An editorial design system combines architectural photography, serif typography, and warm neutral colors.",
+      "Eight fictional architecture projects feature individual case studies, specifications, and image galleries.",
+      "An interactive project explorer supports category filtering, keyboard navigation, and dynamic image previews.",
+      "A fullscreen lightbox lets visitors browse architectural imagery with keyboard and mobile interactions.",
+      "Dedicated pages present the studio's philosophy, services, design process, and project inquiry options.",
+      "Responsive layouts, subtle page transitions, and a client-side email inquiry flow complete the experience.",
     ],
   },
 ];
