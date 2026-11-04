@@ -80,18 +80,18 @@ export default function ProcessSteps() {
   }, [reduceMotion]);
 
   return (
-    <section className="section-padding">
+    <section data-color-scope="process-steps" className="section-padding">
       {/* ───────── Desktop layout (lg and up) – unchanged ───────── */}
       <div className="container-premium hidden lg:block">
         <SectionHeading eyebrow={EYEBROW} title={TITLE} text={TEXT} />
         <div className="stagger-grid mt-14 grid gap-5 lg:grid-cols-4">
           {processDetails.map((step) => (
             <article key={step.title} className="glass card-hover rounded-[1.8rem] p-7">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-white/38">
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-content/38">
                 {step.eyebrow}
               </p>
               <h2 className="mt-8 text-3xl font-black tracking-tight">{step.title}</h2>
-              <p className="mt-5 text-sm leading-7 text-white/58">{step.text}</p>
+              <p className="mt-5 text-sm leading-7 text-content/58">{step.text}</p>
             </article>
           ))}
         </div>
@@ -106,7 +106,7 @@ export default function ProcessSteps() {
         >
           {TITLE}
         </h2>
-        <p className="mt-5 max-w-xl text-base leading-7 text-white/58">{TEXT}</p>
+        <p className="mt-5 max-w-xl text-base leading-7 text-content/58">{TEXT}</p>
 
         {/* Vertical timeline: the line fills as you scroll, the current step lights up */}
         <ol ref={listRef} className="mt-10 max-w-2xl">
@@ -126,13 +126,13 @@ export default function ProcessSteps() {
                 {!isLast && (
                   <span
                     aria-hidden="true"
-                    className="absolute bottom-0 left-5 top-[2.875rem] w-px bg-white/12"
+                    className="absolute bottom-0 left-5 top-[2.875rem] w-px bg-layer/12"
                   >
                     <span
                       ref={(el) => {
                         segRefs.current[index] = el;
                       }}
-                      className="absolute inset-0 origin-top bg-bone/70"
+                      className="absolute inset-0 origin-top bg-emphasis/70"
                       style={{ transform: "scaleY(0)" }}
                     />
                   </span>
@@ -144,10 +144,10 @@ export default function ProcessSteps() {
                   }}
                   className={`relative z-10 mt-1.5 flex h-10 w-10 items-center justify-center rounded-full border text-xs font-black transition duration-500 motion-reduce:transition-none ${
                     isActive && !reduceMotion
-                      ? "border-bone bg-bone text-ink shadow-glow"
+                      ? "border-signal bg-selection text-on-selection shadow-glow"
                       : isDone
-                        ? "border-white/40 bg-ink text-bone"
-                        : "border-white/15 bg-ink text-white/45"
+                        ? "border-line/40 bg-inverse-action-alt text-inverse-heading"
+                        : "border-line/15 bg-inverse-action-alt text-inverse-foreground/45"
                   }`}
                 >
                   {String(index + 1).padStart(2, "0")}
@@ -156,23 +156,23 @@ export default function ProcessSteps() {
                 <article
                   className={`glass rounded-[1.6rem] p-5 transition duration-500 active:scale-[0.99] motion-reduce:transition-none sm:p-6 ${
                     isActive
-                      ? "border-white/25 bg-white/[0.08] opacity-100"
-                      : "opacity-60"
+                      ? "border-line/25 bg-layer/[0.08] opacity-100"
+                      : "opacity-[var(--inactive-card-opacity)]"
                   }`}
                 >
-                  <p className="text-[0.7rem] font-black uppercase tracking-[0.22em] text-white/40">
+                  <p className="text-[0.7rem] font-black uppercase tracking-[0.22em] text-content/40">
                     {step.eyebrow}
                   </p>
-                  <h3 className="mt-3 text-2xl font-black tracking-tight text-bone">
+                  <h3 className="mt-3 text-2xl font-black tracking-tight text-heading">
                     {step.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-7 text-white/60">{step.text}</p>
+                  <p className="mt-3 text-sm leading-7 text-content/60">{step.text}</p>
 
                   {next && (
-                    <p className="mt-5 flex items-center gap-2 border-t border-white/10 pt-4 text-xs font-bold text-white/45">
+                    <p className="mt-5 flex items-center gap-2 border-t border-line/10 pt-4 text-xs font-bold text-content/45">
                       <span className="uppercase tracking-[0.18em]">Next</span>
                       <span aria-hidden="true">→</span>
-                      <span className="text-white/70">{next.title}</span>
+                      <span className="text-content/70">{next.title}</span>
                     </p>
                   )}
                 </article>

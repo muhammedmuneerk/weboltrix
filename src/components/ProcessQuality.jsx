@@ -226,7 +226,7 @@ export default function ProcessQuality() {
   };
 
   return (
-    <section className="section-padding border-y border-white/10 bg-white/[0.025]">
+    <section data-color-scope="process-quality" className="section-padding border-y border-line/10 bg-layer/[0.025]">
       {/* ───────── Desktop layout (lg and up) – unchanged ───────── */}
       <div className="container-premium hidden gap-12 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
         <SectionHeading eyebrow={EYEBROW} title={TITLE} text={TEXT} />
@@ -234,7 +234,7 @@ export default function ProcessQuality() {
           {ITEMS.map((item) => (
             <div
               key={item}
-              className="interactive-card rounded-[1.4rem] border border-white/10 bg-white/[0.055] p-5 text-lg font-black"
+              className="interactive-card rounded-[1.4rem] border border-line/10 bg-layer/[0.055] p-5 text-lg font-black"
             >
               {item}
             </div>
@@ -256,15 +256,15 @@ export default function ProcessQuality() {
           </div>
           <p
             className={`shrink-0 pt-1 text-right text-xs font-bold transition-colors duration-500 ${
-              complete ? "text-bone" : "text-white/50"
+              complete ? "text-heading" : "text-content/50"
             }`}
             aria-live="polite"
           >
             {Math.max(count, 0)}/{total}
-            <span className="mt-0.5 block font-normal text-white/40">checked</span>
+            <span className="mt-0.5 block font-normal text-content/40">checked</span>
           </p>
         </div>
-        <p className="mt-5 max-w-md text-base leading-7 text-white/58">{TEXT}</p>
+        <p className="mt-5 max-w-md text-base leading-7 text-content/58">{TEXT}</p>
 
         {/* Bolt path: nodes alternate hard left / hard right, joined by
             diagonal connectors instead of one straight rail. */}
@@ -285,11 +285,11 @@ export default function ProcessQuality() {
           >
             {segments.map((seg, i) => (
               <g key={i}>
-                <path d={seg.d} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.4" />
+                <path d={seg.d} fill="none" stroke="var(--content-a012)" strokeWidth="1.4" />
                 <path
                   d={seg.d}
                   fill="none"
-                  stroke="#f5f3ef"
+                  stroke="var(--signal)"
                   strokeOpacity="0.7"
                   strokeWidth="1.6"
                   strokeLinecap="round"
@@ -305,14 +305,14 @@ export default function ProcessQuality() {
               <g style={{ transform: `translate(${pulse.x}px, ${pulse.y}px)` }}>
                 <circle
                   r="6"
-                  fill="#f5f3ef"
+                  fill="var(--signal)"
                   style={{
                     transformBox: "fill-box",
                     transformOrigin: "center",
                     animation: "process-flow-glow 1.3s ease-in-out infinite",
                   }}
                 />
-                <circle r="2.4" fill="#f5f3ef" />
+                <circle r="2.4" fill="var(--signal)" />
               </g>
             )}
           </svg>
@@ -367,7 +367,7 @@ export default function ProcessQuality() {
                           cy="12"
                           r="9.5"
                           className={`transition-colors duration-500 motion-reduce:transition-none ${
-                            isDone ? "text-bone" : "text-white/20"
+                            isDone ? "text-heading" : "text-content/20"
                           }`}
                         />
                         <path
@@ -375,7 +375,7 @@ export default function ProcessQuality() {
                           pathLength="1"
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          className="text-bone transition-[stroke-dashoffset] duration-500 ease-out motion-reduce:transition-none"
+                          className="text-heading transition-[stroke-dashoffset] duration-500 ease-out motion-reduce:transition-none"
                           style={{ strokeDasharray: 1, strokeDashoffset: isDone ? 0 : 1 }}
                         />
                       </svg>
@@ -383,7 +383,7 @@ export default function ProcessQuality() {
 
                     <span
                       className={`text-base font-black leading-tight tracking-tight transition-colors duration-500 sm:text-lg ${
-                        isCurrent ? "text-bone" : isDone ? "text-white/70" : "text-white/40"
+                        isCurrent ? "text-heading" : isDone ? "text-content/70" : "text-content/40"
                       }`}
                     >
                       {item}

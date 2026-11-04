@@ -180,7 +180,7 @@ export default function ProcessHero({
   return (
     // On desktop the hero fills the screen height and centres its content,
     // so it fits short laptop viewports as well as tall monitors.
-    <section className="hero-mesh relative isolate overflow-hidden lg:flex lg:min-h-[100svh] lg:items-center">
+    <section data-color-scope="process-hero" className="hero-mesh relative isolate overflow-hidden lg:flex lg:min-h-[100svh] lg:items-center">
       <div className="fine-grid absolute inset-0 -z-10" />
 
       {/* ───────── Mobile / tablet layout (below lg) ───────── */}
@@ -196,7 +196,7 @@ export default function ProcessHero({
           {title}
         </h1>
 
-        <div className="hero-copy mt-5 max-w-xl text-base leading-7 text-white/62">{copy}</div>
+        <div className="hero-copy mt-5 max-w-xl text-base leading-7 text-content/62">{copy}</div>
 
         <div className="mt-7 grid gap-3 sm:max-w-md sm:grid-cols-2">
           <Link to="/contact" className="premium-button-light w-full">
@@ -213,11 +213,11 @@ export default function ProcessHero({
         </div>
 
         {/* Reassurance row: right under the buttons, before the detail */}
-        <dl className="mt-6 grid grid-cols-3 divide-x divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] sm:max-w-md">
+        <dl className="mt-6 grid grid-cols-3 divide-x divide-line/10 overflow-hidden rounded-2xl border border-line/10 bg-layer/[0.04] sm:max-w-md">
           {MOBILE_STATS.map(([term, detail]) => (
             <div key={term} className="px-2 py-3.5 text-center">
-              <dt className="text-sm font-black tracking-tight text-bone">{term}</dt>
-              <dd className="mt-1 text-[0.7rem] leading-4 text-white/50">{detail}</dd>
+              <dt className="text-sm font-black tracking-tight text-heading">{term}</dt>
+              <dd className="mt-1 text-[0.7rem] leading-4 text-content/50">{detail}</dd>
             </div>
           ))}
         </dl>
@@ -226,7 +226,7 @@ export default function ProcessHero({
         <div className="mt-12 flex items-center justify-between gap-3">
           <p className="eyebrow">Build rhythm</p>
           <div className="flex items-center gap-1">
-            <p className="text-xs font-bold text-white/50" aria-live="polite">
+            <p className="text-xs font-bold text-content/50" aria-live="polite">
               Step {mStep + 1} of {total}
             </p>
             {!reduceMotion && (
@@ -235,7 +235,7 @@ export default function ProcessHero({
                 onClick={() => setUserPaused((value) => !value)}
                 aria-pressed={userPaused}
                 aria-label={userPaused ? "Resume automatic steps" : "Pause automatic steps"}
-                className="-my-2 -mr-2 flex h-10 w-10 items-center justify-center rounded-full text-white/60 transition active:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+                className="-my-2 -mr-2 flex h-10 w-10 items-center justify-center rounded-full text-content/60 transition active:bg-layer/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-outline"
               >
                 {userPaused ? (
                   <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
@@ -267,10 +267,10 @@ export default function ProcessHero({
           <ol className="relative mt-5 grid grid-cols-4">
             <span
               aria-hidden="true"
-              className="absolute left-[12.5%] right-[12.5%] top-[1.125rem] h-px bg-white/12"
+              className="absolute left-[12.5%] right-[12.5%] top-[1.125rem] h-px bg-layer/12"
             >
               <span
-                className="absolute inset-0 origin-left bg-bone/70 transition-transform duration-500"
+                className="absolute inset-0 origin-left bg-emphasis/70 transition-transform duration-500"
                 style={{ transform: `scaleX(${mStep / (total - 1)})` }}
               />
             </span>
@@ -284,22 +284,22 @@ export default function ProcessHero({
                     type="button"
                     onClick={() => goToStep(index, true)}
                     aria-current={isActive ? "step" : undefined}
-                    className="flex w-full flex-col items-center gap-2 rounded-xl py-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+                    className="flex w-full flex-col items-center gap-2 rounded-xl py-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-outline"
                   >
                     <span
                       className={`relative z-10 flex h-9 w-9 items-center justify-center rounded-full border text-xs font-black transition duration-500 ${
                         isActive
-                          ? "border-bone bg-bone text-ink shadow-glow"
+                          ? "border-signal bg-selection text-on-selection shadow-glow"
                           : isDone
-                            ? "border-white/40 bg-ink text-bone"
-                            : "border-white/15 bg-ink text-white/45"
+                            ? "border-line/40 bg-inverse-action-alt text-inverse-heading"
+                            : "border-line/15 bg-inverse-action-alt text-inverse-foreground/45"
                       }`}
                     >
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span
                       className={`text-xs font-bold transition-colors duration-500 ${
-                        isActive ? "text-bone" : "text-white/45"
+                        isActive ? "text-heading" : "text-content/45"
                       }`}
                     >
                       {step.title}
@@ -331,26 +331,26 @@ export default function ProcessHero({
                 >
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute -right-1 -top-3 select-none text-[6.5rem] font-black leading-none tracking-tighter text-white/[0.06]"
+                    className="pointer-events-none absolute -right-1 -top-3 select-none text-[6.5rem] font-black leading-none tracking-tighter text-content/[0.06]"
                   >
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <p className="text-[0.7rem] font-black uppercase tracking-[0.22em] text-white/40">
+                  <p className="text-[0.7rem] font-black uppercase tracking-[0.22em] text-content/40">
                     {step.eyebrow}
                   </p>
-                  <h2 className="mt-10 text-3xl font-black tracking-tight text-bone">
+                  <h2 className="mt-10 text-3xl font-black tracking-tight text-heading">
                     {step.title}
                   </h2>
-                  <p className="mt-3 text-sm leading-7 text-white/60">{step.text}</p>
+                  <p className="mt-3 text-sm leading-7 text-content/60">{step.text}</p>
 
                   {/* Countdown to the next step. Its animation drives the auto-advance. */}
                   {isActive && !reduceMotion && (
                     <span
                       aria-hidden="true"
-                      className="absolute inset-x-6 bottom-4 h-0.5 overflow-hidden rounded-full bg-white/10"
+                      className="absolute inset-x-6 bottom-4 h-0.5 overflow-hidden rounded-full bg-layer/10"
                     >
                       <span
-                        className="block h-full w-full origin-left rounded-full bg-bone/70"
+                        className="block h-full w-full origin-left rounded-full bg-emphasis/70"
                         style={{
                           animation: `process-bar-fill ${MOBILE_AUTOPLAY_MS}ms linear forwards`,
                           animationPlayState: mobilePaused ? "paused" : "running",
@@ -379,7 +379,7 @@ export default function ProcessHero({
             {title}
           </h1>
 
-          <div className="hero-copy mt-5 max-w-xl text-base leading-7 text-white/62 sm:text-lg sm:leading-8 lg:text-base">
+          <div className="hero-copy mt-5 max-w-xl text-base leading-7 text-content/62 sm:text-lg sm:leading-8 lg:text-base">
             {copy}
           </div>
 
@@ -398,15 +398,15 @@ export default function ProcessHero({
           </div>
 
           {/* Compact strip: always visible, hidden only on extremely short windows */}
-          <dl className="mt-8 grid max-w-xl grid-cols-3 gap-4 border-t border-white/10 pt-5 sm:gap-6 lg:mt-6 lg:pt-4 [@media(max-height:500px)]:hidden">
+          <dl className="mt-8 grid max-w-xl grid-cols-3 gap-4 border-t border-line/10 pt-5 sm:gap-6 lg:mt-6 lg:pt-4 [@media(max-height:500px)]:hidden">
             {[
               ["4 steps", "Idea to launch"],
               ["Mobile first", "Built for phones"],
               ["Handover", "Ready for edits"],
             ].map(([term, detail]) => (
               <div key={term}>
-                <dt className="text-sm font-black tracking-tight text-bone sm:text-base">{term}</dt>
-                <dd className="mt-0.5 text-xs leading-5 text-white/50">{detail}</dd>
+                <dt className="text-sm font-black tracking-tight text-heading sm:text-base">{term}</dt>
+                <dd className="mt-0.5 text-xs leading-5 text-content/50">{detail}</dd>
               </div>
             ))}
           </dl>
@@ -422,7 +422,7 @@ export default function ProcessHero({
         >
           <div className="flex items-center justify-between gap-4">
             <p className="eyebrow">Build rhythm</p>
-            <p className="text-xs font-bold text-white/50" aria-live="polite">
+            <p className="text-xs font-bold text-content/50" aria-live="polite">
               Step {active + 1} of {total}
             </p>
           </div>
@@ -432,7 +432,7 @@ export default function ProcessHero({
               <span
                 key={step.title}
                 className={`h-1 rounded-full transition-colors duration-500 ${
-                  index <= active ? "bg-bone" : "bg-white/12"
+                  index <= active ? "bg-emphasis" : "bg-layer/12"
                 }`}
               />
             ))}
@@ -449,10 +449,10 @@ export default function ProcessHero({
                   {!isLast && (
                     <span
                       aria-hidden="true"
-                      className="absolute bottom-0 left-5 top-10 w-px bg-white/12"
+                      className="absolute bottom-0 left-5 top-10 w-px bg-layer/12"
                     >
                       <span
-                        className={`absolute inset-0 origin-top bg-bone/70 transition-transform duration-700 ${
+                        className={`absolute inset-0 origin-top bg-emphasis/70 transition-transform duration-700 ${
                           isDone ? "scale-y-100" : "scale-y-0"
                         }`}
                       />
@@ -463,15 +463,15 @@ export default function ProcessHero({
                     type="button"
                     onClick={() => setActive(index)}
                     aria-expanded={isActive}
-                    className="grid w-full grid-cols-[auto_minmax(0,1fr)] gap-4 rounded-2xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bone"
+                    className="grid w-full grid-cols-[auto_minmax(0,1fr)] gap-4 rounded-2xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus-outline"
                   >
                     <span
                       className={`flex h-10 w-10 items-center justify-center rounded-full border text-xs font-black transition duration-500 ${
                         isActive
-                          ? "border-bone bg-bone text-ink shadow-glow"
+                          ? "border-signal bg-selection text-on-selection shadow-glow"
                           : isDone
-                            ? "border-white/40 bg-white/10 text-bone"
-                            : "border-white/15 bg-white/[0.04] text-white/45"
+                            ? "border-line/40 bg-layer/10 text-heading"
+                            : "border-line/15 bg-layer/[0.04] text-content/45"
                       }`}
                     >
                       {String(index + 1).padStart(2, "0")}
@@ -480,7 +480,7 @@ export default function ProcessHero({
                     <span className="block min-w-0 pt-1.5">
                       <span
                         className={`block text-xl font-black leading-none tracking-tight transition-colors duration-500 sm:text-2xl ${
-                          isActive ? "text-bone" : "text-white/55"
+                          isActive ? "text-heading" : "text-content/55"
                         }`}
                       >
                         {step.title}
@@ -492,10 +492,10 @@ export default function ProcessHero({
                         }`}
                       >
                         <span className="overflow-hidden">
-                          <span className="mt-3 block text-[0.7rem] font-black uppercase tracking-[0.22em] text-white/40">
+                          <span className="mt-3 block text-[0.7rem] font-black uppercase tracking-[0.22em] text-content/40">
                             {step.eyebrow}
                           </span>
-                          <span className="mt-2 block text-sm leading-6 text-white/60">
+                          <span className="mt-2 block text-sm leading-6 text-content/60">
                             {step.text}
                           </span>
                         </span>

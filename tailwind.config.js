@@ -1,3 +1,5 @@
+import { colors, frameworkColors, backgroundColor, boxShadow, ringColor, ringOffsetColor } from "./src/theme/tailwind.js";
+
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
@@ -6,16 +8,11 @@ export default {
         display: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
         body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
       },
-      colors: {
-        ink: "#050505",
-        bone: "#f5f3ef",
-        fog: "#b8b8b8",
-        platinum: "#e7e3db",
-      },
-      boxShadow: {
-        premium: "0 24px 90px rgba(0,0,0,0.18)",
-        glow: "0 0 70px rgba(255,255,255,0.15)",
-      },
+      colors: { ...frameworkColors, ...colors },
+      backgroundColor,
+      boxShadow,
+      ringColor: { ...colors, ...ringColor },
+      ringOffsetColor,
       animation: {
         float: "float 8s ease-in-out infinite",
         "fade-up": "fadeUp 0.9s ease both",

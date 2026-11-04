@@ -16,7 +16,7 @@ export default function DetailedBreakdown() {
   const total = services.length;
 
   return (
-    <section className="section-padding overflow-hidden border-y border-white/10 bg-white/[0.025]">
+    <section data-color-scope="detailed-breakdown" className="section-padding overflow-hidden border-y border-line/10 bg-layer/[0.025]">
       {/* ───────── Desktop layout (lg and up) – unchanged ───────── */}
       <div className="container-premium hidden lg:block">
         <SectionHeading
@@ -33,7 +33,7 @@ export default function DetailedBreakdown() {
         />
 
         {/* Staircase */}
-        <div className="mt-20 grid border-b border-white/15 lg:grid-cols-3 lg:items-end">
+        <div className="mt-20 grid border-b border-line/15 lg:grid-cols-3 lg:items-end">
           {services.map((service, index) => {
             const f = Boolean(service.featured);
 
@@ -42,11 +42,11 @@ export default function DetailedBreakdown() {
                 key={service.name}
                 className={`group relative flex flex-col overflow-hidden border-t-2 px-6 pb-10 pt-8 transition-colors duration-500 sm:px-9 sm:pb-12 sm:pt-10 lg:border-l ${
                   STEP_HEIGHTS[index] ?? ""
-                } ${index === 0 ? "lg:border-l-white/15" : "border-l-white/15"} ${
+                } ${index === 0 ? "lg:border-l-line/15" : "border-l-line/15"} ${
                   f
-                    ? "border-bone bg-bone text-ink"
-                    : "border-white/25 bg-transparent text-bone hover:bg-white/[0.035]"
-                } ${index === total - 1 ? "lg:border-r lg:border-r-white/15" : ""}`}
+                    ? "border-signal bg-emphasis text-on-emphasis"
+                    : "border-line/25 bg-transparent text-heading hover:bg-layer/[0.035]"
+                } ${index === total - 1 ? "lg:border-r lg:border-r-line/15" : ""}`}
               >
                 {/* Ghost numeral */}
                 <span
@@ -54,8 +54,8 @@ export default function DetailedBreakdown() {
                   className="pointer-events-none absolute -bottom-6 -right-2 select-none text-[11rem] font-black leading-none tracking-tighter text-transparent"
                   style={{
                     WebkitTextStroke: f
-                      ? "1px rgba(5,5,5,0.12)"
-                      : "1px rgba(255,255,255,0.07)",
+                      ? "1px var(--on-emphasis-a012)"
+                      : "1px var(--line-a007)",
                   }}
                 >
                   {String(index + 1).padStart(2, "0")}
@@ -70,18 +70,18 @@ export default function DetailedBreakdown() {
                         className={`h-1 w-8 rounded-full ${
                           step <= index
                             ? f
-                              ? "bg-ink"
-                              : "bg-bone"
+                              ? "bg-canvas"
+                              : "bg-emphasis"
                             : f
-                              ? "bg-black/15"
-                              : "bg-white/15"
+                              ? "bg-recess/15"
+                              : "bg-layer/15"
                         }`}
                       />
                     ))}
                   </div>
                   <span
                     className={`text-[0.65rem] font-black uppercase tracking-[0.22em] ${
-                      f ? "text-black/45" : "text-white/38"
+                      f ? "text-on-emphasis-soft/45" : "text-content/38"
                     }`}
                   >
                     Level {String(index + 1).padStart(2, "0")}
@@ -95,7 +95,7 @@ export default function DetailedBreakdown() {
                 </h3>
                 <p
                   className={`relative mt-3 text-xs font-black uppercase tracking-[0.25em] ${
-                    f ? "text-black/45" : "text-white/42"
+                    f ? "text-on-emphasis-soft/45" : "text-content/42"
                   }`}
                 >
                   {service.price}
@@ -104,7 +104,7 @@ export default function DetailedBreakdown() {
                 {/* Audience */}
                 <p
                   className={`relative mt-7 text-base font-semibold leading-8 ${
-                    f ? "text-black/72" : "text-white/70"
+                    f ? "text-on-emphasis-soft/72" : "text-content/70"
                   }`}
                 >
                   {service.audience}
@@ -112,18 +112,18 @@ export default function DetailedBreakdown() {
 
                 {/* Details */}
                 <ul
-                  className={`relative mt-7 border-t ${f ? "border-black/15" : "border-white/12"}`}
+                  className={`relative mt-7 border-t ${f ? "border-contrast-line/15" : "border-line/12"}`}
                 >
                   {service.details.map((detail) => (
                     <li
                       key={detail}
                       className={`flex gap-3 border-b py-3.5 text-sm leading-7 last:border-b-0 ${
-                        f ? "border-black/10 text-black/65" : "border-white/[0.07] text-white/60"
+                        f ? "border-contrast-line/10 text-on-emphasis-soft/65" : "border-line/[0.07] text-content/60"
                       }`}
                     >
                       <span
                         aria-hidden="true"
-                        className={`flex-none font-black ${f ? "text-ink" : "text-bone"}`}
+                        className={`flex-none font-black ${f ? "text-on-emphasis" : "text-heading"}`}
                       >
                         +
                       </span>
@@ -136,7 +136,7 @@ export default function DetailedBreakdown() {
                 <Link
                   to="/contact"
                   className={`relative mt-auto inline-flex items-center gap-2 pt-9 text-sm font-bold transition hover:translate-x-1 ${
-                    f ? "text-ink" : "text-white"
+                    f ? "text-on-emphasis" : "text-content"
                   }`}
                 >
                   Start with {service.name} <span aria-hidden="true">&rarr;</span>
@@ -156,7 +156,7 @@ export default function DetailedBreakdown() {
         >
           Every package is shaped around trust, speed, and enquiries.
         </h2>
-        <p className="mt-5 max-w-md text-base leading-7 text-white/58">
+        <p className="mt-5 max-w-md text-base leading-7 text-content/58">
           The level changes, but the goal stays the same: a clean website that makes customers
           confident enough to contact you.
         </p>
@@ -193,7 +193,7 @@ function MobileStaircase() {
       <div
         role="tablist"
         aria-label="Website packages"
-        className="flex items-end gap-2.5 border-b border-white/15 pb-0 sm:gap-3"
+        className="flex items-end gap-2.5 border-b border-line/15 pb-0 sm:gap-3"
       >
         {services.map((service, index) => {
           const isActive = index === active;
@@ -209,21 +209,21 @@ function MobileStaircase() {
                 BAR_HEIGHTS[index] ?? "h-20"
               } ${
                 isActive
-                  ? "border-bone bg-bone text-ink shadow-glow"
-                  : "border-white/15 bg-white/[0.045] text-white/55 hover:border-white/30 hover:bg-white/[0.07]"
+                  ? "border-selection bg-selection text-on-selection shadow-glow"
+                  : "border-line/15 bg-layer/[0.045] text-content/55 hover:border-line/30 hover:bg-layer/[0.07]"
               }`}
             >
               {f && (
                 <span
                   aria-hidden="true"
                   className={`absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full px-2 py-0.5 text-[0.55rem] font-black uppercase tracking-[0.08em] ${
-                    isActive ? "bg-ink text-bone" : "bg-bone text-ink"
+                    isActive ? "bg-inverse-action-alt text-inverse-heading" : "bg-selection text-on-selection"
                   }`}
                 >
                   Popular
                 </span>
               )}
-              <span className="text-[0.6rem] font-black uppercase tracking-[0.2em] opacity-60">
+              <span className="text-[0.6rem] font-black uppercase tracking-[0.2em] opacity-[var(--secondary-label-opacity)]">
                 0{index + 1}
               </span>
               <span className="text-sm font-black tracking-tight sm:text-base">{service.name}</span>
@@ -236,14 +236,14 @@ function MobileStaircase() {
       <article
         key={current.name}
         className={`relative animate-fade-up overflow-hidden rounded-b-[1.8rem] border border-t-0 px-6 pb-8 pt-8 transition-colors duration-500 motion-reduce:animate-none sm:px-8 ${
-          isFeatured ? "border-bone bg-bone text-ink shadow-premium" : "border-white/15 bg-white/[0.035] text-bone"
+          isFeatured ? "border-signal bg-emphasis text-on-emphasis shadow-premium" : "border-line/15 bg-layer/[0.035] text-heading"
         }`}
       >
         <span
           aria-hidden="true"
           className="pointer-events-none absolute -bottom-5 -right-2 select-none text-[7rem] font-black leading-none tracking-tighter text-transparent"
           style={{
-            WebkitTextStroke: isFeatured ? "1px rgba(5,5,5,0.12)" : "1px rgba(255,255,255,0.08)",
+            WebkitTextStroke: isFeatured ? "1px var(--on-emphasis-a012)" : "1px var(--line-a008)",
           }}
         >
           {String(active + 1).padStart(2, "0")}
@@ -251,7 +251,7 @@ function MobileStaircase() {
 
         <p
           className={`relative text-[0.65rem] font-black uppercase tracking-[0.22em] ${
-            isFeatured ? "text-black/45" : "text-white/42"
+            isFeatured ? "text-on-emphasis-soft/45" : "text-content/42"
           }`}
         >
           {current.price}
@@ -261,21 +261,21 @@ function MobileStaircase() {
         </h3>
         <p
           className={`relative mt-5 text-sm font-semibold leading-7 ${
-            isFeatured ? "text-black/72" : "text-white/70"
+            isFeatured ? "text-on-emphasis-soft/72" : "text-content/70"
           }`}
         >
           {current.audience}
         </p>
 
-        <ul className={`relative mt-6 border-t ${isFeatured ? "border-black/15" : "border-white/12"}`}>
+        <ul className={`relative mt-6 border-t ${isFeatured ? "border-contrast-line/15" : "border-line/12"}`}>
           {current.details.map((detail) => (
             <li
               key={detail}
               className={`flex gap-3 border-b py-3 text-sm leading-6 last:border-b-0 ${
-                isFeatured ? "border-black/10 text-black/65" : "border-white/[0.07] text-white/60"
+                isFeatured ? "border-contrast-line/10 text-on-emphasis-soft/65" : "border-line/[0.07] text-content/60"
               }`}
             >
-              <span aria-hidden="true" className={`flex-none font-black ${isFeatured ? "text-ink" : "text-bone"}`}>
+              <span aria-hidden="true" className={`flex-none font-black ${isFeatured ? "text-on-emphasis" : "text-heading"}`}>
                 +
               </span>
               {detail}
@@ -286,14 +286,14 @@ function MobileStaircase() {
         <Link
           to="/contact"
           className={`relative mt-7 inline-flex items-center gap-2 text-sm font-bold transition active:translate-x-0.5 ${
-            isFeatured ? "text-ink" : "text-white"
+            isFeatured ? "text-on-emphasis" : "text-content"
           }`}
         >
           Start with {current.name} <span aria-hidden="true">&rarr;</span>
         </Link>
       </article>
 
-      <p className="mt-4 text-center text-xs font-bold text-white/35" aria-hidden="true">
+      <p className="mt-4 text-center text-xs font-bold text-content/35" aria-hidden="true">
         Tap a step to compare levels
       </p>
     </div>

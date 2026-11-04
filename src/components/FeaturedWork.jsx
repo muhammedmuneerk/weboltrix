@@ -50,15 +50,15 @@ function ProjectPanel({ project, index, active, total }) {
       <div style={{
         position: "absolute", inset: 0,
         background: [
-          "linear-gradient(to right, rgba(14,14,14,0.96) 0%, rgba(14,14,14,0.7) 45%, rgba(14,14,14,0.08) 100%)",
-          "linear-gradient(to top,   rgba(14,14,14,0.55) 0%, transparent 40%)",
+          "linear-gradient(to right, var(--surface-editorial-a096) 0%, var(--surface-editorial-a07) 45%, var(--surface-editorial-a008) 100%)",
+          "linear-gradient(to top,   var(--surface-editorial-a055) 0%, transparent 40%)",
         ].join(", "),
       }} />
 
       {/* ── Corner brackets ── */}
       {[
-        { top: "2rem",    left:  "2rem",  borderTop:    "1px solid #C9A84C", borderLeft:  "1px solid #C9A84C" },
-        { bottom: "2rem", right: "2rem",  borderBottom: "1px solid #C9A84C", borderRight: "1px solid #C9A84C" },
+        { top: "2rem",    left:  "2rem",  borderTop:    "1px solid var(--editorial-accent)", borderLeft:  "1px solid var(--editorial-accent)" },
+        { bottom: "2rem", right: "2rem",  borderBottom: "1px solid var(--editorial-accent)", borderRight: "1px solid var(--editorial-accent)" },
       ].map((s, k) => (
         <div key={k} style={{
           position: "absolute", width: "2rem", height: "2rem",
@@ -82,7 +82,7 @@ function ProjectPanel({ project, index, active, total }) {
           fontSize: "clamp(4.5rem, 10vw, 8rem)",
           fontWeight: 900,
           color: "transparent",
-          WebkitTextStroke: "1px rgba(201,168,76,0.2)",
+          WebkitTextStroke: "1px var(--editorial-accent-a02)",
           lineHeight: 1,
           marginBottom: "-1rem",
           userSelect: "none",
@@ -95,7 +95,7 @@ function ProjectPanel({ project, index, active, total }) {
         <p style={{
           fontSize: "9px", fontWeight: 800,
           letterSpacing: "0.28em", textTransform: "uppercase",
-          color: "#C9A84C", marginBottom: "0.85rem",
+          color: "var(--editorial-accent)", marginBottom: "0.85rem",
           ...enter("y", "1rem", 0.18),
         }}>
           {project.category}
@@ -106,7 +106,7 @@ function ProjectPanel({ project, index, active, total }) {
           fontFamily: "'Syne', system-ui, sans-serif",
           fontSize: "clamp(1.6rem, 3.5vw, 3rem)",
           fontWeight: 800, lineHeight: 1.08,
-          letterSpacing: "-0.025em", color: "#F5F0E8",
+          letterSpacing: "-0.025em", color: "var(--editorial-content)",
           marginBottom: "0.9rem",
           ...enter("y", "1.25rem", 0.28),
         }}>
@@ -116,7 +116,7 @@ function ProjectPanel({ project, index, active, total }) {
         {/* Description */}
         <p style={{
           fontSize: "0.8125rem", lineHeight: 1.85,
-          color: "rgba(245,240,232,0.5)",
+          color: "var(--editorial-content-a05)",
           maxWidth: "380px", marginBottom: "1.25rem",
           ...enter("y", "1.25rem", 0.36),
         }}>
@@ -125,21 +125,21 @@ function ProjectPanel({ project, index, active, total }) {
 
         {/* Before → After */}
         <div style={{
-          borderLeft: "2px solid rgba(201,168,76,0.45)",
+          borderLeft: "2px solid var(--editorial-accent-a045)",
           paddingLeft: "0.9rem",
           marginBottom: "1.25rem",
           ...enter("y", "1rem", 0.43),
         }}>
           <p style={{
             fontSize: "8px", fontWeight: 800, letterSpacing: "0.2em",
-            textTransform: "uppercase", color: "rgba(201,168,76,0.55)",
+            textTransform: "uppercase", color: "var(--editorial-accent-a055)",
             marginBottom: "0.3rem",
           }}>
             Before → After
           </p>
           <p style={{
             fontSize: "0.8rem", fontWeight: 600,
-            color: "#F5F0E8", lineHeight: 1.5,
+            color: "var(--editorial-content)", lineHeight: 1.5,
           }}>
             {project.transformation}
           </p>
@@ -155,8 +155,8 @@ function ProjectPanel({ project, index, active, total }) {
             <span key={m} style={{
               fontSize: "8px", fontWeight: 800, letterSpacing: "0.13em",
               textTransform: "uppercase",
-              color: "rgba(245,240,232,0.4)",
-              border: "1px solid rgba(245,240,232,0.1)",
+              color: "var(--editorial-content-a04)",
+              border: "1px solid var(--editorial-content-a01)",
               padding: "0.28rem 0.7rem",
             }}>
               {m}
@@ -174,8 +174,8 @@ function ProjectPanel({ project, index, active, total }) {
             <span key={tag} style={{
               fontSize: "8px", fontWeight: 800, letterSpacing: "0.1em",
               textTransform: "uppercase",
-              color: "rgba(201,168,76,0.65)",
-              border: "1px solid rgba(201,168,76,0.22)",
+              color: "var(--editorial-accent-a065)",
+              border: "1px solid var(--editorial-accent-a022)",
               padding: "0.25rem 0.6rem",
             }}>
               {tag}
@@ -193,7 +193,7 @@ function ProjectPanel({ project, index, active, total }) {
             to={`/work/${project.slug}`}
             style={{
               display: "inline-flex", alignItems: "center", gap: "0.6rem",
-              background: "#C9A84C", color: "#0E0E0E",
+              background: "var(--editorial-accent)", color: "var(--surface-editorial)",
               fontSize: "0.7rem", fontWeight: 800,
               letterSpacing: "0.12em", textTransform: "uppercase",
               padding: "0.8rem 1.6rem",
@@ -205,7 +205,7 @@ function ProjectPanel({ project, index, active, total }) {
           {liveLink && (
             <a href={liveLink} target="_blank" rel="noreferrer" style={{
               fontSize: "0.75rem", fontWeight: 700,
-              color: "rgba(245,240,232,0.38)",
+              color: "var(--editorial-content-a038)",
               textDecoration: "none", letterSpacing: "0.05em",
             }}>
               Live Site ↗
@@ -214,7 +214,7 @@ function ProjectPanel({ project, index, active, total }) {
           {project.github && (
             <a href={project.github} target="_blank" rel="noreferrer" style={{
               fontSize: "0.75rem", fontWeight: 700,
-              color: "rgba(245,240,232,0.25)",
+              color: "var(--editorial-content-a025)",
               textDecoration: "none", letterSpacing: "0.05em",
             }}>
               GitHub ↗
@@ -233,14 +233,14 @@ function ProjectPanel({ project, index, active, total }) {
         <p style={{
           fontFamily: "'Syne', system-ui, sans-serif",
           fontSize: "clamp(0.85rem, 1.4vw, 1.2rem)",
-          fontWeight: 800, color: "#F5F0E8",
+          fontWeight: 800, color: "var(--editorial-content)",
           lineHeight: 1.3, marginBottom: "0.35rem",
         }}>
           {project.impact}
         </p>
         <p style={{
           fontSize: "8px", fontWeight: 800, letterSpacing: "0.2em",
-          textTransform: "uppercase", color: "rgba(201,168,76,0.5)",
+          textTransform: "uppercase", color: "var(--editorial-accent-a05)",
         }}>
           Project outcome
         </p>
@@ -253,7 +253,7 @@ function ProjectPanel({ project, index, active, total }) {
         fontFamily: "'Syne', system-ui, sans-serif",
         fontSize: "9px", fontWeight: 800,
         letterSpacing: "0.18em", textTransform: "uppercase",
-        color: "rgba(201,168,76,0.4)",
+        color: "var(--editorial-accent-a04)",
         opacity: active ? 1 : 0,
         transition: "opacity 0.5s 0.3s",
       }}>
@@ -263,7 +263,7 @@ function ProjectPanel({ project, index, active, total }) {
       {/* ── Gold scan line — bottom ── */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
-        height: "2px", background: "#C9A84C",
+        height: "2px", background: "var(--editorial-accent)",
         transformOrigin: "left",
         transform: active ? "scaleX(1)" : "scaleX(0)",
         transition: "transform 1.1s cubic-bezier(0.25,0.46,0.45,0.94) 0.1s",
@@ -327,21 +327,21 @@ export default function FeaturedWork({ projects = [] }) {
       <div style={{
         position: "fixed", top: 0, left: 0, zIndex: 9999,
         height: "2px", width: `${scrollPct * 100}%`,
-        background: "#C9A84C",
+        background: "var(--editorial-accent)",
         transition: "width 0.08s linear",
         pointerEvents: "none",
       }} />
 
       {/* ── Section heading — normal document flow above the stage ── */}
       <div style={{
-        background: "#0E0E0E",
+        background: "var(--surface-editorial)",
         padding: "5rem clamp(1.5rem, 5vw, 4.5rem) 3rem",
         position: "relative", overflow: "hidden",
       }}>
         {/* Dot grid */}
         <div style={{
           position: "absolute", inset: 0, pointerEvents: "none",
-          backgroundImage: "radial-gradient(circle, rgba(201,168,76,0.055) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, var(--editorial-accent-a0055) 1px, transparent 1px)",
           backgroundSize: "30px 30px",
         }} />
         {/* Ghost word */}
@@ -352,7 +352,7 @@ export default function FeaturedWork({ projects = [] }) {
           fontSize: "clamp(5rem, 20vw, 18rem)",
           fontWeight: 900, lineHeight: 1,
           color: "transparent",
-          WebkitTextStroke: "1px rgba(201,168,76,0.05)",
+          WebkitTextStroke: "1px var(--editorial-accent-a005)",
           userSelect: "none", pointerEvents: "none",
         }}>
           WORK
@@ -361,11 +361,11 @@ export default function FeaturedWork({ projects = [] }) {
         <div style={{ position: "relative", zIndex: 1, maxWidth: "800px" }}>
           <p style={{
             fontSize: "9px", fontWeight: 800, letterSpacing: "0.28em",
-            textTransform: "uppercase", color: "#C9A84C",
+            textTransform: "uppercase", color: "var(--editorial-accent)",
             marginBottom: "1.25rem",
             display: "flex", alignItems: "center", gap: "0.75rem",
           }}>
-            <span style={{ display: "block", width: "2.5rem", height: "1px", background: "#C9A84C" }} />
+            <span style={{ display: "block", width: "2.5rem", height: "1px", background: "var(--editorial-accent)" }} />
             Featured Work
           </p>
 
@@ -373,7 +373,7 @@ export default function FeaturedWork({ projects = [] }) {
             fontFamily: "'Syne', system-ui, sans-serif",
             fontSize: "clamp(2rem, 5.5vw, 4.5rem)",
             fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.03em",
-            color: "#F5F0E8", maxWidth: "640px", marginBottom: "1.25rem",
+            color: "var(--editorial-content)", maxWidth: "640px", marginBottom: "1.25rem",
           }}>
             Websites designed to look expensive and work hard.
           </h2>
@@ -381,14 +381,14 @@ export default function FeaturedWork({ projects = [] }) {
           <div style={{ display: "flex", alignItems: "center", gap: "2rem", flexWrap: "wrap" }}>
             <p style={{
               fontSize: "0.875rem", lineHeight: 1.75,
-              color: "rgba(245,240,232,0.42)", maxWidth: "380px",
+              color: "var(--editorial-content-a042)", maxWidth: "380px",
             }}>
               Every project starts with business clarity, then becomes a polished
               website that builds confidence fast.
             </p>
             <span style={{
               fontSize: "9px", fontWeight: 800, letterSpacing: "0.22em",
-              textTransform: "uppercase", color: "rgba(245,240,232,0.22)",
+              textTransform: "uppercase", color: "var(--editorial-content-a022)",
             }}>
               {projects.length} Projects · Scroll to explore ↓
             </span>
@@ -405,7 +405,7 @@ export default function FeaturedWork({ projects = [] }) {
         <div style={{
           position: "sticky", top: 0,
           height: "100vh", overflow: "hidden",
-          background: "#0E0E0E",
+          background: "var(--surface-editorial)",
         }}>
 
           {/* ── Diamond dot navigator (right rail) ── */}
@@ -421,7 +421,7 @@ export default function FeaturedWork({ projects = [] }) {
             <span style={{
               fontFamily: "'Syne', system-ui, sans-serif",
               fontSize: "8px", fontWeight: 800, letterSpacing: "0.08em",
-              color: "rgba(201,168,76,0.45)",
+              color: "var(--editorial-accent-a045)",
               writingMode: "vertical-rl", transform: "rotate(180deg)",
               marginBottom: "0.5rem",
             }}>
@@ -438,8 +438,8 @@ export default function FeaturedWork({ projects = [] }) {
                   width: 7, height: 7,
                   transform: "rotate(45deg)",
                   cursor: "pointer",
-                  background: active === i ? "#C9A84C" : "transparent",
-                  border: `1px solid ${active === i ? "#C9A84C" : "rgba(201,168,76,0.3)"}`,
+                  background: active === i ? "var(--editorial-accent)" : "transparent",
+                  border: `1px solid ${active === i ? "var(--editorial-accent)" : "var(--editorial-accent-a03)"}`,
                   padding: 0, flexShrink: 0,
                   transition: "background 0.3s, border-color 0.3s",
                 }}

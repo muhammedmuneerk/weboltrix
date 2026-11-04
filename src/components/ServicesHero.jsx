@@ -195,7 +195,7 @@ export default function ServicesHero({
   );
 
   return (
-    <section className="hero-mesh relative isolate overflow-hidden lg:flex lg:min-h-[100svh] lg:items-center">
+    <section data-color-scope="services-hero" className="hero-mesh relative isolate overflow-hidden lg:flex lg:min-h-[100svh] lg:items-center">
       <div className="fine-grid absolute inset-0 -z-10" />
 
       {/* ───────── Mobile / tablet layout (below lg) ───────── */}
@@ -211,7 +211,7 @@ export default function ServicesHero({
           {title}
         </h1>
 
-        <div className="hero-copy mt-5 max-w-xl text-base leading-7 text-white/62">{copy}</div>
+        <div className="hero-copy mt-5 max-w-xl text-base leading-7 text-content/62">{copy}</div>
 
         <div className="mt-7 grid gap-3 sm:max-w-md sm:grid-cols-2">
           <Link to="/contact" className="premium-button-light w-full">
@@ -228,15 +228,15 @@ export default function ServicesHero({
         </div>
 
         {/* Reassurance row: right under the buttons, before the packages */}
-        <dl className="mt-6 grid grid-cols-3 divide-x divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] sm:max-w-md">
+        <dl className="mt-6 grid grid-cols-3 divide-x divide-line/10 overflow-hidden rounded-2xl border border-line/10 bg-layer/[0.04] sm:max-w-md">
           {[
             ["3 levels", "Starter to premium"],
             ["No lock-in", "Clear pricing"],
             ["Add-ons", "Grows with you"],
           ].map(([term, detail]) => (
             <div key={term} className="px-2 py-3.5 text-center">
-              <dt className="text-sm font-black tracking-tight text-bone">{term}</dt>
-              <dd className="mt-1 text-[0.7rem] leading-4 text-white/50">{detail}</dd>
+              <dt className="text-sm font-black tracking-tight text-heading">{term}</dt>
+              <dd className="mt-1 text-[0.7rem] leading-4 text-content/50">{detail}</dd>
             </div>
           ))}
         </dl>
@@ -245,7 +245,7 @@ export default function ServicesHero({
         <div className="mt-12 flex items-center justify-between gap-3">
           <p className="eyebrow">Pick a level</p>
           <div className="flex items-center gap-1">
-            <p className="text-xs font-bold text-white/50" aria-live="polite">
+            <p className="text-xs font-bold text-content/50" aria-live="polite">
               {mStep + 1} of {total}
             </p>
             {!reduceMotion && (
@@ -254,7 +254,7 @@ export default function ServicesHero({
                 onClick={() => setUserPaused((value) => !value)}
                 aria-pressed={userPaused}
                 aria-label={userPaused ? "Resume automatic switching" : "Pause automatic switching"}
-                className="-my-2 -mr-2 flex h-10 w-10 items-center justify-center rounded-full text-white/60 transition active:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+                className="-my-2 -mr-2 flex h-10 w-10 items-center justify-center rounded-full text-content/60 transition active:bg-layer/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-outline"
               >
                 {userPaused ? (
                   <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
@@ -286,10 +286,10 @@ export default function ServicesHero({
           <ol className="relative mt-5 grid grid-cols-3">
             <span
               aria-hidden="true"
-              className="absolute left-[16.6%] right-[16.6%] top-[1.125rem] h-px bg-white/12"
+              className="absolute left-[16.6%] right-[16.6%] top-[1.125rem] h-px bg-layer/12"
             >
               <span
-                className="absolute inset-0 origin-left bg-bone/70 transition-transform duration-500"
+                className="absolute inset-0 origin-left bg-emphasis/70 transition-transform duration-500"
                 style={{ transform: `scaleX(${mStep / (total - 1)})` }}
               />
             </span>
@@ -303,29 +303,29 @@ export default function ServicesHero({
                     type="button"
                     onClick={() => goToStep(index, true)}
                     aria-current={isActive ? "step" : undefined}
-                    className="flex w-full flex-col items-center gap-2 rounded-xl py-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+                    className="flex w-full flex-col items-center gap-2 rounded-xl py-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-outline"
                   >
                     <span
                       className={`relative z-10 flex h-9 w-9 items-center justify-center rounded-full border text-xs font-black transition duration-500 ${
                         isActive
-                          ? "border-bone bg-bone text-ink shadow-glow"
+                          ? "border-signal bg-selection text-on-selection shadow-glow"
                           : isDone
-                            ? "border-white/40 bg-ink text-bone"
-                            : "border-white/15 bg-ink text-white/45"
+                            ? "border-line/40 bg-inverse-action-alt text-inverse-heading"
+                            : "border-line/15 bg-inverse-action-alt text-inverse-foreground/45"
                       }`}
                     >
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span
                       className={`flex items-center gap-1 text-xs font-bold transition-colors duration-500 ${
-                        isActive ? "text-bone" : "text-white/45"
+                        isActive ? "text-heading" : "text-content/45"
                       }`}
                     >
                       {service.name}
                       {service.featured && (
                         <span
                           aria-hidden="true"
-                          className="h-1.5 w-1.5 rounded-full bg-bone"
+                          className="h-1.5 w-1.5 rounded-full bg-emphasis"
                           title="Most popular"
                         />
                       )}
@@ -356,24 +356,24 @@ export default function ServicesHero({
                   }`}
                 >
                   {service.featured && (
-                    <span className="absolute right-5 top-6 rounded-full bg-bone px-3 py-1 text-[0.6rem] font-black uppercase tracking-[0.08em] text-ink">
+                    <span className="absolute right-5 top-6 rounded-full bg-selection px-3 py-1 text-[0.6rem] font-black uppercase tracking-[0.08em] text-on-selection">
                       Popular
                     </span>
                   )}
 
-                  <p className="text-xs font-black uppercase tracking-[0.25em] text-white/40">
+                  <p className="text-xs font-black uppercase tracking-[0.25em] text-content/40">
                     {service.price}
                   </p>
-                  <h2 className="mt-3 text-3xl font-black tracking-tight text-bone">
+                  <h2 className="mt-3 text-3xl font-black tracking-tight text-heading">
                     {service.name}
                   </h2>
-                  <p className="mt-3 text-sm leading-7 text-white/58">{service.audience}</p>
+                  <p className="mt-3 text-sm leading-7 text-content/58">{service.audience}</p>
 
                   <ul className="mt-5 space-y-3">
                     {service.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-3 text-sm font-semibold text-white/75">
-                        <span className="flex h-5 w-5 flex-none items-center justify-center rounded-full border border-white/20 bg-white/5">
-                          <svg viewBox="0 0 24 24" className="h-3 w-3 fill-none stroke-bone" strokeWidth="3">
+                      <li key={feature} className="flex items-center gap-3 text-sm font-semibold text-content/75">
+                        <span className="flex h-5 w-5 flex-none items-center justify-center rounded-full border border-line/20 bg-layer/5">
+                          <svg viewBox="0 0 24 24" className="h-3 w-3 fill-none stroke-signal" strokeWidth="3">
                             <path d="M5 12.5l4.5 4.5L19 7.5" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         </span>
@@ -390,10 +390,10 @@ export default function ServicesHero({
                   {isActive && !reduceMotion && (
                     <span
                       aria-hidden="true"
-                      className="absolute inset-x-6 bottom-4 h-0.5 overflow-hidden rounded-full bg-white/10"
+                      className="absolute inset-x-6 bottom-4 h-0.5 overflow-hidden rounded-full bg-layer/10"
                     >
                       <span
-                        className="block h-full w-full origin-left rounded-full bg-bone/70"
+                        className="block h-full w-full origin-left rounded-full bg-emphasis/70"
                         style={{
                           animation: `services-bar-fill ${MOBILE_AUTOPLAY_MS}ms linear forwards`,
                           animationPlayState: mobilePaused ? "paused" : "running",
@@ -422,7 +422,7 @@ export default function ServicesHero({
             {title}
           </h1>
 
-          <div className="hero-copy mt-5 max-w-xl text-base leading-7 text-white/62 sm:text-lg sm:leading-8 lg:text-base">
+          <div className="hero-copy mt-5 max-w-xl text-base leading-7 text-content/62 sm:text-lg sm:leading-8 lg:text-base">
             {copy}
           </div>
 
@@ -440,15 +440,15 @@ export default function ServicesHero({
             </a>
           </div>
 
-          <dl className="mt-8 grid max-w-xl grid-cols-3 gap-4 border-t border-white/10 pt-5 sm:gap-6 lg:mt-6 lg:pt-4 [@media(max-height:500px)]:hidden">
+          <dl className="mt-8 grid max-w-xl grid-cols-3 gap-4 border-t border-line/10 pt-5 sm:gap-6 lg:mt-6 lg:pt-4 [@media(max-height:500px)]:hidden">
             {[
               ["3 levels", "Starter to premium"],
               ["No lock-in", "Clear, upfront pricing"],
               ["Add-ons", "Grows with your brand"],
             ].map(([term, detail]) => (
               <div key={term}>
-                <dt className="text-sm font-black tracking-tight text-bone sm:text-base">{term}</dt>
-                <dd className="mt-0.5 text-xs leading-5 text-white/50">{detail}</dd>
+                <dt className="text-sm font-black tracking-tight text-heading sm:text-base">{term}</dt>
+                <dd className="mt-0.5 text-xs leading-5 text-content/50">{detail}</dd>
               </div>
             ))}
           </dl>
@@ -464,7 +464,7 @@ export default function ServicesHero({
         >
           <div className="flex items-center justify-between gap-4">
             <p className="eyebrow">Find your fit</p>
-            <p className="text-xs font-bold text-white/50" aria-live="polite">
+            <p className="text-xs font-bold text-content/50" aria-live="polite">
               Package {active + 1} of {total}
             </p>
           </div>
@@ -474,11 +474,11 @@ export default function ServicesHero({
             role="tablist"
             aria-label="Website packages"
             onKeyDown={handleDesktopKeyDown}
-            className="relative mt-3 grid grid-cols-3 rounded-full border border-white/10 bg-white/[0.05] p-1"
+            className="relative mt-3 grid grid-cols-3 rounded-full border border-line/10 bg-layer/[0.05] p-1"
           >
             <span
               aria-hidden="true"
-              className="absolute bottom-1 left-1 top-1 w-[calc((100%-0.5rem)/3)] rounded-full bg-bone shadow-glow transition-transform duration-500 ease-out motion-reduce:transition-none"
+              className="absolute bottom-1 left-1 top-1 w-[calc((100%-0.5rem)/3)] rounded-full bg-selection shadow-glow transition-transform duration-500 ease-out motion-reduce:transition-none"
               style={{ transform: `translateX(${active * 100}%)` }}
             />
             {services.map((service, index) => {
@@ -496,8 +496,8 @@ export default function ServicesHero({
                   aria-controls="services-hero-panel"
                   tabIndex={isActive ? 0 : -1}
                   onClick={() => selectDesktop(index)}
-                  className={`relative z-10 rounded-full px-2 py-3 text-sm font-black transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone motion-reduce:transition-none ${
-                    isActive ? "text-ink" : "text-white/60 hover:text-bone"
+                  className={`relative z-10 rounded-full px-2 py-3 text-sm font-black transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-outline motion-reduce:transition-none ${
+                    isActive ? "text-on-selection" : "text-content/60 hover:text-heading"
                   }`}
                 >
                   {service.name}
@@ -514,13 +514,13 @@ export default function ServicesHero({
             aria-labelledby={`services-hero-tab-${active}`}
             className="mt-5 min-h-[16.5rem] animate-fade-up motion-reduce:animate-none"
           >
-            <p className="text-xs font-black uppercase tracking-[0.25em] text-white/42">
+            <p className="text-xs font-black uppercase tracking-[0.25em] text-content/42">
               {activeService.price}
             </p>
             <h2 className="mt-2 text-4xl font-black tracking-tight sm:text-5xl">
               {activeService.name}
             </h2>
-            <p className="mt-3 text-sm leading-7 text-white/58 sm:text-base">
+            <p className="mt-3 text-sm leading-7 text-content/58 sm:text-base">
               {activeService.audience}
             </p>
 
@@ -528,9 +528,9 @@ export default function ServicesHero({
               {activeService.features.map((feature) => (
                 <li
                   key={feature}
-                  className="flex items-center gap-3 text-sm font-semibold text-white/72 sm:text-base"
+                  className="flex items-center gap-3 text-sm font-semibold text-content/72 sm:text-base"
                 >
-                  <span className="h-2 w-2 shrink-0 rounded-full border border-white/50" />
+                  <span className="h-2 w-2 shrink-0 rounded-full border border-line/50" />
                   {feature}
                 </li>
               ))}
@@ -538,7 +538,7 @@ export default function ServicesHero({
 
             {/* Scope meter: how far the package goes */}
             <div className="mt-7 flex items-center gap-4">
-              <p className="text-[0.7rem] font-black uppercase tracking-[0.22em] text-white/40">
+              <p className="text-[0.7rem] font-black uppercase tracking-[0.22em] text-content/40">
                 Scope
               </p>
               <div className="grid flex-1 grid-cols-3 gap-2" aria-hidden="true">
@@ -546,7 +546,7 @@ export default function ServicesHero({
                   <span
                     key={service.name}
                     className={`h-1 rounded-full transition-colors duration-500 motion-reduce:transition-none ${
-                      index <= active ? "bg-bone" : "bg-white/12"
+                      index <= active ? "bg-emphasis" : "bg-layer/12"
                     }`}
                   />
                 ))}
@@ -555,7 +555,7 @@ export default function ServicesHero({
 
             <Link
               to="/contact"
-              className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-white transition hover:translate-x-1"
+              className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-content transition hover:translate-x-1"
             >
               Start with {activeService.name} <span aria-hidden="true">&rarr;</span>
             </Link>

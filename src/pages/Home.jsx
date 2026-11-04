@@ -68,7 +68,7 @@ export default function Home() {
 
   return (
     <>
-      <section className="hero-mesh relative isolate overflow-hidden pt-28 lg:min-h-[86vh]">
+      <section data-color-scope="home-hero" className="hero-mesh relative isolate overflow-hidden pt-28 lg:min-h-[86vh]">
         <SignatureHeroMoment />
         <div className="fine-grid absolute inset-0 z-0" />
         <div className="container-premium relative z-10 grid items-center gap-12 pb-14 lg:min-h-[calc(86vh-11rem)] lg:grid-cols-[1.15fr_0.85fr] lg:pb-16">
@@ -82,24 +82,24 @@ export default function Home() {
               We build premium websites that bring customers.
             </h1>
 
-            <p className="hero-copy mx-auto mt-5 max-w-xs text-center text-base leading-7 text-white/64 sm:max-w-md sm:text-lg">
+            <p className="hero-copy mx-auto mt-5 max-w-xs text-center text-base leading-7 text-content/64 sm:max-w-md sm:text-lg">
               Turn your business into a premium brand that attracts customers
               automatically.
             </p>
 
-            <div className="relative mx-auto mt-8 max-w-md overflow-hidden rounded-[1.75rem] border border-white/[0.12] bg-white/[0.06] p-2 shadow-premium backdrop-blur-2xl">
-              <div className="relative aspect-[16/11] overflow-hidden rounded-[1.4rem] bg-black">
+            <div className="relative mx-auto mt-8 max-w-md overflow-hidden rounded-[1.75rem] border border-line/[0.12] bg-layer/[0.06] p-2 shadow-premium backdrop-blur-2xl">
+              <div data-color-context="media" className="relative aspect-[16/11] overflow-hidden rounded-[1.4rem] bg-scrim">
                 <img
                   src={studioAssets.heroStudio}
                   alt="Premium website mockup on desktop and mobile screens inside a dark studio."
                   className="h-full w-full scale-110 object-cover object-center"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-scrim/72 via-scrim/10 to-transparent" />
                 <div className="absolute inset-x-4 bottom-4 grid grid-cols-3 gap-2">
                   {["Trust", "Leads", "Polish"].map((item) => (
                     <span
                       key={item}
-                      className="rounded-full border border-white/[0.12] bg-white/10 px-2 py-2 text-center text-[10px] font-black uppercase tracking-[0.14em] text-white/72 backdrop-blur"
+                      className="rounded-full border border-line/[0.12] bg-layer/10 px-2 py-2 text-center text-[10px] font-black uppercase tracking-[0.14em] text-content/72 backdrop-blur"
                     >
                       {item}
                     </span>
@@ -123,7 +123,7 @@ export default function Home() {
               </Link>
             </div>
 
-            <p className="hero-proof mx-auto mt-6 max-w-xs rounded-full border border-white/10 bg-white/[0.045] px-4 py-2.5 text-center text-sm font-bold leading-6 text-white/62 sm:max-w-sm">
+            <p className="hero-proof mx-auto mt-6 max-w-xs rounded-full border border-line/10 bg-layer/[0.045] px-4 py-2.5 text-center text-sm font-bold leading-6 text-content/62 sm:max-w-sm">
               Helping local brands like Amor turn visitors into customers
             </p>
           </div>
@@ -135,7 +135,7 @@ export default function Home() {
               <h1 className="hero-title mt-6 max-w-[21rem] text-4xl font-black leading-[0.94] tracking-tight text-balance sm:max-w-5xl sm:text-7xl sm:leading-[0.9] lg:text-8xl">
                 We build premium websites that bring customers.
               </h1>
-              <p className="hero-copy mt-7 max-w-[21rem] text-lg leading-8 text-white/64 sm:max-w-2xl sm:text-xl">
+              <p className="hero-copy mt-7 max-w-[21rem] text-lg leading-8 text-content/64 sm:max-w-2xl sm:text-xl">
                 Turn your business into a premium brand that attracts customers
                 automatically.
               </p>
@@ -153,7 +153,7 @@ export default function Home() {
                   View Our Work
                 </Link>
               </div>
-              <p className="hero-proof mt-6 max-w-[19rem] text-sm font-bold leading-6 text-white/62 sm:max-w-xl">
+              <p className="hero-proof mt-6 max-w-[19rem] text-sm font-bold leading-6 text-content/62 sm:max-w-xl">
                 Helping local brands like Amor turn visitors into customers
               </p>
             </div>
@@ -163,7 +163,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="above-fold-hint border-y border-white/10 bg-bone py-6 text-ink">
+      <section data-color-scope="home-marquee" className="above-fold-hint border-y border-line/10 bg-emphasis py-6 text-on-emphasis">
         <div className="container-premium overflow-hidden">
           <div className="flex min-w-max animate-marquee gap-12 text-xl font-black uppercase tracking-tight sm:text-2xl">
             {[0, 1, 2, 3].map((item) => (
@@ -176,7 +176,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-padding">
+      <section data-color-scope="home-featured-work" className="section-padding">
         <div className="container-premium">
           <SectionHeading
             eyebrow="Featured work"
@@ -187,7 +187,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-padding border-y border-white/10 bg-white/[0.025]">
+      <section data-color-scope="home-before-after" className="section-padding border-y border-line/10 bg-layer/[0.025]">
         <div className="container-premium grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
           <SectionHeading
             eyebrow="Before / after"
@@ -198,29 +198,29 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="weboltrix-signature" className="py-20 lg:py-24">
+      <section data-color-scope="home-signature" id="weboltrix-signature" className="py-20 lg:py-24">
   <div className="container-premium">
     <div className="max-w-5xl">
       <p className="eyebrow">Weboltrix signature</p>
       <h2 className="mt-5 max-w-4xl text-4xl font-black leading-tight tracking-tight text-balance sm:text-5xl lg:text-6xl">
         A scroll experience that feels premium, but still sells.
       </h2>
-      <p className="mt-6 max-w-4xl text-lg leading-8 text-white/58 sm:text-xl sm:leading-9">
+      <p className="mt-6 max-w-4xl text-lg leading-8 text-content/58 sm:text-xl sm:leading-9">
         The motion system is built to guide attention: reveal proof, slow
         down important decisions, and make each page feel custom.
       </p>
     </div>
 
     {/* Mobile — editorial numbered list, no card chrome */}
-    <div className="mt-10 divide-y divide-white/10 border-t border-white/10 md:hidden">
+    <div className="mt-10 divide-y divide-line/10 border-t border-line/10 md:hidden">
       {experiencePillars.map(([title, text], index) => (
         <div key={title} className="flex gap-5 py-7">
-          <span className="flex h-14 w-14 flex-none items-center justify-center rounded-2xl border border-white/10 bg-white/[0.055] text-xl font-black text-white/70 shadow-premium backdrop-blur-2xl">
+          <span className="flex h-14 w-14 flex-none items-center justify-center rounded-2xl border border-line/10 bg-layer/[0.055] text-xl font-black text-content/70 shadow-premium backdrop-blur-2xl">
             0{index + 1}
           </span>
           <div className="pt-1">
             <h3 className="text-2xl font-black leading-tight tracking-tight">{title}</h3>
-            <p className="mt-3 text-base leading-7 text-white/58">{text}</p>
+            <p className="mt-3 text-base leading-7 text-content/58">{text}</p>
           </div>
         </div>
       ))}
@@ -231,16 +231,16 @@ export default function Home() {
       {experiencePillars.map(([title, text], index) => (
         <article
           key={title}
-          className="signature-panel interactive-card flex min-h-[18rem] flex-col justify-between rounded-[2rem] border border-white/10 bg-white/[0.055] p-7 shadow-premium backdrop-blur-2xl lg:min-h-[19rem]"
+          className="signature-panel interactive-card flex min-h-[18rem] flex-col justify-between rounded-[2rem] border border-line/10 bg-layer/[0.055] p-7 shadow-premium backdrop-blur-2xl lg:min-h-[19rem]"
         >
-          <span className="text-xs font-black uppercase tracking-[0.24em] text-white/38">
+          <span className="text-xs font-black uppercase tracking-[0.24em] text-content/38">
             0{index + 1}
           </span>
           <div>
             <h3 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl xl:text-3xl">
               {title}
             </h3>
-            <p className="mt-5 text-base leading-8 text-white/58">
+            <p className="mt-5 text-base leading-8 text-content/58">
               {text}
             </p>
           </div>
@@ -250,7 +250,7 @@ export default function Home() {
   </div>
 </section>
 
-      <section
+      <section data-color-scope="home-why-choose"
         id="why-choose-us"
         ref={whyChooseRef}
         className="section-padding overflow-hidden"
@@ -262,8 +262,8 @@ export default function Home() {
             title="Built around design quality and customer action."
             align="center"
           />
-          <div className="mx-auto mt-8 h-px max-w-2xl overflow-hidden bg-white/10">
-            <div className="h-full origin-left bg-bone" data-why-progress />
+          <div className="mx-auto mt-8 h-px max-w-2xl overflow-hidden bg-layer/10">
+            <div className="h-full origin-left bg-emphasis" data-why-progress />
           </div>
           <div
             className="mt-14 w-screen -mx-[calc(50vw-50%)] overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:w-auto md:overflow-visible md:snap-none"
@@ -282,7 +282,7 @@ export default function Home() {
                   <h3 className="mt-6 text-xl font-black tracking-tight">
                     {title}
                   </h3>
-                  <p className="mt-3 text-sm leading-7 text-white/55">{text}</p>
+                  <p className="mt-3 text-sm leading-7 text-content/55">{text}</p>
                 </div>
               ))}
             </div>
@@ -290,7 +290,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-padding border-y border-white/10 bg-white/[0.025]">
+      <section data-color-scope="home-services" className="section-padding border-y border-line/10 bg-layer/[0.025]">
         <div className="container-premium">
           <SectionHeading
             eyebrow="Services"
@@ -305,7 +305,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-padding">
+      <section data-color-scope="home-process" className="section-padding">
         <div className="container-premium">
           <SectionHeading
             eyebrow="Process"
@@ -316,18 +316,18 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-padding border-y border-white/10 bg-bone text-ink">
+      <section data-color-scope="home-results" className="section-padding border-y border-line/10 bg-emphasis text-on-emphasis">
         <div className="container-premium">
           <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.28em] text-black/45">
+              <p className="text-xs font-black uppercase tracking-[0.28em] text-on-emphasis-soft/45">
                 Visual proof
               </p>
               <h2 className="mt-5 text-5xl font-black leading-[0.98] tracking-tight sm:text-6xl lg:text-7xl">
                 Results your customers can feel before they call.
               </h2>
             </div>
-            <p className="max-w-2xl text-xl leading-10 text-black/58">
+            <p className="max-w-2xl text-xl leading-10 text-on-emphasis-soft/58">
               A premium website should not only look better. It should make your
               business easier to trust, easier to contact, and easier to choose.
             </p>
@@ -336,18 +336,18 @@ export default function Home() {
             {resultStats.map((item, index) => (
               <div
                 key={item.metric}
-                className="interactive-card rounded-[2rem] border border-black/10 bg-white p-8 shadow-premium transition duration-500 hover:-translate-y-3"
+                className="interactive-card rounded-[2rem] border border-contrast-line/10 bg-emphasis-panel p-8 shadow-premium transition duration-500 hover:-translate-y-3"
               >
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-sm font-black text-white">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-inverse-action text-sm font-black text-inverse-foreground">
                   0{index + 1}
                 </span>
                 <h3 className="mt-10 text-4xl font-black tracking-tight">
                   {item.metric}
                 </h3>
-                <p className="mt-4 text-base font-black text-black/60">
+                <p className="mt-4 text-base font-black text-on-emphasis-soft/60">
                   {item.label}
                 </p>
-                <p className="mt-5 text-sm leading-7 text-black/52">
+                <p className="mt-5 text-sm leading-7 text-on-emphasis-soft/52">
                   {item.text}
                 </p>
               </div>
@@ -356,7 +356,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-padding">
+      <section data-color-scope="home-pricing" className="section-padding">
         <div className="container-premium grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
           <SectionHeading
             eyebrow="Pricing"
@@ -365,7 +365,7 @@ export default function Home() {
           />
           <div>
             {/* Mobile — one unified pricing block */}
-            <div className="glass divide-y divide-white/10 rounded-[2rem] sm:hidden">
+            <div className="glass divide-y divide-line/10 rounded-[2rem] sm:hidden">
               <div className="p-7">
                 <p className="eyebrow">Setup</p>
                 <p className="mt-4 text-3xl font-black">
@@ -396,14 +396,14 @@ export default function Home() {
               </div>
             </div>
                 
-            <p className="mt-5 rounded-full border border-white/10 bg-white/[0.045] px-5 py-3 text-center text-sm font-bold text-white/62">
+            <p className="mt-5 rounded-full border border-line/10 bg-layer/[0.045] px-5 py-3 text-center text-sm font-bold text-content/62">
               No hidden costs. No long-term lock-ins.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="section-padding border-y border-white/10 bg-white/[0.025]">
+      <section data-color-scope="home-testimonials" className="section-padding border-y border-line/10 bg-layer/[0.025]">
         <div className="container-premium">
           <SectionHeading
             eyebrow="Testimonials"
@@ -425,15 +425,15 @@ export default function Home() {
                 >
                   <span
                     aria-hidden="true"
-                    className="block font-black leading-none text-white/12"
+                    className="block font-black leading-none text-content/12"
                     style={{ fontSize: "5rem" }}
                   >
                     &rdquo;
                   </span>
-                  <blockquote className="-mt-6 text-2xl font-semibold leading-9 text-white/78">
+                  <blockquote className="-mt-6 text-2xl font-semibold leading-9 text-content/78">
                     {testimonial.quote}
                   </blockquote>
-                  <figcaption className="mx-auto mt-7 w-fit border-t border-white/15 pt-4 text-sm font-black uppercase tracking-[0.18em] text-white/40">
+                  <figcaption className="mx-auto mt-7 w-fit border-t border-line/15 pt-4 text-sm font-black uppercase tracking-[0.18em] text-content/40">
                     {testimonial.author}
                   </figcaption>
                 </figure>
@@ -449,8 +449,8 @@ export default function Home() {
                 key={testimonial.author}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
                   index === activeTestimonial
-                    ? "w-5 bg-white/70"
-                    : "w-1.5 bg-white/25"
+                    ? "w-5 bg-layer/70"
+                    : "w-1.5 bg-layer/25"
                 }`}
               />
             ))}
@@ -463,10 +463,10 @@ export default function Home() {
                 key={testimonial.author}
                 className="glass card-hover rounded-[2rem] p-8 sm:p-9"
               >
-                <blockquote className="text-xl font-semibold leading-9 text-white/78">
+                <blockquote className="text-xl font-semibold leading-9 text-content/78">
                   &quot;{testimonial.quote}&quot;
                 </blockquote>
-                <figcaption className="mt-8 text-sm font-black uppercase tracking-[0.18em] text-white/40">
+                <figcaption className="mt-8 text-sm font-black uppercase tracking-[0.18em] text-content/40">
                   {testimonial.author}
                 </figcaption>
               </figure>

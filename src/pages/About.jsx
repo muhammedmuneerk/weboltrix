@@ -16,10 +16,10 @@ export default function About() {
 
       <AboutPrinciples />
 
-      <section className="section-padding">
+      <section data-color-scope="about" className="section-padding">
         <div className="container-premium">
-          <div className="rounded-[2rem] border border-white/10 bg-bone p-8 text-ink sm:p-12">
-            <p className="text-sm font-black uppercase tracking-[0.25em] text-black/45">Highlight</p>
+          <div className="rounded-[2rem] border border-line/10 bg-emphasis p-8 text-on-emphasis sm:p-12">
+            <p className="text-sm font-black uppercase tracking-[0.25em] text-on-emphasis-soft/45">Highlight</p>
             <h2 className="mt-5 max-w-4xl text-4xl font-black leading-tight tracking-tight sm:text-6xl">
               Fast, modern, premium mindset for businesses ready to be taken seriously.
             </h2>

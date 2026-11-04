@@ -3,7 +3,7 @@ export default function WorkHero({ projects }) {
   const industryCount = new Set(projects.map((project) => project.category)).size;
 
   return (
-    <section className="relative isolate overflow-hidden border-b border-white/[0.07] hero-mesh">
+    <section data-color-scope="work-hero" className="relative isolate overflow-hidden border-b border-line/[0.07] hero-mesh">
       <style>{workHeroStyles}</style>
 
       <div className="fine-grid absolute inset-0 -z-10" />
@@ -15,16 +15,16 @@ export default function WorkHero({ projects }) {
           <h1 className="mt-5 max-w-4xl text-5xl font-black leading-[0.94] tracking-tight text-balance sm:text-7xl lg:text-8xl">
             Proof that premium changes perception.
           </h1>
-          <p className="mt-7 max-w-2xl text-lg leading-8 text-white/64 sm:text-xl">
+          <p className="mt-7 max-w-2xl text-lg leading-8 text-content/64 sm:text-xl">
             A considered collection of websites designed to make businesses look established,
             earn trust faster, and turn attention into enquiries.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3 text-xs font-black uppercase tracking-[0.16em] text-white/48">
+          <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3 text-xs font-black uppercase tracking-[0.16em] text-content/48">
             <span>{projects.length} selected projects</span>
-            <span className="h-1 w-1 rounded-full bg-white/40" aria-hidden="true" />
+            <span className="h-1 w-1 rounded-full bg-layer/40" aria-hidden="true" />
             <span>{industryCount} business categories</span>
-            <span className="h-1 w-1 rounded-full bg-white/40" aria-hidden="true" />
+            <span className="h-1 w-1 rounded-full bg-layer/40" aria-hidden="true" />
             <span>Built for clarity</span>
           </div>
 
@@ -34,7 +34,7 @@ export default function WorkHero({ projects }) {
         </div>
 
         <div className="w-[min(100%,37rem)] justify-self-end max-[860px]:w-[min(100%,31rem)] max-[860px]:justify-self-start lg:mb-44" aria-label="A preview of selected Weboltrix projects">
-          <p className="mb-[0.85rem] text-[0.625rem] font-black uppercase tracking-[0.16em] text-white/34">
+          <p className="mb-[0.85rem] text-[0.625rem] font-black uppercase tracking-[0.16em] text-content/34">
             A few of the transformations
           </p>
           <div className="relative min-h-[clamp(19rem,32vw,27rem)] max-[520px]:min-h-[17rem]">
@@ -45,12 +45,12 @@ export default function WorkHero({ projects }) {
                 "bottom-0 left-[24%] z-[3] w-[50%] aspect-[16/10] rotate-[-1.5deg] max-[520px]:left-[23%] max-[520px]:w-[53%]",
               ];
               return (
-                <article className={`absolute overflow-hidden rounded-[0.85rem] border border-white/[0.14] bg-[#101010] shadow-[0_24px_70px_rgba(0,0,0,0.35)] ${cardStyles[index]}`} key={project.slug}>
+                <article data-color-context="media" className={`absolute overflow-hidden rounded-[0.85rem] border border-line/[0.14] bg-[color:var(--surface-media-frame)] shadow-[0_24px_70px_var(--shadow-a035)] ${cardStyles[index]}`} key={project.slug}>
                   <img src={project.image} alt="" className="work-hero-card-image" />
                   <div className="absolute inset-0 work-hero-card-overlay" />
-                  <div className="absolute bottom-3 left-[0.9rem] right-[0.9rem] flex items-center justify-between gap-3 text-[0.5625rem] font-black uppercase tracking-[0.12em] text-white/54 max-[520px]:bottom-[0.55rem] max-[520px]:left-[0.65rem] max-[520px]:right-[0.65rem]">
+                  <div className="absolute bottom-3 left-[0.9rem] right-[0.9rem] flex items-center justify-between gap-3 text-[0.5625rem] font-black uppercase tracking-[0.12em] text-content/54 max-[520px]:bottom-[0.55rem] max-[520px]:left-[0.65rem] max-[520px]:right-[0.65rem]">
                     <span>{String(index + 1).padStart(2, "0")}</span>
-                    <strong className="overflow-hidden whitespace-nowrap text-ellipsis text-[0.625rem] text-white">
+                    <strong className="overflow-hidden whitespace-nowrap text-ellipsis text-[0.625rem] text-content">
                       {project.title}
                     </strong>
                   </div>
@@ -69,27 +69,27 @@ export default function WorkHero({ projects }) {
           <h1 className="mt-4 text-[2.5rem] font-black leading-[1.02] tracking-tight text-balance sm:text-5xl">
             Proof that premium changes perception.
           </h1>
-          <p className="mt-4 text-base leading-7 text-white/64 sm:text-lg">
+          <p className="mt-4 text-base leading-7 text-content/64 sm:text-lg">
             A considered collection of websites designed to make businesses look established,
             earn trust faster, and turn attention into enquiries.
           </p>
         </div>
 
         <div>
-          <p className="mb-3 text-[0.625rem] font-black uppercase tracking-[0.16em] text-white/34">
+          <p className="mb-3 text-[0.625rem] font-black uppercase tracking-[0.16em] text-content/34">
             A few of the transformations
           </p>
           <div className="work-hero-scroller -mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-1">
             {featuredProjects.map((project, index) => (
-              <article
-                className="relative aspect-[4/5] w-[68%] flex-none snap-start overflow-hidden rounded-[0.85rem] border border-white/[0.14] bg-[#101010] shadow-[0_18px_50px_rgba(0,0,0,0.35)] sm:w-[46%]"
+              <article data-color-context="media"
+                className="relative aspect-[4/5] w-[68%] flex-none snap-start overflow-hidden rounded-[0.85rem] border border-line/[0.14] bg-[color:var(--surface-media-frame)] shadow-[0_18px_50px_var(--shadow-a035)] sm:w-[46%]"
                 key={project.slug}
               >
                 <img src={project.image} alt="" className="work-hero-card-image" />
                 <div className="absolute inset-0 work-hero-card-overlay" />
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-3 text-[0.5625rem] font-black uppercase tracking-[0.12em] text-white/54">
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-3 text-[0.5625rem] font-black uppercase tracking-[0.12em] text-content/54">
                   <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong className="overflow-hidden whitespace-nowrap text-ellipsis text-[0.625rem] text-white">
+                  <strong className="overflow-hidden whitespace-nowrap text-ellipsis text-[0.625rem] text-content">
                     {project.title}
                   </strong>
                 </div>
@@ -98,11 +98,11 @@ export default function WorkHero({ projects }) {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.6rem] font-black uppercase tracking-[0.14em] text-white/48">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.6rem] font-black uppercase tracking-[0.14em] text-content/48">
           <span>{projects.length} selected projects</span>
-          <span className="h-1 w-1 rounded-full bg-white/40" aria-hidden="true" />
+          <span className="h-1 w-1 rounded-full bg-layer/40" aria-hidden="true" />
           <span>{industryCount} business categories</span>
-          <span className="h-1 w-1 rounded-full bg-white/40" aria-hidden="true" />
+          <span className="h-1 w-1 rounded-full bg-layer/40" aria-hidden="true" />
           <span>Built for clarity</span>
         </div>
 
@@ -122,7 +122,7 @@ const workHeroStyles = `
     width: min(56vw, 52rem);
     aspect-ratio: 1;
     border-radius: 999px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.13), transparent 68%);
+    background: radial-gradient(circle, var(--layer-a013), transparent 68%);
     filter: blur(12px);
     pointer-events: none;
   }
@@ -131,7 +131,7 @@ const workHeroStyles = `
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    color: #fff;
+    color: var(--content);
     font-size: 0.75rem;
     font-weight: 900;
     letter-spacing: 0.16em;
@@ -143,7 +143,7 @@ const workHeroStyles = `
     content: "";
     width: 2.5rem;
     height: 1px;
-    background: rgba(255, 255, 255, 0.48);
+    background: var(--layer-a048);
     transition: width 0.25s ease;
   }
 
@@ -160,7 +160,7 @@ const workHeroStyles = `
   }
 
   .work-hero-card-overlay {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.82), transparent 57%);
+    background: linear-gradient(to top, var(--scrim-a082), transparent 57%);
   }
 
   .work-hero-scroller {

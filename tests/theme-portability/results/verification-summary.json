@@ -1,0 +1,518 @@
+{
+  "status": "Passed scoped browser verification; original theme retained",
+  "completed": "2026-11-04T11:12:37.458Z",
+  "themeFilesOnly": {
+    "sourceHash": "e702d35a73ac8ad52b552aad8931e8bcc4cbaf7bbc7b7324ca96fdafb46d5aa0",
+    "restored": true,
+    "builds": [
+      {
+        "theme": "original",
+        "sourceHash": "e702d35a73ac8ad52b552aad8931e8bcc4cbaf7bbc7b7324ca96fdafb46d5aa0",
+        "themeFiles": {
+          "palette.css": "cb2d1c48416a8f5a0e1552c648c10815eda9eaaf76d11c597c3a00b159647044",
+          "assignments.css": "4a5da2abf4136c0f4d758c5999b40fffd6a6b75817161558b7c16bfbe189ea4d"
+        }
+      },
+      {
+        "theme": "navy",
+        "sourceHash": "e702d35a73ac8ad52b552aad8931e8bcc4cbaf7bbc7b7324ca96fdafb46d5aa0",
+        "themeFiles": {
+          "palette.css": "2c84ed14af86edffcd46ab36fb708049d7296cb359aee3eae403a2bce470bb0c",
+          "assignments.css": "e4361ce1a2083bee5bb5029bb65280f3d774278c67b29b2c2d644dc93276e568"
+        }
+      },
+      {
+        "theme": "light",
+        "sourceHash": "e702d35a73ac8ad52b552aad8931e8bcc4cbaf7bbc7b7324ca96fdafb46d5aa0",
+        "themeFiles": {
+          "palette.css": "2c84ed14af86edffcd46ab36fb708049d7296cb359aee3eae403a2bce470bb0c",
+          "assignments.css": "edcb482070cf6985331019b464207c1af8400305a7402cfefb997b4f52b5bae1"
+        }
+      }
+    ]
+  },
+  "activeOriginalHashesMatch": true,
+  "applicationChangesThisVerification": [],
+  "matrixSamples": 240,
+  "widths": [
+    1440,
+    768,
+    390
+  ],
+  "normalComputedRegressions": [],
+  "stateRegressions": [],
+  "nativePseudoStateChecks": {
+    "checks": 136,
+    "failures": 0
+  },
+  "screenshots": {
+    "captures": 96,
+    "baselineOriginalPairs": 24,
+    "pixelIdenticalPairs": 24,
+    "mode": "Reduced motion, paused CSS animation/transition for deterministic comparison; normal motion was used in the main audit.",
+    "comparisons": [
+      {
+        "sample": "home",
+        "width": 1440,
+        "differentPixels": 0,
+        "totalPixels": 1440000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "work",
+        "width": 1440,
+        "differentPixels": 0,
+        "totalPixels": 1440000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "services",
+        "width": 1440,
+        "differentPixels": 0,
+        "totalPixels": 1440000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "process",
+        "width": 1440,
+        "differentPixels": 0,
+        "totalPixels": 1440000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "about",
+        "width": 1440,
+        "differentPixels": 0,
+        "totalPixels": 1440000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "contact",
+        "width": 1440,
+        "differentPixels": 0,
+        "totalPixels": 1440000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "cta",
+        "width": 1440,
+        "differentPixels": 0,
+        "totalPixels": 1440000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "redirect",
+        "width": 1440,
+        "differentPixels": 0,
+        "totalPixels": 1440000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "home",
+        "width": 768,
+        "differentPixels": 0,
+        "totalPixels": 768000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "work",
+        "width": 768,
+        "differentPixels": 0,
+        "totalPixels": 768000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "services",
+        "width": 768,
+        "differentPixels": 0,
+        "totalPixels": 768000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "process",
+        "width": 768,
+        "differentPixels": 0,
+        "totalPixels": 768000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "about",
+        "width": 768,
+        "differentPixels": 0,
+        "totalPixels": 768000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "contact",
+        "width": 768,
+        "differentPixels": 0,
+        "totalPixels": 768000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "cta",
+        "width": 768,
+        "differentPixels": 0,
+        "totalPixels": 768000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "redirect",
+        "width": 768,
+        "differentPixels": 0,
+        "totalPixels": 768000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "home",
+        "width": 390,
+        "differentPixels": 0,
+        "totalPixels": 390000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "work",
+        "width": 390,
+        "differentPixels": 0,
+        "totalPixels": 390000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "services",
+        "width": 390,
+        "differentPixels": 0,
+        "totalPixels": 390000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "process",
+        "width": 390,
+        "differentPixels": 0,
+        "totalPixels": 390000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "about",
+        "width": 390,
+        "differentPixels": 0,
+        "totalPixels": 390000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "contact",
+        "width": 390,
+        "differentPixels": 0,
+        "totalPixels": 390000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "cta",
+        "width": 390,
+        "differentPixels": 0,
+        "totalPixels": 390000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      },
+      {
+        "sample": "redirect",
+        "width": 390,
+        "differentPixels": 0,
+        "totalPixels": 390000,
+        "maxChannelDelta": 0,
+        "bounds": null
+      }
+    ]
+  },
+  "marginInvestigation": {
+    "initialObservations": [
+      {
+        "width": 1440,
+        "route": "/",
+        "differences": [
+          {
+            "node": 404,
+            "tag": "DIV",
+            "text": "",
+            "visible": true,
+            "pseudo": 0,
+            "property": "marginRight",
+            "selector": "[scope=home-before-after] > div.container-premium.grid.gap-12",
+            "beforeBounds": {
+              "x": 72.5,
+              "y": 3222.9375,
+              "width": 1280,
+              "height": 1290
+            },
+            "afterBounds": {
+              "x": 72.5,
+              "y": 3222.9375,
+              "width": 1280,
+              "height": 1290
+            },
+            "beforeInlineStyle": null,
+            "afterInlineStyle": null,
+            "before": "72.5px",
+            "after": "0px"
+          },
+          {
+            "node": 404,
+            "tag": "DIV",
+            "text": "",
+            "visible": true,
+            "pseudo": 0,
+            "property": "marginLeft",
+            "selector": "[scope=home-before-after] > div.container-premium.grid.gap-12",
+            "beforeBounds": {
+              "x": 72.5,
+              "y": 3222.9375,
+              "width": 1280,
+              "height": 1290
+            },
+            "afterBounds": {
+              "x": 72.5,
+              "y": 3222.9375,
+              "width": 1280,
+              "height": 1290
+            },
+            "beforeInlineStyle": null,
+            "afterInlineStyle": null,
+            "before": "72.5px",
+            "after": "0px"
+          }
+        ]
+      },
+      {
+        "width": 1440,
+        "route": "/work",
+        "differences": [
+          {
+            "node": 24,
+            "tag": "DIV",
+            "text": "",
+            "visible": true,
+            "pseudo": 0,
+            "property": "marginRight",
+            "selector": "[scope=work-hero] > div.container-premium.relative.z-10",
+            "beforeBounds": {
+              "x": 72.5,
+              "y": 0,
+              "width": 1280,
+              "height": 891.59375
+            },
+            "afterBounds": {
+              "x": 72.5,
+              "y": 0,
+              "width": 1280,
+              "height": 891.59375
+            },
+            "beforeInlineStyle": null,
+            "afterInlineStyle": null,
+            "before": "0px",
+            "after": "72.5px"
+          },
+          {
+            "node": 24,
+            "tag": "DIV",
+            "text": "",
+            "visible": true,
+            "pseudo": 0,
+            "property": "marginLeft",
+            "selector": "[scope=work-hero] > div.container-premium.relative.z-10",
+            "beforeBounds": {
+              "x": 72.5,
+              "y": 0,
+              "width": 1280,
+              "height": 891.59375
+            },
+            "afterBounds": {
+              "x": 72.5,
+              "y": 0,
+              "width": 1280,
+              "height": 891.59375
+            },
+            "beforeInlineStyle": null,
+            "afterInlineStyle": null,
+            "before": "0px",
+            "after": "72.5px"
+          }
+        ]
+      },
+      {
+        "width": 1440,
+        "route": "/work/mmk-shop",
+        "differences": [
+          {
+            "node": 24,
+            "tag": "DIV",
+            "text": "",
+            "visible": true,
+            "pseudo": 0,
+            "property": "marginRight",
+            "selector": "[scope=work-hero] > div.container-premium.relative.z-10",
+            "beforeBounds": {
+              "x": 72.5,
+              "y": 0,
+              "width": 1280,
+              "height": 891.59375
+            },
+            "afterBounds": {
+              "x": 72.5,
+              "y": 0,
+              "width": 1280,
+              "height": 891.59375
+            },
+            "beforeInlineStyle": null,
+            "afterInlineStyle": null,
+            "before": "0px",
+            "after": "72.5px"
+          },
+          {
+            "node": 24,
+            "tag": "DIV",
+            "text": "",
+            "visible": true,
+            "pseudo": 0,
+            "property": "marginLeft",
+            "selector": "[scope=work-hero] > div.container-premium.relative.z-10",
+            "beforeBounds": {
+              "x": 72.5,
+              "y": 0,
+              "width": 1280,
+              "height": 891.59375
+            },
+            "afterBounds": {
+              "x": 72.5,
+              "y": 0,
+              "width": 1280,
+              "height": 891.59375
+            },
+            "beforeInlineStyle": null,
+            "afterInlineStyle": null,
+            "before": "0px",
+            "after": "72.5px"
+          }
+        ]
+      }
+    ],
+    "identicalBounds": true,
+    "settledDifferences": 0,
+    "redirectResolvesToWork": true,
+    "finding": "Intermittent computed auto-margin serialization without any observed movement. Bounds match, settled comparisons match and redirect screenshots are pixel-identical."
+  },
+  "overrideProbes": {
+    "global": {
+      "pass": true,
+      "before": "rgb(5, 5, 5)",
+      "after": "rgb(38, 38, 38)"
+    },
+    "scoped": {
+      "pass": true
+    },
+    "targeted": {
+      "pass": true,
+      "before": "rgb(245, 243, 239)",
+      "after": "rgb(38, 38, 38)"
+    },
+    "restored": true
+  },
+  "themes": {
+    "baseline": {
+      "normalTextChecks": 5873,
+      "normalTextFailures": 1636,
+      "interactiveTextChecks": 9973,
+      "interactiveTextFailures": 1842,
+      "focusControlChecks": 162,
+      "focusControlFailures": 12,
+      "projectedRules": 87,
+      "interactions": {
+        "hover": 1912,
+        "active": 1912,
+        "focus": 1912,
+        "disabled": 0,
+        "selected": 132
+      },
+      "imageBackedChecks": 357
+    },
+    "original": {
+      "normalTextChecks": 5873,
+      "normalTextFailures": 1636,
+      "interactiveTextChecks": 9973,
+      "interactiveTextFailures": 1842,
+      "focusControlChecks": 162,
+      "focusControlFailures": 12,
+      "projectedRules": 88,
+      "interactions": {
+        "hover": 1912,
+        "active": 1912,
+        "focus": 1912,
+        "disabled": 0,
+        "selected": 132
+      },
+      "imageBackedChecks": 382
+    },
+    "navy": {
+      "normalTextChecks": 5873,
+      "normalTextFailures": 0,
+      "interactiveTextChecks": 9973,
+      "interactiveTextFailures": 0,
+      "focusControlChecks": 162,
+      "focusControlFailures": 0,
+      "projectedRules": 88,
+      "interactions": {
+        "hover": 1912,
+        "active": 1912,
+        "focus": 1912,
+        "disabled": 0,
+        "selected": 132
+      },
+      "imageBackedChecks": 382
+    },
+    "light": {
+      "normalTextChecks": 5873,
+      "normalTextFailures": 0,
+      "interactiveTextChecks": 9973,
+      "interactiveTextFailures": 0,
+      "focusControlChecks": 162,
+      "focusControlFailures": 0,
+      "projectedRules": 88,
+      "interactions": {
+        "hover": 1912,
+        "active": 1912,
+        "focus": 1912,
+        "disabled": 0,
+        "selected": 132
+      },
+      "imageBackedChecks": 382
+    }
+  },
+  "limitations": [
+    "Original approved low contrast is preserved, not repaired.",
+    "Chromium only; screenshots use reduced motion and frozen CSS animation for deterministic image comparison.",
+    "Computed contrast uses conservative gradient/alpha compositing, not exhaustive image-pixel or backdrop-filter sampling.",
+    "No disabled controls were encountered; continuous animation frames, all drag/scroll positions, external navigation and actual form submission are not exhaustively exercised."
+  ],
+  "activeApplicationHashMatches": true,
+  "applicationHash": "e702d35a73ac8ad52b552aad8931e8bcc4cbaf7bbc7b7324ca96fdafb46d5aa0"
+}

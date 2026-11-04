@@ -69,11 +69,11 @@ function Decal({ label, isActive }) {
           <span
             key={slot}
             className={`relative h-3 rounded-full border transition-colors duration-700 ${
-              isActive ? "border-white/40 bg-white/25" : "border-white/20 bg-white/[0.12]"
+              isActive ? "border-line/40 bg-layer/25" : "border-line/20 bg-layer/[0.12]"
             }`}
           >
             <span
-              className={`absolute right-2 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-bone ${
+              className={`absolute right-2 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-emphasis ${
                 slot === 0 ? "addon-blink" : "opacity-60"
               }`}
             />
@@ -90,11 +90,11 @@ function Decal({ label, isActive }) {
         <span
           key={knob}
           className={`relative h-1.5 rounded-full transition-colors duration-700 ${
-            isActive ? "bg-white/45" : "bg-white/25"
+            isActive ? "bg-layer/45" : "bg-layer/25"
           }`}
         >
           <span
-            className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-ink/40 bg-bone"
+            className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-on-emphasis/40 bg-emphasis"
             style={{ left: knob }}
           />
         </span>
@@ -136,7 +136,7 @@ export default function AddOns() {
   const gap = exploded ? gapExploded : gapStacked;
 
   return (
-    <section className="section-padding overflow-hidden border-y border-white/10 bg-white/[0.025]">
+    <section data-color-scope="addons" className="section-padding overflow-hidden border-y border-line/10 bg-layer/[0.025]">
       <style>{css}</style>
 
       {/* ───────── Desktop layout (lg and up) – unchanged ───────── */}
@@ -148,7 +148,7 @@ export default function AddOns() {
           <div
             ref={diagramRef}
             aria-hidden="true"
-            className="relative flex flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] px-4 py-8 shadow-premium sm:px-8 lg:min-h-[30rem]"
+            className="relative flex flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-line/10 bg-layer/[0.03] px-4 py-8 shadow-premium sm:px-8 lg:min-h-[30rem]"
           >
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-40">
               <div className="fine-grid h-full w-full" />
@@ -157,7 +157,7 @@ export default function AddOns() {
             <div className="relative h-[23rem] w-full max-w-xl sm:h-[26rem]">
             {/* Soft light on the "ground" under the stack */}
             <span
-              className="absolute left-1/2 h-12 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.07] blur-2xl transition-[top] duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none"
+              className="absolute left-1/2 h-12 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-layer/[0.07] blur-2xl transition-[top] duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none"
               style={{ top: `calc(50% + ${gap + (compact ? 3.9 : 4.9)}rem)` }}
             />
 
@@ -167,12 +167,12 @@ export default function AddOns() {
                 GUIDE_SIDES.map((side) => (
                   <span
                     key={`${layer.label}-${side}`}
-                    className={`absolute w-0 border-l border-dashed border-white/25 transition-[opacity,top,height] duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none ${side} ${
+                    className={`absolute w-0 border-l border-dashed border-line/25 transition-[opacity,top,height] duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none ${side} ${
                       exploded ? "opacity-100" : "opacity-0"
                     }`}
                     style={{ top: `calc(50% + ${(index - 1) * gap}rem)`, height: `${gap}rem` }}
                   >
-                    <span className="addon-rise absolute -left-[3px] h-1.5 w-1.5 rounded-full bg-bone" />
+                    <span className="addon-rise absolute -left-[3px] h-1.5 w-1.5 rounded-full bg-emphasis" />
                   </span>
                 ))
               )}
@@ -201,10 +201,10 @@ export default function AddOns() {
                         key={depth}
                         className={`absolute inset-0 rounded-[1.6rem] border transition-colors duration-700 ${
                           isSite
-                            ? "border-[#b9b5ab] bg-[#cfcbc1]"
+                            ? "border-[color:var(--object-edge)] bg-[color:var(--object-base)]"
                             : isActive
-                              ? "border-white/20 bg-[#1d1d1d]"
-                              : "border-white/10 bg-[#0d0d0d]"
+                              ? "border-line/20 bg-[color:var(--surface-raised)]"
+                              : "border-line/10 bg-[color:var(--surface-recessed)]"
                         }`}
                         style={{ transform: `translateZ(-${depth}px)` }}
                       />
@@ -213,26 +213,26 @@ export default function AddOns() {
                     <div
                       className={`absolute inset-0 overflow-hidden rounded-[1.6rem] border transition-[background-color,border-color,box-shadow] duration-700 motion-reduce:transition-none ${
                         isSite
-                          ? "border-bone bg-bone shadow-glow"
+                          ? "border-signal bg-emphasis shadow-glow"
                           : isActive
-                            ? "border-bone/80 bg-[#303030] shadow-glow"
-                            : "border-white/20 bg-[#181818]"
+                            ? "border-signal/80 bg-[color:var(--surface-control-active)] shadow-glow"
+                            : "border-line/20 bg-[color:var(--surface-control-idle)]"
                       }`}
                     >
                       {/* Sheen */}
                       <span
                         className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${
                           isSite
-                            ? "from-white via-transparent to-black/[0.08]"
-                            : "from-white/20 via-white/[0.03] to-transparent"
+                            ? "from-layer via-transparent to-scrim/[0.08]"
+                            : "from-layer/20 via-layer/[0.03] to-transparent"
                         }`}
                       />
 
                       {isSite ? (
                         <div className="relative flex h-full flex-col gap-3 p-5 sm:p-6">
-                          <span className="h-2 w-1/2 rounded-full bg-ink/25" />
-                          <span className="h-2 w-3/4 rounded-full bg-ink/15" />
-                          <span className="mt-auto h-10 w-full rounded-xl bg-ink/10" />
+                          <span className="h-2 w-1/2 rounded-full bg-canvas/25" />
+                          <span className="h-2 w-3/4 rounded-full bg-canvas/15" />
+                          <span className="mt-auto h-10 w-full rounded-xl bg-canvas/10" />
                         </div>
                       ) : (
                         <Decal label={layer.label} isActive={isActive} />
@@ -249,12 +249,12 @@ export default function AddOns() {
                       zIndex: 20,
                     }}
                   >
-                    <span className="h-px w-8 bg-white/30" />
+                    <span className="h-px w-8 bg-layer/30" />
                     <span
                       className={`rounded-full border px-3 py-1 text-[0.65rem] font-black uppercase tracking-[0.18em] transition-colors duration-500 ${
                         isSite || isActive
-                          ? "border-bone bg-bone text-ink"
-                          : "border-white/20 bg-ink text-white/60"
+                          ? "border-signal bg-selection text-on-selection"
+                          : "border-line/20 bg-canvas text-content/60"
                       }`}
                     >
                       {layerText(layer)}
@@ -277,8 +277,8 @@ export default function AddOns() {
                     onClick={isSite ? undefined : () => setActive(layer.addon)}
                     className={`rounded-full border px-2.5 py-1 text-[0.58rem] font-black uppercase tracking-[0.14em] transition-colors duration-500 ${
                       isSite || isActive
-                        ? "border-bone bg-bone text-ink"
-                        : "border-white/20 bg-ink text-white/60"
+                        ? "border-signal bg-selection text-on-selection"
+                        : "border-line/20 bg-canvas text-content/60"
                     }`}
                   >
                     {layerText(layer)}
@@ -300,17 +300,17 @@ export default function AddOns() {
                     onMouseEnter={() => setActive(index)}
                     onFocus={() => setActive(index)}
                     aria-pressed={isActive}
-                    className={`flex w-full items-start gap-5 rounded-[1.8rem] border p-6 text-left transition duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone motion-reduce:transition-none sm:p-7 ${
+                    className={`flex w-full items-start gap-5 rounded-[1.8rem] border p-6 text-left transition duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-outline motion-reduce:transition-none sm:p-7 ${
                       isActive
-                        ? "border-bone bg-bone text-ink shadow-glow"
-                        : "border-white/10 bg-white/[0.045] text-bone hover:border-white/25"
+                        ? "border-selection bg-selection text-on-selection shadow-glow"
+                        : "border-line/10 bg-layer/[0.045] text-heading hover:border-line/25"
                     }`}
                   >
                     <span
                       className={`flex h-10 w-10 flex-none items-center justify-center rounded-full border text-xs font-black transition duration-500 ${
                         isActive
-                          ? "border-ink bg-ink text-bone"
-                          : "border-white/15 bg-white/[0.04] text-white/45"
+                          ? "border-on-emphasis bg-inverse-action-alt text-inverse-heading"
+                          : "border-line/15 bg-layer/[0.04] text-content/45"
                       }`}
                     >
                       {pad(index)}
@@ -321,7 +321,7 @@ export default function AddOns() {
                       </span>
                       <span
                         className={`mt-2 block text-sm leading-7 transition-colors duration-500 ${
-                          isActive ? "text-black/68" : "text-white/58"
+                          isActive ? "text-on-emphasis-soft/68" : "text-content/58"
                         }`}
                       >
                         {addon.text}
@@ -371,7 +371,7 @@ function MobileStage() {
   return (
     <div
       ref={stageRef}
-      className="relative mt-12 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] px-5 pb-8 pt-4 shadow-premium"
+      className="relative mt-12 overflow-hidden rounded-[2rem] border border-line/10 bg-layer/[0.03] px-5 pb-8 pt-4 shadow-premium"
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-40">
         <div className="fine-grid h-full w-full" />
@@ -379,7 +379,7 @@ function MobileStage() {
 
       {/* Plates */}
       <div aria-hidden="true" className="relative h-[19rem] w-full">
-        <span className="absolute bottom-2 left-1/2 h-12 w-64 -translate-x-1/2 rounded-full bg-white/[0.07] blur-2xl" />
+        <span className="absolute bottom-2 left-1/2 h-12 w-64 -translate-x-1/2 rounded-full bg-layer/[0.07] blur-2xl" />
 
         {LAYERS.map((layer, index) => {
           const isSite = layer.addon === null;
@@ -402,7 +402,7 @@ function MobileStage() {
                   <span
                     key={depth}
                     className={`absolute inset-0 rounded-[1.6rem] border ${
-                      isSite ? "border-[#b9b5ab] bg-[#cfcbc1]" : "border-white/10 bg-[#0d0d0d]"
+                      isSite ? "border-[color:var(--object-edge)] bg-[color:var(--object-base)]" : "border-line/10 bg-[color:var(--surface-recessed)]"
                     }`}
                     style={{ transform: `translateZ(-${depth}px)` }}
                   />
@@ -411,21 +411,21 @@ function MobileStage() {
                 <div
                   data-plate-face
                   className={`absolute inset-0 overflow-hidden rounded-[1.6rem] border ${
-                    isSite ? "border-bone bg-bone shadow-glow" : "border-white/20 bg-[#181818]"
+                    isSite ? "border-signal bg-emphasis shadow-glow" : "border-line/20 bg-[color:var(--surface-control-idle)]"
                   }`}
                 >
                   <span
                     className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${
                       isSite
-                        ? "from-white via-transparent to-black/[0.08]"
-                        : "from-white/20 via-white/[0.03] to-transparent"
+                        ? "from-layer via-transparent to-scrim/[0.08]"
+                        : "from-layer/20 via-layer/[0.03] to-transparent"
                     }`}
                   />
                   {isSite ? (
                     <div className="relative flex h-full flex-col gap-3 p-5">
-                      <span className="h-2 w-1/2 rounded-full bg-ink/25" />
-                      <span className="h-2 w-3/4 rounded-full bg-ink/15" />
-                      <span className="mt-auto h-10 w-full rounded-xl bg-ink/10" />
+                      <span className="h-2 w-1/2 rounded-full bg-canvas/25" />
+                      <span className="h-2 w-3/4 rounded-full bg-canvas/15" />
+                      <span className="mt-auto h-10 w-full rounded-xl bg-canvas/10" />
                     </div>
                   ) : (
                     <Decal label={layer.label} isActive={false} />
@@ -447,8 +447,8 @@ function MobileStage() {
               data-legend
               className={`rounded-full border px-3 py-1 text-[0.6rem] font-black uppercase tracking-[0.16em] ${
                 isSite
-                  ? "border-bone bg-bone text-ink"
-                  : "border-white/20 bg-ink text-white/60"
+                  ? "border-signal bg-selection text-on-selection"
+                  : "border-line/20 bg-canvas text-content/60"
               }`}
             >
               {layerText(layer)}
@@ -466,7 +466,7 @@ function MobileStage() {
               {caption.name}
             </h3>
             {caption.text && (
-              <p className="mt-4 text-sm leading-7 text-white/62">{caption.text}</p>
+              <p className="mt-4 text-sm leading-7 text-content/62">{caption.text}</p>
             )}
           </div>
         ))}

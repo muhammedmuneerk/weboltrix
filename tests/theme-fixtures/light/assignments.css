@@ -1,0 +1,393 @@
+/* PORTABLE THEME CONTRACT — replace this file together with palette.css only.
+ * No JSX/Tailwind edits or runtime theme engine are needed for ordinary themes.
+ * Preserve every variable name, selector and gradient geometry. Change mappings.
+ * PAIRS: canvas/heading/content; emphasis/on-emphasis/on-emphasis-soft;
+ * action/action-foreground; inverse-action/inverse-foreground;
+ * selection/on-selection; media-surface/media-heading/media-content.
+ * Check text >=4.5:1 (large text >=3:1), controls/focus >=3:1 against actual surfaces.
+ * Transparent layers composite over their parent. Alpha floors below let a new
+ * theme strengthen muted text/control edges WITHOUT editing utility modifiers.
+ * Original theme floors are zero to retain its approved (sometimes low) contrast.
+ * Keep media scrims dark and media foregrounds light: image pixels are fixed.
+ * Footer and CTA are independent canvas contexts: their children resolve local
+ * foregrounds here, AND color is reapplied at the boundary (inheritance matters).
+ * RGB aliases are raw comma-separated channels. Full-color aliases below must
+ * be rebound in each context: root-computed aliases do not recompute in children.
+ *
+ * ROLE GUIDE (all -rgb values are pigment references from palette.css):
+ * canvas = page; heading/content = its main/muted text; layer = transparent
+ * cards and hover washes; recess = recessed panels. surface-* are ordered
+ * opaque panel/control/media-frame shades, paired with local heading/content.
+ * emphasis/emphasis-panel = contrasting callouts and cards, paired with
+ * on-emphasis/on-emphasis-soft. emphasis-content controls nested white text
+ * from the original design; new themes should pair it with emphasis too.
+ * action/action-bright/action-hover + action-foreground/hover-foreground =
+ * primary actions. inverse-action/-alt/-hover + inverse-foreground/-heading
+ * = dark counter-actions inside light callouts. These pairs are independent.
+ * selection/selection-bright + on-selection/-alt = selected tabs, sliding
+ * thumbs, counters and active nodes. action-on-selection-soft = their labels.
+ * focus-outline/focus-ring = focus indicators, paired with the surrounding
+ * surface (rings paint outside media contexts). signal = icons/progress; line/contrast-line =
+ * edges on ordinary/contrasting surfaces; scrim = image darkening only.
+ * media-* = text, badge washes and edges over immutable photos; keep readable
+ * even over white image pixels. media-badge-surface defaults transparent:
+ * its legacy /52 utility generated no CSS. New themes can use an opaque scrim.
+ * glow/ambient/shadow = effects, never body text. object-* = decorative art.
+ * editorial-* = optional editorial work layout; pair with surface-editorial.
+ * footer-* and cta-* deliberately form independent contrasting regions.
+ *
+ * Alpha floors retain existing Tailwind /NN and /[0.NN] syntax, but allow
+ * accessible new themes to strengthen muted text/edges. They cannot repair
+ * an incorrect foreground/background pair. Avoid excessive bright glows.
+ * caption/secondary-label/inactive-card opacity and motion-* alpha inputs
+ * control legibility of dim text. Motion timing, geometry and visibility
+ * endpoints are unchanged; original opacity inputs preserve the approved art.
+ * Framework gray pigments/focus colors remain configurable in these files.
+ * Transparent/currentColor/none and alpha masks are behavior, not pigments.
+ *
+ * TARGETED EDITS (add rules here; no component edits):
+ * [data-color-scope="service-card"][data-color-key="Business"] {
+ *   --action-rgb: var(--rgb-ivory); --action-foreground-rgb: var(--rgb-neutral-005);
+ * }
+ * [data-color-scope="home-hero"] {
+ *   --canvas-rgb: var(--rgb-neutral-005); --heading-rgb: var(--rgb-ivory);
+ *   color: rgb(var(--heading-rgb)); // reapply inherited foreground explicitly
+ * }
+ * Full aliases below rebind on EVERY existing data-color-scope boundary.
+ * For a single action, assign --button-light-* or --cta-primary-* directly
+ * on its data-color-part hook, including its hover foreground/background.
+ * These examples are inactive comments. Preserve selectors and formulas;
+ * author a theme by changing root pigments, role inputs and intentional scopes.
+ */
+:root {
+  --content-alpha-floor: .95;
+  --contrast-alpha-floor: .85;
+  --media-alpha-floor: 1;
+  --line-alpha-floor: .7;
+  --focus-ring-alpha-floor: 1;
+  --scrim-alpha-floor: .88;
+  --brand-asset-surface: rgb(var(--rgb-theme-navy));
+  --focus-outline-rgb: var(--rgb-theme-blue);
+  --focus-ring-rgb: var(--rgb-theme-blue);
+  --focus-default-rgb: var(--rgb-theme-blue);
+  --focus-offset: rgb(var(--rgb-white));
+  --mask-solid: rgb(var(--rgb-black));
+  --motion-muted-alpha: .85;
+  --motion-caption-alpha: .85;
+  --motion-border-alpha: .6;
+  --motion-word-opacity: .85;
+  --motion-phrase-opacity: .85;
+  --motion-label-opacity: .85;
+  --selection-bright-rgb: var(--rgb-theme-blue);
+  --content-rgb: var(--rgb-theme-body);
+  --heading-rgb: var(--rgb-theme-ink);
+  --on-emphasis-rgb: var(--rgb-theme-ink);
+  --on-emphasis-soft-rgb: var(--rgb-theme-body);
+  --line-rgb: var(--rgb-theme-body);
+  --contrast-line-rgb: var(--rgb-theme-body);
+  --layer-rgb: var(--rgb-theme-body);
+  --recess-rgb: var(--rgb-theme-raised);
+  --canvas-rgb: var(--rgb-white);
+  --emphasis-rgb: var(--rgb-theme-ice);
+  --emphasis-panel-rgb: var(--rgb-white);
+  --signal-rgb: var(--rgb-theme-blue);
+  --action-rgb: var(--rgb-theme-blue);
+  --action-bright-rgb: var(--rgb-theme-blue);
+  --action-foreground-rgb: var(--rgb-white);
+  --inverse-action-rgb: var(--rgb-theme-navy);
+  --inverse-action-alt-rgb: var(--rgb-theme-navy);
+  --inverse-foreground-rgb: var(--rgb-white);
+  --inverse-heading-rgb: var(--rgb-white);
+  --inverse-hover-rgb: var(--rgb-theme-nightRaised);
+  --selection-rgb: var(--rgb-theme-blue);
+  --on-selection-rgb: var(--rgb-white);
+  --scrim-rgb: var(--rgb-theme-navy);
+  --glow-rgb: var(--rgb-theme-pale);
+  --shadow-rgb: var(--rgb-theme-navy);
+  --media-content-rgb: var(--rgb-white);
+  --media-heading-rgb: var(--rgb-white);
+  --editorial-content-rgb: var(--rgb-theme-body);
+  --editorial-accent-rgb: var(--rgb-theme-blue);
+  --surface-editorial-rgb: var(--rgb-theme-pale);
+  --surface-sidebar-rgb: var(--rgb-theme-pale);
+  --on-selection-alt-rgb: var(--rgb-white);
+  --surface-recessed-rgb: var(--rgb-theme-pale);
+  --surface-media-frame-rgb: var(--rgb-theme-navy);
+  --surface-hero-mid-rgb: var(--rgb-theme-ice);
+  --surface-panel-rgb: var(--rgb-theme-panel);
+  --surface-control-idle-rgb: var(--rgb-theme-pale);
+  --surface-raised-rgb: var(--rgb-theme-panel);
+  --surface-control-active-rgb: var(--rgb-theme-raised);
+  --muted-solid-rgb: var(--rgb-theme-body);
+  --ambient-rgb: var(--rgb-theme-pale);
+  --object-base-rgb: var(--rgb-theme-ice);
+  --object-edge-rgb: var(--rgb-theme-raised);
+  --subtle-solid-rgb: var(--rgb-theme-ice);
+  --emphasis-content-rgb: var(--rgb-theme-body);
+  --footer-heading-rgb: var(--rgb-white);
+  --footer-content-rgb: var(--rgb-white);
+  --footer-layer-rgb: var(--rgb-white);
+  --footer-line-rgb: var(--rgb-white);
+  --footer-surface-rgb: var(--rgb-black);
+  --cta-heading-rgb: var(--rgb-white);
+  --cta-content-rgb: var(--rgb-white);
+  --cta-layer-rgb: var(--rgb-white);
+  --cta-line-rgb: var(--rgb-white);
+  --cta-base-rgb: var(--rgb-theme-navy);
+  --cta-mid-rgb: var(--rgb-theme-nightPanel);
+  --media-layer-rgb: var(--rgb-theme-navy);
+  --media-line-rgb: var(--rgb-white);
+  --media-layer-alpha-floor: .88;
+  --layer-alpha-floor: 0;
+  --media-badge-surface: rgba(var(--rgb-theme-navy), .92);
+  --caption-opacity: 1;
+  --secondary-label-opacity: 1;
+  --inactive-card-opacity: 1;
+  --action-hover-rgb: var(--rgb-theme-navy);
+  --action-hover-foreground-rgb: var(--rgb-white);
+  --action-on-selection-soft-rgb: var(--rgb-white);
+}
+
+/* Context inputs first. These selectors only assign colors, never structure. */
+:where([data-color-context="media"]) {
+  --heading-rgb: var(--media-heading-rgb);
+  --content-rgb: var(--media-content-rgb);
+  --content-alpha-floor: var(--media-alpha-floor);
+  --layer-rgb: var(--media-layer-rgb);
+  --layer-alpha-floor: var(--media-layer-alpha-floor);
+  --line-rgb: var(--media-line-rgb);
+  color: rgb(var(--media-heading-rgb));
+}
+:where(.bg-emphasis.text-on-emphasis, .bg-emphasis-panel.text-on-emphasis-soft) {
+  --heading-rgb: var(--on-emphasis-rgb);
+  --content-rgb: var(--emphasis-content-rgb);
+  color: rgb(var(--on-emphasis-rgb));
+}
+:where(.bg-selection) {
+  --on-emphasis-rgb: var(--on-selection-rgb);
+  --on-emphasis-soft-rgb: var(--action-on-selection-soft-rgb);
+}
+:where([data-color-scope="footer"]) {
+  --heading-rgb: var(--footer-heading-rgb);
+  --content-rgb: var(--footer-content-rgb);
+  --layer-rgb: var(--footer-layer-rgb);
+  --line-rgb: var(--footer-line-rgb);
+  color: rgb(var(--footer-heading-rgb));
+}
+:where([data-color-scope="cta"]) {
+  --heading-rgb: var(--cta-heading-rgb);
+  --content-rgb: var(--cta-content-rgb);
+  --layer-rgb: var(--cta-layer-rgb);
+  --line-rgb: var(--cta-line-rgb);
+  --canvas-rgb: var(--cta-base-rgb);
+  --surface-hero-mid-rgb: var(--cta-mid-rgb);
+  color: rgb(var(--cta-heading-rgb));
+}
+
+/* Reusable semantic variations. Suffix a0055 means alpha .055, a055 means .55.
+ * Preserve these declarations when generating a new theme; edit inputs above.
+ * Text floors affect text roles only; shadows, glows, and layers are independent.
+ */
+:root, :where([data-color-context], [data-color-scope], .bg-emphasis.text-on-emphasis,
+  .bg-emphasis-panel.text-on-emphasis-soft, .bg-selection) {
+  --action: rgb(var(--action-rgb));
+  --action-bright: rgb(var(--action-bright-rgb));
+  --action-foreground: rgb(var(--action-foreground-rgb));
+  --ambient: rgb(var(--ambient-rgb));
+  --ambient-a012: rgba(var(--ambient-rgb), 0.12);
+  --canvas: rgb(var(--canvas-rgb));
+  --content: rgb(var(--content-rgb));
+  --content-a012: rgba(var(--content-rgb), max(0.12, var(--content-alpha-floor)));
+  --content-a016: rgba(var(--content-rgb), max(0.16, var(--content-alpha-floor)));
+  --content-a018: rgba(var(--content-rgb), max(0.18, var(--content-alpha-floor)));
+  --content-a02: rgba(var(--content-rgb), max(0.2, var(--content-alpha-floor)));
+  --content-a028: rgba(var(--content-rgb), max(0.28, var(--content-alpha-floor)));
+  --content-a03: rgba(var(--content-rgb), max(0.3, var(--content-alpha-floor)));
+  --content-a034: rgba(var(--content-rgb), max(0.34, var(--content-alpha-floor)));
+  --content-a038: rgba(var(--content-rgb), max(0.38, var(--content-alpha-floor)));
+  --content-a04: rgba(var(--content-rgb), max(0.4, var(--content-alpha-floor)));
+  --content-a045: rgba(var(--content-rgb), max(0.45, var(--content-alpha-floor)));
+  --content-a05: rgba(var(--content-rgb), max(0.5, var(--content-alpha-floor)));
+  --content-a055: rgba(var(--content-rgb), max(0.55, var(--content-alpha-floor)));
+  --content-a06: rgba(var(--content-rgb), max(0.6, var(--content-alpha-floor)));
+  --content-a07: rgba(var(--content-rgb), max(0.7, var(--content-alpha-floor)));
+  --content-a075: rgba(var(--content-rgb), max(0.75, var(--content-alpha-floor)));
+  --content-a08: rgba(var(--content-rgb), max(0.8, var(--content-alpha-floor)));
+  --content-a085: rgba(var(--content-rgb), max(0.85, var(--content-alpha-floor)));
+  --contrast-line: rgb(var(--contrast-line-rgb));
+  --editorial-accent: rgb(var(--editorial-accent-rgb));
+  --editorial-accent-a005: rgba(var(--editorial-accent-rgb), 0.05);
+  --editorial-accent-a0055: rgba(var(--editorial-accent-rgb), 0.055);
+  --editorial-accent-a008: rgba(var(--editorial-accent-rgb), 0.08);
+  --editorial-accent-a02: rgba(var(--editorial-accent-rgb), 0.2);
+  --editorial-accent-a022: rgba(var(--editorial-accent-rgb), 0.22);
+  --editorial-accent-a03: rgba(var(--editorial-accent-rgb), 0.3);
+  --editorial-accent-a04: rgba(var(--editorial-accent-rgb), 0.4);
+  --editorial-accent-a045: rgba(var(--editorial-accent-rgb), 0.45);
+  --editorial-accent-a05: rgba(var(--editorial-accent-rgb), 0.5);
+  --editorial-accent-a055: rgba(var(--editorial-accent-rgb), 0.55);
+  --editorial-accent-a065: rgba(var(--editorial-accent-rgb), 0.65);
+  --editorial-accent-a07: rgba(var(--editorial-accent-rgb), 0.7);
+  --editorial-content: rgb(var(--editorial-content-rgb));
+  --editorial-content-a006: rgba(var(--editorial-content-rgb), max(0.06, var(--content-alpha-floor)));
+  --editorial-content-a008: rgba(var(--editorial-content-rgb), max(0.08, var(--content-alpha-floor)));
+  --editorial-content-a01: rgba(var(--editorial-content-rgb), max(0.1, var(--content-alpha-floor)));
+  --editorial-content-a022: rgba(var(--editorial-content-rgb), max(0.22, var(--content-alpha-floor)));
+  --editorial-content-a025: rgba(var(--editorial-content-rgb), max(0.25, var(--content-alpha-floor)));
+  --editorial-content-a035: rgba(var(--editorial-content-rgb), max(0.35, var(--content-alpha-floor)));
+  --editorial-content-a038: rgba(var(--editorial-content-rgb), max(0.38, var(--content-alpha-floor)));
+  --editorial-content-a04: rgba(var(--editorial-content-rgb), max(0.4, var(--content-alpha-floor)));
+  --editorial-content-a042: rgba(var(--editorial-content-rgb), max(0.42, var(--content-alpha-floor)));
+  --editorial-content-a05: rgba(var(--editorial-content-rgb), max(0.5, var(--content-alpha-floor)));
+  --editorial-content-a055: rgba(var(--editorial-content-rgb), max(0.55, var(--content-alpha-floor)));
+  --emphasis: rgb(var(--emphasis-rgb));
+  --emphasis-panel: rgb(var(--emphasis-panel-rgb));
+  --glow: rgb(var(--glow-rgb));
+  --glow-a0: rgba(var(--glow-rgb), 0);
+  --glow-a006: rgba(var(--glow-rgb), 0.06);
+  --glow-a008: rgba(var(--glow-rgb), 0.08);
+  --glow-a01: rgba(var(--glow-rgb), 0.1);
+  --glow-a015: rgba(var(--glow-rgb), 0.15);
+  --glow-a016: rgba(var(--glow-rgb), 0.16);
+  --glow-a02: rgba(var(--glow-rgb), 0.2);
+  --glow-a028: rgba(var(--glow-rgb), 0.28);
+  --glow-a038: rgba(var(--glow-rgb), 0.38);
+  --glow-a04: rgba(var(--glow-rgb), 0.4);
+  --glow-a05: rgba(var(--glow-rgb), 0.5);
+  --glow-a058: rgba(var(--glow-rgb), 0.58);
+  --heading: rgb(var(--heading-rgb));
+  --heading-a0: rgba(var(--heading-rgb), 0);
+  --heading-a05: rgba(var(--heading-rgb), 0.5);
+  --inverse-action: rgb(var(--inverse-action-rgb));
+  --inverse-action-alt: rgb(var(--inverse-action-alt-rgb));
+  --inverse-foreground: rgb(var(--inverse-foreground-rgb));
+  --inverse-heading: rgb(var(--inverse-heading-rgb));
+  --inverse-hover: rgb(var(--inverse-hover-rgb));
+  --layer: rgb(var(--layer-rgb));
+  --layer-a0012: rgba(var(--layer-rgb), 0.012);
+  --layer-a002: rgba(var(--layer-rgb), 0.02);
+  --layer-a003: rgba(var(--layer-rgb), 0.03);
+  --layer-a004: rgba(var(--layer-rgb), 0.04);
+  --layer-a0045: rgba(var(--layer-rgb), 0.045);
+  --layer-a005: rgba(var(--layer-rgb), 0.05);
+  --layer-a0055: rgba(var(--layer-rgb), 0.055);
+  --layer-a0078: rgba(var(--layer-rgb), 0.078);
+  --layer-a008: rgba(var(--layer-rgb), 0.08);
+  --layer-a009: rgba(var(--layer-rgb), 0.09);
+  --layer-a01: rgba(var(--layer-rgb), 0.1);
+  --layer-a012: rgba(var(--layer-rgb), 0.12);
+  --layer-a013: rgba(var(--layer-rgb), 0.13);
+  --layer-a014: rgba(var(--layer-rgb), 0.14);
+  --layer-a016: rgba(var(--layer-rgb), 0.16);
+  --layer-a018: rgba(var(--layer-rgb), 0.18);
+  --layer-a036: rgba(var(--layer-rgb), 0.36);
+  --layer-a045: rgba(var(--layer-rgb), 0.45);
+  --layer-a048: rgba(var(--layer-rgb), 0.48);
+  --layer-a058: rgba(var(--layer-rgb), 0.58);
+  --layer-a082: rgba(var(--layer-rgb), 0.82);
+  --line: rgb(var(--line-rgb));
+  --line-a0035: rgba(var(--line-rgb), max(0.035, var(--line-alpha-floor)));
+  --line-a0055: rgba(var(--line-rgb), max(0.055, var(--line-alpha-floor)));
+  --line-a006: rgba(var(--line-rgb), max(0.06, var(--line-alpha-floor)));
+  --line-a007: rgba(var(--line-rgb), max(0.07, var(--line-alpha-floor)));
+  --line-a008: rgba(var(--line-rgb), max(0.08, var(--line-alpha-floor)));
+  --line-a009: rgba(var(--line-rgb), max(0.09, var(--line-alpha-floor)));
+  --line-a01: rgba(var(--line-rgb), max(0.1, var(--line-alpha-floor)));
+  --line-a014: rgba(var(--line-rgb), max(0.14, var(--line-alpha-floor)));
+  --line-a015: rgba(var(--line-rgb), max(0.15, var(--line-alpha-floor)));
+  --line-a02: rgba(var(--line-rgb), max(0.2, var(--line-alpha-floor)));
+  --line-a03: rgba(var(--line-rgb), max(0.3, var(--line-alpha-floor)));
+  --line-a035: rgba(var(--line-rgb), max(0.35, var(--line-alpha-floor)));
+  --media-content: rgb(var(--media-content-rgb));
+  --media-heading: rgb(var(--media-heading-rgb));
+  --muted-solid: rgb(var(--muted-solid-rgb));
+  --object-base: rgb(var(--object-base-rgb));
+  --object-edge: rgb(var(--object-edge-rgb));
+  --on-emphasis: rgb(var(--on-emphasis-rgb));
+  --on-emphasis-a012: rgba(var(--on-emphasis-rgb), 0.12);
+  --on-emphasis-soft: rgb(var(--on-emphasis-soft-rgb));
+  --on-emphasis-soft-a035: rgba(var(--on-emphasis-soft-rgb), max(0.35, var(--contrast-alpha-floor)));
+  --on-selection: rgb(var(--on-selection-rgb));
+  --on-selection-alt: rgb(var(--on-selection-alt-rgb));
+  --recess: rgb(var(--recess-rgb));
+  --recess-a082: rgba(var(--recess-rgb), 0.82);
+  --scrim: rgb(var(--scrim-rgb));
+  --selection: rgb(var(--selection-rgb));
+  --shadow: rgb(var(--shadow-rgb));
+  --shadow-a018: rgba(var(--shadow-rgb), 0.18);
+  --shadow-a032: rgba(var(--shadow-rgb), 0.32);
+  --shadow-a035: rgba(var(--shadow-rgb), 0.35);
+  --shadow-a04: rgba(var(--shadow-rgb), 0.4);
+  --shadow-a045: rgba(var(--shadow-rgb), 0.45);
+  --shadow-a05: rgba(var(--shadow-rgb), 0.5);
+  --signal: rgb(var(--signal-rgb));
+  --signal-a014: rgba(var(--signal-rgb), 0.14);
+  --signal-a05: rgba(var(--signal-rgb), 0.5);
+  --signal-a06: rgba(var(--signal-rgb), 0.6);
+  --signal-a08: rgba(var(--signal-rgb), 0.8);
+  --subtle-solid: rgb(var(--subtle-solid-rgb));
+  --surface-control-active: rgb(var(--surface-control-active-rgb));
+  --surface-control-idle: rgb(var(--surface-control-idle-rgb));
+  --surface-editorial: rgb(var(--surface-editorial-rgb));
+  --surface-editorial-a008: rgba(var(--surface-editorial-rgb), 0.08);
+  --surface-editorial-a01: rgba(var(--surface-editorial-rgb), 0.1);
+  --surface-editorial-a055: rgba(var(--surface-editorial-rgb), 0.55);
+  --surface-editorial-a07: rgba(var(--surface-editorial-rgb), 0.7);
+  --surface-editorial-a096: rgba(var(--surface-editorial-rgb), 0.96);
+  --surface-hero-mid: rgb(var(--surface-hero-mid-rgb));
+  --surface-media-frame: rgb(var(--surface-media-frame-rgb));
+  --surface-panel: rgb(var(--surface-panel-rgb));
+  --surface-panel-a085: rgba(var(--surface-panel-rgb), 0.85);
+  --surface-raised: rgb(var(--surface-raised-rgb));
+  --surface-recessed: rgb(var(--surface-recessed-rgb));
+  --surface-sidebar: rgb(var(--surface-sidebar-rgb));
+
+  /* Shared relationships. Context aliases are rebound with local foregrounds. */
+  --surface-page: var(--canvas);
+  --text-primary: var(--heading);
+  --selection-bright: rgb(var(--selection-bright-rgb));
+  --scrim-a082: rgba(var(--scrim-rgb), .82);
+  /* GSAP needs numeric RGBA endpoints; no max()/color-mix() in these values. */
+  --motion-muted-foreground: rgba(var(--content-rgb), var(--motion-muted-alpha));
+  --motion-caption-foreground: rgba(var(--content-rgb), var(--motion-caption-alpha));
+  --motion-node-border: rgba(var(--line-rgb), var(--motion-border-alpha));
+  --selection-surface: var(--selection);
+  --selection-text: var(--on-selection);
+  --footer-surface: rgb(var(--footer-surface-rgb));
+  --footer-wordmark-fill: rgb(var(--footer-heading-rgb));
+  --footer-wordmark-stroke: rgba(var(--footer-heading-rgb), .5);
+  --hero-mesh-background:
+    radial-gradient(circle at 20% 20%, var(--glow-a016), transparent 26%),
+    radial-gradient(circle at 84% 14%, var(--ambient-a012), transparent 30%),
+    radial-gradient(circle at 70% 78%, var(--glow-a01), transparent 28%),
+    linear-gradient(135deg, var(--canvas) 0%, var(--surface-hero-mid) 52%, var(--canvas) 100%);
+  --work-projects-surface: var(--surface-sidebar);
+  --effect-glow: 0 0 70px var(--glow-a015);
+  --effect-node-dim: 0 0 0 var(--glow-a0);
+  --cta-primary-surface: var(--action);
+  --cta-primary-text: var(--action-foreground);
+  --cta-primary-hover: rgb(var(--action-hover-rgb));
+  --cta-secondary-surface: var(--layer-a004);
+  --cta-secondary-text: var(--heading);
+  --cta-secondary-hover: var(--layer-a008);
+  --cta-secondary-border: var(--line-a015);
+  --cta-secondary-hover-border: var(--line-a035);
+  --card-surface: var(--layer-a0055);
+  --card-border: var(--line-a01);
+  --card-hover-surface: var(--layer-a0078);
+  --card-hover-border: var(--line-a03);
+  --button-light-surface: var(--action);
+  --button-light-text: var(--action-foreground);
+  --button-light-hover: rgb(var(--action-hover-rgb));
+  --button-dark-surface: var(--layer-a005);
+  --button-dark-text: var(--heading);
+  --button-dark-border: var(--line-a015);
+  --button-dark-hover-surface: var(--layer-a01);
+  --button-dark-hover-border: var(--line-a035);
+}
+
+/* Foreground must track a changed hover background, including inherited children. */
+.premium-button-light:hover, [data-color-part="primary-action"]:hover {
+  color: rgb(var(--action-hover-foreground-rgb));
+}
+[data-color-asset="brand"] { background-color: var(--brand-asset-surface); }

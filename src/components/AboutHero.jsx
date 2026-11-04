@@ -37,7 +37,7 @@ export default function AboutHero({ eyebrow, title, children }) {
   ];
 
   return (
-    <section className="about-hero hero-mesh relative isolate overflow-hidden lg:flex lg:min-h-[100svh] lg:items-center">
+    <section data-color-scope="about-hero" className="about-hero hero-mesh relative isolate overflow-hidden lg:flex lg:min-h-[100svh] lg:items-center">
       <style>{css}</style>
       <div className="fine-grid absolute inset-0 -z-10" />
 
@@ -101,9 +101,9 @@ function HeroText({ eyebrow, firstWord, rest, titleClass, centered = false, chil
             centered ? "justify-center" : ""
           }`}
         >
-          <span aria-hidden="true" className="h-px w-10 bg-white/40" />
+          <span aria-hidden="true" className="h-px w-10 bg-layer/40" />
           {eyebrow}
-          {centered && <span aria-hidden="true" className="h-px w-10 bg-white/40" />}
+          {centered && <span aria-hidden="true" className="h-px w-10 bg-layer/40" />}
         </p>
       )}
 
@@ -115,7 +115,7 @@ function HeroText({ eyebrow, firstWord, rest, titleClass, centered = false, chil
         <span
           className="block animate-fade-up text-transparent motion-reduce:animate-none"
           style={{
-            WebkitTextStroke: "1.5px rgba(245,243,239,0.6)",
+            WebkitTextStroke: "1.5px var(--signal-a06)",
             animationDelay: "80ms",
           }}
         >
@@ -133,10 +133,10 @@ function HeroText({ eyebrow, firstWord, rest, titleClass, centered = false, chil
 
       {children && (
         <div
-          className={`hero-copy mt-8 animate-fade-up text-white/62 motion-reduce:animate-none ${
+          className={`hero-copy mt-8 animate-fade-up text-content/62 motion-reduce:animate-none ${
             centered
               ? "mx-auto max-w-md text-center text-base leading-7 sm:text-lg sm:leading-8"
-              : "max-w-xl border-l-2 border-white/20 pl-5 text-lg leading-8 sm:text-xl sm:leading-9"
+              : "max-w-xl border-l-2 border-line/20 pl-5 text-lg leading-8 sm:text-xl sm:leading-9"
           }`}
           style={{ animationDelay: "300ms" }}
         >
@@ -158,24 +158,24 @@ function ArchWindow({ className = "", delay = "0ms" }) {
       style={{ animationDelay: delay }}
       data-cursor-glow
     >
-      <div className="h-full w-full overflow-hidden rounded-t-[999px] rounded-b-[2rem] border border-white/[0.12] bg-white/[0.06] p-2.5 shadow-premium backdrop-blur-2xl">
-        <div className="relative h-full w-full overflow-hidden rounded-t-[999px] rounded-b-[1.5rem] bg-black">
+      <div className="h-full w-full overflow-hidden rounded-t-[999px] rounded-b-[2rem] border border-line/[0.12] bg-layer/[0.06] p-2.5 shadow-premium backdrop-blur-2xl">
+        <div data-color-context="media" className="relative h-full w-full overflow-hidden rounded-t-[999px] rounded-b-[1.5rem] bg-scrim">
           <img
             src={studioAssets.heroStudio}
             alt="Premium website mockup on desktop and mobile screens inside a dark studio."
             className="h-full w-full scale-110 object-cover object-center"
             data-parallax-media
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-scrim/70 via-scrim/5 to-transparent" />
         </div>
       </div>
 
       {/* Spinning studio badge */}
-      <div className="absolute -left-[7%] top-[20%] flex aspect-square w-[27%] min-w-[5rem] max-w-[7.5rem] items-center justify-center rounded-full border border-white/[0.14] bg-ink/90 shadow-premium backdrop-blur">
+      <div className="absolute -left-[7%] top-[20%] flex aspect-square w-[27%] min-w-[5rem] max-w-[7.5rem] items-center justify-center rounded-full border border-line/[0.14] bg-canvas/90 shadow-premium backdrop-blur">
         <svg
           viewBox="0 0 120 120"
           aria-hidden="true"
-          className="about-ring absolute inset-0 h-full w-full text-white/70"
+          className="about-ring absolute inset-0 h-full w-full text-content/70"
         >
           <defs>
             <path id={ringId} d="M60,60 m-47,0 a47,47 0 1,1 94,0 a47,47 0 1,1 -94,0" />
@@ -186,7 +186,7 @@ function ArchWindow({ className = "", delay = "0ms" }) {
             </textPath>
           </text>
         </svg>
-        <img
+        <img data-color-asset="brand"
           src={brandAssets.logoSquare}
           alt=""
           className="relative max-h-[34%] w-auto max-w-[52%] object-contain"
@@ -194,7 +194,7 @@ function ArchWindow({ className = "", delay = "0ms" }) {
       </div>
 
       {/* Studio tag */}
-      <div className="absolute -bottom-5 right-[5%] whitespace-nowrap rounded-full border border-white/10 bg-bone px-5 py-3 text-[0.65rem] font-black uppercase tracking-[0.2em] text-ink shadow-premium">
+      <div className="absolute -bottom-5 right-[5%] whitespace-nowrap rounded-full border border-line/10 bg-emphasis px-5 py-3 text-[0.65rem] font-black uppercase tracking-[0.2em] text-on-emphasis shadow-premium">
         Boutique studio
       </div>
     </div>
@@ -204,7 +204,7 @@ function ArchWindow({ className = "", delay = "0ms" }) {
 function Stats({ stats, centered = false, className = "" }) {
   return (
     <dl
-      className={`grid animate-fade-up grid-cols-3 divide-x divide-white/10 border-t border-white/10 motion-reduce:animate-none ${className}`}
+      className={`grid animate-fade-up grid-cols-3 divide-x divide-line/10 border-t border-line/10 motion-reduce:animate-none ${className}`}
       style={{ animationDelay: "400ms" }}
     >
       {stats.map(([value, label], index) => (
@@ -225,7 +225,7 @@ function Stats({ stats, centered = false, className = "" }) {
           >
             {value}
           </dd>
-          <dt className="mt-2 text-[0.6rem] font-black uppercase leading-4 tracking-[0.18em] text-white/45 sm:text-xs sm:tracking-[0.22em]">
+          <dt className="mt-2 text-[0.6rem] font-black uppercase leading-4 tracking-[0.18em] text-content/45 sm:text-xs sm:tracking-[0.22em]">
             {label}
           </dt>
         </div>

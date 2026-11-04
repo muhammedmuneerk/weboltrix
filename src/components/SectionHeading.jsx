@@ -42,7 +42,7 @@ export default function SectionHeading({
         {text && (
           <p
             className={cx(
-              "text-lg leading-9 text-white/58 sm:text-xl sm:leading-10",
+              "text-lg leading-9 text-content/58 sm:text-xl sm:leading-10",
               textClassName
             )}
           >
@@ -66,7 +66,7 @@ export default function SectionHeading({
       {text && (
         <p
           className={cx(
-            "mt-7 text-lg leading-9 text-white/58 sm:text-xl sm:leading-10",
+            "mt-7 text-lg leading-9 text-content/58 sm:text-xl sm:leading-10",
             textClassName
           )}
         >

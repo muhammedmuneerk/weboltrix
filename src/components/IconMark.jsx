@@ -10,7 +10,7 @@ export default function IconMark({ label, index = 0 }) {
   return (
     <span
       aria-hidden="true"
-      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-bone shadow-glow"
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line/15 bg-layer/[0.06] text-heading shadow-glow"
       title={label}
     >
       {icons[index % icons.length]}

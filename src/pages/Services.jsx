@@ -11,7 +11,7 @@ export default function Services() {
     <>
       <ServicesHero />
 
-      <section className="section-padding">
+      <section data-color-scope="services" className="section-padding">
         <div className="container-premium">
           <div className="stagger-grid grid gap-6 lg:grid-cols-3">
             {services.map((service) => (

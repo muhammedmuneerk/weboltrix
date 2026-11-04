@@ -40,7 +40,7 @@ function ScrubReveal({ before, beforeAlt, after, afterAlt }) {
   };
 
   return (
-    <div
+    <div data-color-context="media"
       ref={frameRef}
       role="slider"
       aria-label="Drag to compare before and after"
@@ -53,7 +53,7 @@ function ScrubReveal({ before, beforeAlt, after, afterAlt }) {
       onPointerUp={onPointerUp}
       onPointerLeave={onPointerUp}
       onKeyDown={onKeyDown}
-      className="relative aspect-[16/10] w-full touch-none cursor-ew-resize select-none overflow-hidden rounded-[1.75rem] border border-white/10 bg-black outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+      className="relative aspect-[16/10] w-full touch-none cursor-ew-resize select-none overflow-hidden rounded-[1.75rem] border border-line/10 bg-scrim outline-none focus-visible:ring-2 focus-visible:ring-focus-ring/40"
     >
       {/* After (base layer, fully visible) */}
       <img
@@ -75,19 +75,19 @@ function ScrubReveal({ before, beforeAlt, after, afterAlt }) {
       />
 
       {/* Static corner labels — identify sides, don't track the drag */}
-      <span className="absolute left-3 top-3 rounded-full border border-white/15 bg-black/55 px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white/70 backdrop-blur">
+      <span className="absolute left-3 top-3 rounded-full border border-line/15 bg-scrim/55 px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-content/70 backdrop-blur">
         Before
       </span>
-      <span className="absolute right-3 top-3 rounded-full border border-white/15 bg-black/55 px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white/70 backdrop-blur">
+      <span className="absolute right-3 top-3 rounded-full border border-line/15 bg-scrim/55 px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-content/70 backdrop-blur">
         After
       </span>
 
       {/* Divider + handle */}
       <div
-        className="absolute inset-y-0 w-px bg-white/80"
+        className="absolute inset-y-0 w-px bg-layer/80"
         style={{ left: `${pos}%` }}
       >
-        <div className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white text-black shadow-lg sm:h-9 sm:w-9">
+        <div className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line/30 bg-emphasis-panel text-on-emphasis-soft shadow-lg sm:h-9 sm:w-9">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M14 5l-7 7 7 7M10 5l7 7-7 7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -101,7 +101,7 @@ export default function BeforeAfter({ compact = false, limit }) {
   const projects = limit ? beforeAfterProjects.slice(0, limit) : beforeAfterProjects;
 
   return (
-    <div className="stagger-grid divide-y divide-white/10 border-t border-white/10">
+    <div className="stagger-grid divide-y divide-line/10 border-t border-line/10">
       {projects.map((project, i) => (
         <article
           key={project.slug}
@@ -110,21 +110,21 @@ export default function BeforeAfter({ compact = false, limit }) {
           }`}
         >
           <div>
-            <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/38">
+            <p className="text-[11px] font-black uppercase tracking-[0.2em] text-content/38">
               {project.category}
             </p>
             <h3 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">
               {project.title}
             </h3>
-            <p className="mt-3 text-sm leading-7 text-white/55">{project.description}</p>
+            <p className="mt-3 text-sm leading-7 text-content/55">{project.description}</p>
 
-            <p className="mt-5 border-l-2 border-white/20 pl-4 text-sm font-bold leading-6 text-white/65">
+            <p className="mt-5 border-l-2 border-line/20 pl-4 text-sm font-bold leading-6 text-content/65">
               {project.outcome}
             </p>
 
             <Link
               to={`/work/${project.slug}`}
-              className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-white transition hover:translate-x-1"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-content transition hover:translate-x-1"
             >
               View transformation <span aria-hidden="true">&rarr;</span>
             </Link>

@@ -1,0 +1,164 @@
+/* PORTABLE FOUNDATION FILE — give this file AND assignments.css to a theme author.
+ * This file contains available pigments, not visual responsibilities. Do not
+ * recolor the site by blindly swapping white/black/ivory: choose independent
+ * surface, foreground, action, selection, media, and effect pairs in assignments.
+ * New themes may add named pigment channels here, then map the semantic roles
+ * there. Keep the existing variable names available for compatibility/framework
+ * defaults. RGB values are comma-separated 0–255 channels; alpha references below
+ * are reusable colors, not required text contrast levels. Fixed image/logo pixels
+ * cannot be changed here; use the media and brand-asset roles in assignments.
+ * Only these two CSS files are the future theme editing interface.
+ *
+ * Current approved palette. RGB channels are the single source for every solid and alpha.
+ * Neutral suffixes are the original 0–255 channel values; a0xxx is the exact alpha.
+ * Do not round alpha values or merge nearby shades. */
+:root {
+  /* Verification pigments; all usage roles remain in assignments.css. */
+  --rgb-theme-navy: 8, 18, 38;
+  --rgb-theme-ink: 16, 38, 66;
+  --rgb-theme-body: 24, 52, 86;
+  --rgb-theme-blue: 35, 77, 197;
+  --rgb-theme-electric: 36, 89, 217;
+  --rgb-theme-ice: 229, 239, 252;
+  --rgb-theme-pale: 240, 246, 252;
+  --rgb-theme-panel: 225, 237, 250;
+  --rgb-theme-raised: 206, 223, 245;
+  --rgb-theme-nightPanel: 22, 34, 63;
+  --rgb-theme-nightRaised: 36, 57, 100;
+  --rgb-theme-glow: 125, 185, 255;
+  --rgb-black: 0, 0, 0;
+  --rgb-gold: 201, 168, 76;
+  --rgb-ivory: 245, 243, 239;
+  --rgb-linen: 245, 240, 232;
+  --rgb-neutral-005: 5, 5, 5;
+  --rgb-neutral-008: 8, 8, 8;
+  --rgb-neutral-010: 10, 10, 10;
+  --rgb-neutral-013: 13, 13, 13;
+  --rgb-neutral-014: 14, 14, 14;
+  --rgb-neutral-016: 16, 16, 16;
+  --rgb-neutral-018: 18, 18, 18;
+  --rgb-neutral-020: 20, 20, 20;
+  --rgb-neutral-024: 24, 24, 24;
+  --rgb-neutral-029: 29, 29, 29;
+  --rgb-neutral-038: 38, 38, 38;
+  --rgb-neutral-048: 48, 48, 48;
+  --rgb-neutral-184: 184, 184, 184;
+  --rgb-neutral-188: 188, 188, 188;
+  --rgb-rgb-156-163-175: 156, 163, 175;
+  --rgb-rgb-229-231-235: 229, 231, 235;
+  --rgb-rgb-59-130-246: 59, 130, 246;
+  --rgb-stone-100: 231, 227, 219;
+  --rgb-stone-200: 207, 203, 193;
+  --rgb-stone-300: 185, 181, 171;
+  --rgb-white: 255, 255, 255;
+
+  /* Reusable full-color references (including the original alpha variations). */
+  --color-black: rgb(var(--rgb-black));
+  --color-black-a018: rgba(var(--rgb-black), 0.18);
+  --color-black-a032: rgba(var(--rgb-black), 0.32);
+  --color-black-a035: rgba(var(--rgb-black), 0.35);
+  --color-black-a04: rgba(var(--rgb-black), 0.4);
+  --color-black-a045: rgba(var(--rgb-black), 0.45);
+  --color-black-a05: rgba(var(--rgb-black), 0.5);
+  --color-black-a082: rgba(var(--rgb-black), 0.82);
+  --color-gold: rgb(var(--rgb-gold));
+  --color-gold-a005: rgba(var(--rgb-gold), 0.05);
+  --color-gold-a0055: rgba(var(--rgb-gold), 0.055);
+  --color-gold-a008: rgba(var(--rgb-gold), 0.08);
+  --color-gold-a02: rgba(var(--rgb-gold), 0.2);
+  --color-gold-a022: rgba(var(--rgb-gold), 0.22);
+  --color-gold-a03: rgba(var(--rgb-gold), 0.3);
+  --color-gold-a04: rgba(var(--rgb-gold), 0.4);
+  --color-gold-a045: rgba(var(--rgb-gold), 0.45);
+  --color-gold-a05: rgba(var(--rgb-gold), 0.5);
+  --color-gold-a055: rgba(var(--rgb-gold), 0.55);
+  --color-gold-a065: rgba(var(--rgb-gold), 0.65);
+  --color-gold-a07: rgba(var(--rgb-gold), 0.7);
+  --color-ivory: rgb(var(--rgb-ivory));
+  --color-ivory-a0: rgba(var(--rgb-ivory), 0);
+  --color-ivory-a014: rgba(var(--rgb-ivory), 0.14);
+  --color-ivory-a05: rgba(var(--rgb-ivory), 0.5);
+  --color-ivory-a06: rgba(var(--rgb-ivory), 0.6);
+  --color-ivory-a08: rgba(var(--rgb-ivory), 0.8);
+  --color-linen: rgb(var(--rgb-linen));
+  --color-linen-a006: rgba(var(--rgb-linen), 0.06);
+  --color-linen-a008: rgba(var(--rgb-linen), 0.08);
+  --color-linen-a01: rgba(var(--rgb-linen), 0.1);
+  --color-linen-a022: rgba(var(--rgb-linen), 0.22);
+  --color-linen-a025: rgba(var(--rgb-linen), 0.25);
+  --color-linen-a035: rgba(var(--rgb-linen), 0.35);
+  --color-linen-a038: rgba(var(--rgb-linen), 0.38);
+  --color-linen-a04: rgba(var(--rgb-linen), 0.4);
+  --color-linen-a042: rgba(var(--rgb-linen), 0.42);
+  --color-linen-a05: rgba(var(--rgb-linen), 0.5);
+  --color-linen-a055: rgba(var(--rgb-linen), 0.55);
+  --color-neutral-005: rgb(var(--rgb-neutral-005));
+  --color-neutral-005-a012: rgba(var(--rgb-neutral-005), 0.12);
+  --color-neutral-008: rgb(var(--rgb-neutral-008));
+  --color-neutral-010: rgb(var(--rgb-neutral-010));
+  --color-neutral-013: rgb(var(--rgb-neutral-013));
+  --color-neutral-014: rgb(var(--rgb-neutral-014));
+  --color-neutral-014-a008: rgba(var(--rgb-neutral-014), 0.08);
+  --color-neutral-014-a01: rgba(var(--rgb-neutral-014), 0.1);
+  --color-neutral-014-a055: rgba(var(--rgb-neutral-014), 0.55);
+  --color-neutral-014-a07: rgba(var(--rgb-neutral-014), 0.7);
+  --color-neutral-014-a096: rgba(var(--rgb-neutral-014), 0.96);
+  --color-neutral-016: rgb(var(--rgb-neutral-016));
+  --color-neutral-018: rgb(var(--rgb-neutral-018));
+  --color-neutral-020: rgb(var(--rgb-neutral-020));
+  --color-neutral-020-a085: rgba(var(--rgb-neutral-020), 0.85);
+  --color-neutral-024: rgb(var(--rgb-neutral-024));
+  --color-neutral-029: rgb(var(--rgb-neutral-029));
+  --color-neutral-038: rgb(var(--rgb-neutral-038));
+  --color-neutral-048: rgb(var(--rgb-neutral-048));
+  --color-neutral-184: rgb(var(--rgb-neutral-184));
+  --color-neutral-188: rgb(var(--rgb-neutral-188));
+  --color-neutral-188-a012: rgba(var(--rgb-neutral-188), 0.12);
+  --color-rgb-156-163-175: rgb(var(--rgb-rgb-156-163-175));
+  --color-rgb-229-231-235: rgb(var(--rgb-rgb-229-231-235));
+  --color-rgb-59-130-246: rgb(var(--rgb-rgb-59-130-246));
+  --color-stone-100: rgb(var(--rgb-stone-100));
+  --color-stone-200: rgb(var(--rgb-stone-200));
+  --color-stone-300: rgb(var(--rgb-stone-300));
+  --color-white: rgb(var(--rgb-white));
+  --color-white-a0: rgba(var(--rgb-white), 0);
+  --color-white-a0012: rgba(var(--rgb-white), 0.012);
+  --color-white-a002: rgba(var(--rgb-white), 0.02);
+  --color-white-a003: rgba(var(--rgb-white), 0.03);
+  --color-white-a0035: rgba(var(--rgb-white), 0.035);
+  --color-white-a004: rgba(var(--rgb-white), 0.04);
+  --color-white-a0045: rgba(var(--rgb-white), 0.045);
+  --color-white-a005: rgba(var(--rgb-white), 0.05);
+  --color-white-a0055: rgba(var(--rgb-white), 0.055);
+  --color-white-a006: rgba(var(--rgb-white), 0.06);
+  --color-white-a007: rgba(var(--rgb-white), 0.07);
+  --color-white-a0078: rgba(var(--rgb-white), 0.078);
+  --color-white-a008: rgba(var(--rgb-white), 0.08);
+  --color-white-a009: rgba(var(--rgb-white), 0.09);
+  --color-white-a01: rgba(var(--rgb-white), 0.1);
+  --color-white-a012: rgba(var(--rgb-white), 0.12);
+  --color-white-a013: rgba(var(--rgb-white), 0.13);
+  --color-white-a014: rgba(var(--rgb-white), 0.14);
+  --color-white-a015: rgba(var(--rgb-white), 0.15);
+  --color-white-a016: rgba(var(--rgb-white), 0.16);
+  --color-white-a018: rgba(var(--rgb-white), 0.18);
+  --color-white-a02: rgba(var(--rgb-white), 0.2);
+  --color-white-a028: rgba(var(--rgb-white), 0.28);
+  --color-white-a03: rgba(var(--rgb-white), 0.3);
+  --color-white-a034: rgba(var(--rgb-white), 0.34);
+  --color-white-a035: rgba(var(--rgb-white), 0.35);
+  --color-white-a036: rgba(var(--rgb-white), 0.36);
+  --color-white-a038: rgba(var(--rgb-white), 0.38);
+  --color-white-a04: rgba(var(--rgb-white), 0.4);
+  --color-white-a045: rgba(var(--rgb-white), 0.45);
+  --color-white-a048: rgba(var(--rgb-white), 0.48);
+  --color-white-a05: rgba(var(--rgb-white), 0.5);
+  --color-white-a055: rgba(var(--rgb-white), 0.55);
+  --color-white-a058: rgba(var(--rgb-white), 0.58);
+  --color-white-a06: rgba(var(--rgb-white), 0.6);
+  --color-white-a07: rgba(var(--rgb-white), 0.7);
+  --color-white-a075: rgba(var(--rgb-white), 0.75);
+  --color-white-a08: rgba(var(--rgb-white), 0.8);
+  --color-white-a082: rgba(var(--rgb-white), 0.82);
+  --color-white-a085: rgba(var(--rgb-white), 0.85);
+}

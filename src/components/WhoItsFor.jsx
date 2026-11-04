@@ -21,7 +21,7 @@ export default function WhoItsFor() {
   const prev = () => setActive((current) => (current - 1 + total) % total);
 
   return (
-    <section className="section-padding overflow-hidden">
+    <section data-color-scope="who-its-for" className="section-padding overflow-hidden">
       <div className="container-premium grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-x-16 lg:gap-y-10 xl:gap-x-24">
         {/* Heading */}
         <div className="lg:col-start-1 lg:row-start-1 lg:self-end">
@@ -45,8 +45,8 @@ export default function WhoItsFor() {
                 }}
                 className={`absolute inset-x-0 top-[7rem] ${CARD_H} origin-top cursor-pointer overflow-hidden rounded-[2rem] border transition-[transform,background-color,border-color,box-shadow,opacity] duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none ${
                   isFront
-                    ? "border-bone bg-bone text-ink shadow-glow"
-                    : "border-white/15 bg-[#141414] text-bone hover:border-white/30"
+                    ? "border-signal bg-emphasis text-on-emphasis shadow-glow"
+                    : "border-line/15 bg-[color:var(--surface-panel)] text-heading hover:border-line/30"
                 } ${pos > 2 ? "pointer-events-none opacity-0" : ""}`}
               >
                 {/* Ghost numeral */}
@@ -55,8 +55,8 @@ export default function WhoItsFor() {
                   className="pointer-events-none absolute -bottom-6 -right-2 select-none text-[11rem] font-black leading-none tracking-tighter text-transparent"
                   style={{
                     WebkitTextStroke: isFront
-                      ? "1px rgba(5,5,5,0.12)"
-                      : "1px rgba(255,255,255,0.07)",
+                      ? "1px var(--on-emphasis-a012)"
+                      : "1px var(--line-a007)",
                   }}
                 >
                   {pad(index)}
@@ -68,7 +68,7 @@ export default function WhoItsFor() {
                     <h3 className="text-2xl font-black tracking-tight">{service.name}</h3>
                     <span
                       className={`text-xs font-black tabular-nums tracking-[0.1em] ${
-                        isFront ? "text-black/45" : "text-white/35"
+                        isFront ? "text-on-emphasis-soft/45" : "text-content/35"
                       }`}
                     >
                       {pad(index)}
@@ -77,7 +77,7 @@ export default function WhoItsFor() {
 
                   <p
                     className={`mt-auto text-2xl font-black leading-[1.12] tracking-tight text-balance sm:text-3xl ${
-                      isFront ? "text-ink" : "text-white/70"
+                      isFront ? "text-on-emphasis" : "text-content/70"
                     }`}
                   >
                     {service.audience}
@@ -86,7 +86,7 @@ export default function WhoItsFor() {
                   <p
                     aria-hidden="true"
                     className={`mt-7 text-xs font-black uppercase tracking-[0.25em] ${
-                      isFront ? "text-black/45" : "text-white/30"
+                      isFront ? "text-on-emphasis-soft/45" : "text-content/30"
                     }`}
                   >
                     {isFront ? "Next \u2192" : "Bring forward"}
@@ -104,7 +104,7 @@ export default function WhoItsFor() {
               type="button"
               onClick={prev}
               aria-label="Previous audience"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/5 text-bone transition hover:-translate-x-0.5 hover:border-white/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-line/15 bg-layer/5 text-heading transition hover:-translate-x-0.5 hover:border-line/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-outline"
             >
               <span aria-hidden="true">&larr;</span>
             </button>
@@ -112,14 +112,14 @@ export default function WhoItsFor() {
               type="button"
               onClick={next}
               aria-label="Next audience"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-bone bg-bone text-ink shadow-glow transition hover:translate-x-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bone"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-selection bg-selection text-on-selection shadow-glow transition hover:translate-x-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-outline"
             >
               <span aria-hidden="true">&rarr;</span>
             </button>
           </div>
 
           <div className="flex items-center gap-4">
-            <p className="text-xs font-bold text-white/50" aria-live="polite">
+            <p className="text-xs font-bold text-content/50" aria-live="polite">
               {active + 1} of {total}
             </p>
             <div className="flex gap-2" aria-hidden="true">
@@ -127,7 +127,7 @@ export default function WhoItsFor() {
                 <span
                   key={service.name}
                   className={`h-1 w-8 rounded-full transition-colors duration-500 motion-reduce:transition-none ${
-                    index === active ? "bg-bone" : "bg-white/15"
+                    index === active ? "bg-emphasis" : "bg-layer/15"
                   }`}
                 />
               ))}

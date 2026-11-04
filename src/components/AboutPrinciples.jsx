@@ -23,16 +23,16 @@ const STAGE_TOP = "top 110px";
 const SCROLL_RUNWAY = 1.5;
 
 const NODE_DIM = {
-  backgroundColor: "#050505",
-  borderColor: "rgba(255,255,255,0.2)",
-  color: "rgba(255,255,255,0.5)",
-  boxShadow: "0 0 0 rgba(255,255,255,0)",
+  backgroundColor: "var(--canvas)",
+  borderColor: "var(--motion-node-border)",
+  color: "var(--motion-muted-foreground)",
+  boxShadow: "var(--effect-node-dim)",
 };
 const NODE_LIT = {
-  backgroundColor: "#f5f3ef",
-  borderColor: "#f5f3ef",
-  color: "#050505",
-  boxShadow: "0 0 70px rgba(255,255,255,0.15)",
+  backgroundColor: "var(--selection)",
+  borderColor: "var(--signal)",
+  color: "var(--on-selection)",
+  boxShadow: "var(--effect-glow)",
 };
 
 // Pinned scroll story (GSAP ScrollTrigger). While the stage is pinned, the three
@@ -43,6 +43,7 @@ function usePrinciplesMotion(stageRef) {
   useLayoutEffect(() => {
     const stage = stageRef.current;
     if (!stage || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+    const labelAlpha = Number(getComputedStyle(stage).getPropertyValue("--motion-label-opacity"));
 
     const refreshFrame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
 
@@ -82,9 +83,9 @@ function usePrinciplesMotion(stageRef) {
 
         // Index: hand the spotlight over
         if (nodes[i - 1]) timeline.to(nodes[i - 1], { ...NODE_DIM, duration: 0.3 }, at + 0.2);
-        if (labels[i - 1]) timeline.to(labels[i - 1], { opacity: 0.35, duration: 0.3 }, at + 0.2);
+        if (labels[i - 1]) timeline.to(labels[i - 1], { opacity: labelAlpha, duration: 0.3 }, at + 0.2);
         if (nodes[i]) timeline.fromTo(nodes[i], NODE_DIM, { ...NODE_LIT, duration: 0.4 }, at + 0.5);
-        if (labels[i]) timeline.fromTo(labels[i], { opacity: 0.35 }, { opacity: 1, duration: 0.4 }, at + 0.5);
+        if (labels[i]) timeline.fromTo(labels[i], { opacity: labelAlpha }, { opacity: 1, duration: 0.4 }, at + 0.5);
 
         // Rail between the two nodes (desktop)
         if (fills[i - 1]) {
@@ -119,9 +120,9 @@ export default function AboutPrinciples() {
 
   if (reduce) {
     return (
-      <section className="section-padding border-y border-white/10 bg-white/[0.025]">
+      <section data-color-scope="about-principles" className="section-padding border-y border-line/10 bg-layer/[0.025]">
         <div className="container-premium">
-          <ol className="divide-y divide-white/10 border-y border-white/10">
+          <ol className="divide-y divide-line/10 border-y border-line/10">
             {PRINCIPLES.map(([label, text], index) => (
               <li key={label} className="grid gap-4 py-10 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-12">
                 <p className="eyebrow">
@@ -139,7 +140,7 @@ export default function AboutPrinciples() {
   }
 
   return (
-    <section className="section-padding border-y border-white/10 bg-white/[0.025]">
+    <section data-color-scope="about-principles" className="section-padding border-y border-line/10 bg-layer/[0.025]">
       <div className="container-premium">
         <div
           ref={stageRef}
@@ -154,22 +155,22 @@ export default function AboutPrinciples() {
                   {!isLast && (
                     <span
                       aria-hidden="true"
-                      className="absolute -bottom-10 left-5 top-12 hidden w-px bg-white/12 lg:block"
+                      className="absolute -bottom-10 left-5 top-12 hidden w-px bg-layer/12 lg:block"
                     >
-                      <span data-fill className="absolute inset-0 origin-top bg-bone/70" />
+                      <span data-fill className="absolute inset-0 origin-top bg-emphasis/70" />
                     </span>
                   )}
                   <div className="flex flex-col items-center gap-2 text-center lg:flex-row lg:gap-5 lg:pb-10 lg:text-left">
                     <span
                       aria-hidden="true"
                       data-node
-                      className="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full border border-bone bg-bone text-xs font-black tabular-nums text-ink shadow-glow"
+                      className="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full border border-signal bg-selection text-xs font-black tabular-nums text-on-selection shadow-glow"
                     >
                       {pad(index)}
                     </span>
                     <span
                       data-label
-                      className="text-xs font-black uppercase tracking-[0.18em] text-bone sm:text-sm lg:text-base lg:tracking-[0.22em]"
+                      className="text-xs font-black uppercase tracking-[0.18em] text-heading sm:text-sm lg:text-base lg:tracking-[0.22em]"
                     >
                       {label}
                     </span>
@@ -187,7 +188,7 @@ export default function AboutPrinciples() {
                   key={label}
                   data-ghost
                   className="select-none self-end justify-self-end text-[clamp(4rem,12vw,10.5rem)] font-black leading-[0.8] tracking-tighter text-transparent [grid-area:1/1]"
-                  style={{ WebkitTextStroke: "1.5px rgba(245,243,239,0.14)" }}
+                  style={{ WebkitTextStroke: "1.5px var(--signal-a014)" }}
                 >
                   {label}
                 </span>

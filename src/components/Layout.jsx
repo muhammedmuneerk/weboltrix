@@ -12,7 +12,7 @@ export default function Layout() {
   usePageMotion(location.pathname, location.hash);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-ink text-bone">
+    <div data-color-scope="site" className="min-h-screen overflow-x-hidden bg-[color:var(--surface-page)] text-[color:var(--text-primary)]">
       <Navbar />
       <main>
         <Outlet />

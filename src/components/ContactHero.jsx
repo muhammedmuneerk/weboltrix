@@ -27,7 +27,7 @@ const css = `
 // Same props as PageHero, so Contact.jsx keeps its copy exactly as written.
 export default function ContactHero({ eyebrow, title, children }) {
   return (
-    <section className="hero-mesh relative isolate overflow-hidden lg:flex lg:min-h-[100svh] lg:items-center">
+    <section data-color-scope="contact-hero" className="hero-mesh relative isolate overflow-hidden lg:flex lg:min-h-[100svh] lg:items-center">
       <style>{css}</style>
       <div className="fine-grid absolute inset-0 -z-10" />
 
@@ -37,7 +37,7 @@ export default function ContactHero({ eyebrow, title, children }) {
           <div className="min-w-0">
             {eyebrow && (
               <p className="hero-kicker eyebrow flex animate-fade-up items-center gap-4 motion-reduce:animate-none">
-                <span aria-hidden="true" className="h-px w-10 bg-white/40" />
+                <span aria-hidden="true" className="h-px w-10 bg-layer/40" />
                 {eyebrow}
               </p>
             )}
@@ -51,7 +51,7 @@ export default function ContactHero({ eyebrow, title, children }) {
 
             {children && (
               <div
-                className="hero-copy mt-5 max-w-xl animate-fade-up text-lg sm:mt-8 leading-8 text-white/62 motion-reduce:animate-none sm:text-xl sm:leading-9"
+                className="hero-copy mt-5 max-w-xl animate-fade-up text-lg sm:mt-8 leading-8 text-content/62 motion-reduce:animate-none sm:text-xl sm:leading-9"
                 style={{ animationDelay: "180ms" }}
               >
                 {children}
@@ -59,7 +59,7 @@ export default function ContactHero({ eyebrow, title, children }) {
             )}
 
             <p
-              className="mt-8 hidden max-w-md animate-fade-up border-l-2 border-white/20 pl-5 text-sm font-semibold leading-7 text-white/62 motion-reduce:animate-none sm:block"
+              className="mt-8 hidden max-w-md animate-fade-up border-l-2 border-line/20 pl-5 text-sm font-semibold leading-7 text-content/62 motion-reduce:animate-none sm:block"
               style={{ animationDelay: "260ms" }}
             >
               Mention your business type, the pages you need, a few websites you like and when you
@@ -74,16 +74,16 @@ export default function ContactHero({ eyebrow, title, children }) {
             data-cursor-glow
           >
             <div className="glass overflow-hidden rounded-[2rem] p-2.5">
-              <div className="rounded-[1.5rem] bg-black/60">
+              <div data-color-context="media" className="rounded-[1.5rem] bg-scrim/60">
                 {/* Chat header */}
-                <div className="flex items-center gap-3 border-b border-white/10 px-5 py-4">
-                  <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full border border-white/15 bg-ink p-2">
-                    <img src={brandAssets.logoSquare} alt="" className="h-full w-full object-contain" />
+                <div className="flex items-center gap-3 border-b border-line/10 px-5 py-4">
+                  <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full border border-line/15 bg-canvas p-2">
+                    <img data-color-asset="brand" src={brandAssets.logoSquare} alt="" className="h-full w-full object-contain" />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-sm font-black tracking-tight text-bone">Weboltrix</p>
-                    <p className="flex items-center gap-2 text-xs font-semibold text-white/50">
-                      <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-bone" />
+                    <p className="text-sm font-black tracking-tight text-heading">Weboltrix</p>
+                    <p className="flex items-center gap-2 text-xs font-semibold text-content/50">
+                      <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-emphasis" />
                       Chat on WhatsApp
                     </p>
                   </div>
@@ -96,7 +96,7 @@ export default function ContactHero({ eyebrow, title, children }) {
                   className="flex flex-col justify-end gap-3 px-5 py-6 lg:min-h-[13rem]"
                 >
                   <p
-                    className="ml-auto max-w-[85%] animate-fade-up rounded-2xl rounded-br-md bg-bone px-4 py-3 text-base font-semibold leading-6 text-ink motion-reduce:animate-none"
+                    className="ml-auto max-w-[85%] animate-fade-up rounded-2xl rounded-br-md bg-emphasis px-4 py-3 text-base font-semibold leading-6 text-on-emphasis motion-reduce:animate-none"
                     style={{ animationDelay: "500ms" }}
                   >
                     {FIRST_MESSAGE}
@@ -104,17 +104,17 @@ export default function ContactHero({ eyebrow, title, children }) {
 
                   <div
                     aria-hidden="true"
-                    className="flex w-fit animate-fade-up items-center gap-1.5 rounded-2xl rounded-bl-md border border-white/10 bg-white/[0.08] px-4 py-3.5 motion-reduce:animate-none"
+                    className="flex w-fit animate-fade-up items-center gap-1.5 rounded-2xl rounded-bl-md border border-line/10 bg-layer/[0.08] px-4 py-3.5 motion-reduce:animate-none"
                     style={{ animationDelay: "1200ms" }}
                   >
-                    <span className="contact-dot h-1.5 w-1.5 rounded-full bg-bone" />
-                    <span className="contact-dot h-1.5 w-1.5 rounded-full bg-bone" />
-                    <span className="contact-dot h-1.5 w-1.5 rounded-full bg-bone" />
+                    <span className="contact-dot h-1.5 w-1.5 rounded-full bg-emphasis" />
+                    <span className="contact-dot h-1.5 w-1.5 rounded-full bg-emphasis" />
+                    <span className="contact-dot h-1.5 w-1.5 rounded-full bg-emphasis" />
                   </div>
                 </div>
 
                 {/* Actions */}
-                <div className="grid gap-3 border-t border-white/10 p-5">
+                <div className="grid gap-3 border-t border-line/10 p-5">
                   <a
                     href={whatsappLink}
                     target="_blank"
@@ -125,7 +125,7 @@ export default function ContactHero({ eyebrow, title, children }) {
                   </a>
                   <a
                     href="#enquiry-form"
-                    className="text-center text-sm font-bold text-white/58 transition hover:text-white"
+                    className="text-center text-sm font-bold text-content/58 transition hover:text-content"
                   >
                     Prefer a form? Send an enquiry
                   </a>
@@ -137,22 +137,22 @@ export default function ContactHero({ eyebrow, title, children }) {
 
         {/* ───────── Direct channels: a single strip, same rhythm as the About hero stats ───────── */}
         <dl
-          className="mt-14 grid animate-fade-up border-t border-white/10 motion-reduce:animate-none lg:grid-cols-[1fr_1.6fr_1fr] lg:divide-x lg:divide-white/10 lg:mt-16"
+          className="mt-14 grid animate-fade-up border-t border-line/10 motion-reduce:animate-none lg:grid-cols-[1fr_1.6fr_1fr] lg:divide-x lg:divide-line/10 lg:mt-16"
           style={{ animationDelay: "400ms" }}
         >
           {CHANNELS.map((channel, index) => (
             <div
               key={channel.label}
-              className={`border-b border-white/10 lg:border-b-0 ${
+              className={`border-b border-line/10 lg:border-b-0 ${
                 index === 0 ? "lg:pr-8" : "lg:px-8"
               }`}
             >
-              <dt className="pt-5 text-xs font-bold text-white/45">{channel.label}</dt>
+              <dt className="pt-5 text-xs font-bold text-content/45">{channel.label}</dt>
               <dd className="pb-5 pt-1.5 lg:pb-0">
                 <a
                   href={channel.href}
                   {...(channel.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                  className="block break-words text-xl font-black tracking-tight text-bone transition hover:text-white/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bone lg:py-1 lg:text-xl xl:text-2xl"
+                  className="block break-words text-xl font-black tracking-tight text-heading transition hover:text-content/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus-outline lg:py-1 lg:text-xl xl:text-2xl"
                 >
                   {channel.value}
                 </a>

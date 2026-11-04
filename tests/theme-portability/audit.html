@@ -1,0 +1,9 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Weboltrix theme portability audit</title>
+<style>body{margin:16px;font:14px system-ui;background:#eee;color:#111}button,select{font:inherit;padding:8px;margin-right:8px}iframe{display:block;background:white;border:1px solid #aaa;margin-top:16px;height:900px}pre{white-space:pre-wrap;max-width:1200px}#status{padding:12px;background:white}</style>
+<h1>Theme portability verification</h1><p>Local test harness only. Application source is served from independently built theme bundles.</p>
+<button id="run">Run complete comparison</button><button id="quick">Run main routes</button>
+<select id="theme"><option>original</option><option>navy</option><option>light</option><option>baseline</option></select>
+<select id="route"><option>/</option><option>/work</option><option>/services</option><option>/process</option><option>/about</option><option>/contact</option></select>
+<button id="preview">Preview theme</button><button id="stop">Stop after current route</button>
+<pre id="status">Ready.</pre><iframe id="site" title="Application under test" width="1440"></iframe>
+<script type="module" src="/__audit/audit.js"></script></html>

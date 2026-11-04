@@ -10,14 +10,14 @@ export default function Work() {
       <WorkHero projects={projects} />
       <WorkProjects projects={projects} />
 
-      <section className="section-padding border-y border-white/10 bg-white/[0.025]">
+      <section data-color-scope="work" className="section-padding border-y border-line/10 bg-layer/[0.025]">
         <div className="container-premium">
           <div className="mx-auto max-w-3xl text-center">
             <p className="eyebrow">Comparison</p>
             <h2 className="mt-4 text-4xl font-black tracking-tight sm:text-6xl">
               Before and after clarity.
             </h2>
-            <p className="mt-5 text-lg leading-8 text-white/58">
+            <p className="mt-5 text-lg leading-8 text-content/58">
               Most websites lose customers before they even load properly. We rebuild them into
               fast, premium experiences that convert instantly.
             </p>

@@ -14,16 +14,16 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header
+    <header data-color-scope="navbar"
       className={`fixed inset-x-0 top-0 z-50 border-b transition duration-300 ${
         scrolled
-          ? "border-white/[0.14] bg-ink/[0.78] shadow-premium backdrop-blur-2xl"
-          : "border-white/[0.08] bg-ink/[0.36] backdrop-blur-2xl"
+          ? "border-line/[0.14] bg-canvas/[0.78] shadow-premium backdrop-blur-2xl"
+          : "border-line/[0.08] bg-canvas/[0.36] backdrop-blur-2xl"
       }`}
     >
       <nav className="container-premium flex h-20 items-center justify-between">
         <Link to="/" className="flex items-center" aria-label="Weboltrix home" onClick={() => setOpen(false)}>
-          <img
+          <img data-color-asset="brand"
             src={brandAssets.logoSquare}
             alt="Weboltrix"
             className="h-20 w-auto lg:h-28"
@@ -36,10 +36,10 @@ export default function Navbar() {
               key={link.href}
               to={link.href}
               className={({ isActive }) =>
-                `relative py-2 text-sm font-semibold transition after:absolute after:bottom-0 after:left-1/2 after:h-px after:bg-white after:transition-all after:duration-300 after:-translate-x-1/2 hover:text-white ${
+                `relative py-2 text-sm font-semibold transition after:absolute after:bottom-0 after:left-1/2 after:h-px after:bg-emphasis-panel after:transition-all after:duration-300 after:-translate-x-1/2 hover:text-content ${
                   isActive
-                    ? "text-white after:w-full"
-                    : "text-white/58 after:w-0 hover:after:w-full"
+                    ? "text-content after:w-full"
+                    : "text-content/58 after:w-0 hover:after:w-full"
                 }`
               }
             >
@@ -51,14 +51,14 @@ export default function Navbar() {
         <div className="hidden lg:block">
           <Link
             to="/contact"
-            className="premium-button bg-white text-ink shadow-[0_0_42px_rgba(255,255,255,0.28)] hover:-translate-y-1 hover:bg-bone hover:shadow-[0_0_62px_rgba(255,255,255,0.38)]"
+            className="premium-button bg-action-bright text-action-foreground shadow-[0_0_42px_var(--glow-a028)] hover:-translate-y-1 hover:bg-action hover:shadow-[0_0_62px_var(--glow-a038)]"
           >
             Get Your Website
           </Link>
         </div>
 
         <button
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 md:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-line/15 bg-layer/5 md:hidden"
           type="button"
           aria-label="Toggle navigation"
           onClick={() => setOpen((value) => !value)}
@@ -91,7 +91,7 @@ export default function Navbar() {
                 key={link.href}
                 to={link.href}
                 onClick={() => setOpen(false)}
-                className="rounded-2xl px-4 py-3 text-sm font-bold text-white/75 transition hover:bg-white/10 hover:text-white"
+                className="rounded-2xl px-4 py-3 text-sm font-bold text-content/75 transition hover:bg-layer/10 hover:text-content"
               >
                 {link.label}
               </NavLink>

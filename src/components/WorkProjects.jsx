@@ -276,7 +276,7 @@ export default function WorkProjects({ projects }) {
   }, [isStepMode]);
 
   return (
-    <div
+    <div data-color-scope="work-projects-index"
       className={`sb-layout${isStepMode ? "" : " sb-layout--flow"}`}
       id="project-index"
       ref={layoutRef}
@@ -347,7 +347,7 @@ export default function WorkProjects({ projects }) {
           const liveLink = project.linkAfter || project.link;
           const isHiddenInFlow = !isStepMode && index !== activeIndex;
           return (
-            <section
+            <section data-color-scope="work-projects"
               key={project.slug}
               id={`project-${project.slug}`}
               className={`sb-project${index === activeIndex ? " sb-project--active" : ""}${

@@ -209,24 +209,24 @@ export function useAddOnsMobileMotion(stageRef) {
       const total = plates.length;
 
       const faceDim = {
-        backgroundColor: "#181818",
-        borderColor: "rgba(255,255,255,0.2)",
-        boxShadow: "0 0 0 rgba(255,255,255,0)",
+        backgroundColor: "var(--surface-control-idle)",
+        borderColor: "var(--motion-node-border)",
+        boxShadow: "var(--effect-node-dim)",
       };
       const faceLit = {
-        backgroundColor: "#303030",
-        borderColor: "rgba(245,243,239,0.8)",
-        boxShadow: "0 0 70px rgba(255,255,255,0.15)",
+        backgroundColor: "var(--surface-control-active)",
+        borderColor: "var(--signal-a08)",
+        boxShadow: "var(--effect-glow)",
       };
       const pillDim = {
-        backgroundColor: "#050505",
-        borderColor: "rgba(255,255,255,0.2)",
-        color: "rgba(255,255,255,0.6)",
+        backgroundColor: "var(--canvas)",
+        borderColor: "var(--motion-node-border)",
+        color: "var(--motion-caption-foreground)",
       };
       const pillLit = {
-        backgroundColor: "#f5f3ef",
-        borderColor: "#f5f3ef",
-        color: "#050505",
+        backgroundColor: "var(--selection)",
+        borderColor: "var(--signal)",
+        color: "var(--on-selection)",
       };
 
       const timeline = gsap.timeline({

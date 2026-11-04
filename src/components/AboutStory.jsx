@@ -30,6 +30,9 @@ function useStoryMotion(rootRef) {
   useLayoutEffect(() => {
     const root = rootRef.current;
     if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+    const theme = getComputedStyle(root);
+    const wordAlpha = Number(theme.getPropertyValue("--motion-word-opacity"));
+    const phraseAlpha = Number(theme.getPropertyValue("--motion-phrase-opacity"));
 
     const refreshFrame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
 
@@ -41,7 +44,7 @@ function useStoryMotion(rootRef) {
       if (words.length) {
         gsap.fromTo(
           words,
-          { opacity: 0.16 },
+          { opacity: wordAlpha },
           {
             opacity: 1,
             ease: "none",
@@ -80,13 +83,13 @@ function useStoryMotion(rootRef) {
           if (numeral) {
             timeline.fromTo(
               numeral,
-              { color: "rgba(245,243,239,0)" },
-              { color: "rgba(245,243,239,1)", duration: 0.8 },
+              { color: "var(--heading-a0)" },
+              { color: "var(--heading)", duration: 0.8 },
               at
             );
           }
           if (text) {
-            timeline.fromTo(text, { opacity: 0.2, y: 14 }, { opacity: 1, y: 0, duration: 0.8 }, at);
+            timeline.fromTo(text, { opacity: phraseAlpha, y: 14 }, { opacity: 1, y: 0, duration: 0.8 }, at);
           }
         });
       }
@@ -106,7 +109,7 @@ export default function AboutStory() {
   const words = TITLE.split(" ");
 
   return (
-    <section ref={rootRef} className="section-padding">
+    <section data-color-scope="about-story" ref={rootRef} className="section-padding">
       <div className="container-premium">
         {/* Headline: the shared SectionHeading, with the words split out for the reveal */}
         <div data-story-title>
@@ -124,10 +127,10 @@ export default function AboutStory() {
 
         {/* Lead and intro share one line, so nothing is left hanging on either side */}
         <div className="mt-14 grid gap-8 lg:mt-20 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:gap-20">
-          <p className="max-w-lg border-l-2 border-bone pl-6 text-lg leading-9 text-white/62 sm:text-xl sm:leading-10">
+          <p className="max-w-lg border-l-2 border-signal pl-6 text-lg leading-9 text-content/62 sm:text-xl sm:leading-10">
             {LEAD}
           </p>
-          <p className="max-w-xl text-lg leading-9 text-white/62 sm:text-xl sm:leading-10 lg:justify-self-end">
+          <p className="max-w-xl text-lg leading-9 text-content/62 sm:text-xl sm:leading-10 lg:justify-self-end">
             {INTRO}
           </p>
         </div>
@@ -143,28 +146,28 @@ export default function AboutStory() {
               data-story-col
               className={`relative flex items-center gap-6 py-7 sm:flex-col sm:items-start sm:justify-between sm:gap-14 sm:py-9 lg:min-h-[19rem] lg:px-7 lg:py-9 ${
                 index % 2 === 1 ? "sm:pl-8" : ""
-              } ${index === 0 ? "lg:pl-0" : "lg:border-l lg:border-white/10"} lg:pr-7`}
+              } ${index === 0 ? "lg:pl-0" : "lg:border-l lg:border-line/10"} lg:pr-7`}
             >
               {/* Line that draws across the top of the pillar */}
               <span
                 aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-px bg-white/12 lg:left-0"
+                className="absolute inset-x-0 top-0 h-px bg-layer/12 lg:left-0"
               >
-                <span data-story-fill className="absolute inset-0 origin-left bg-bone" />
+                <span data-story-fill className="absolute inset-0 origin-left bg-emphasis" />
               </span>
 
               <span
                 aria-hidden="true"
                 data-story-numeral
-                className="select-none text-6xl font-black leading-none tracking-tighter text-bone sm:text-7xl lg:text-8xl"
-                style={{ WebkitTextStroke: "1.5px rgba(245,243,239,0.5)" }}
+                className="select-none text-6xl font-black leading-none tracking-tighter text-heading sm:text-7xl lg:text-8xl"
+                style={{ WebkitTextStroke: "1.5px var(--signal-a05)" }}
               >
                 {pad(index)}
               </span>
 
               <span
                 data-story-text
-                className="block min-w-0 text-2xl font-black leading-[1.08] tracking-tight text-bone first-letter:uppercase sm:text-3xl lg:text-[1.9rem]"
+                className="block min-w-0 text-2xl font-black leading-[1.08] tracking-tight text-heading first-letter:uppercase sm:text-3xl lg:text-[1.9rem]"
               >
                 {point}
               </span>
